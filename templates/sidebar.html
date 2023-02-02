@@ -1,0 +1,94 @@
+{% block sidebar%}
+
+<div id="mySidebar" class="d-flex mySidebar flex-column flex-shrink-0 p-3 text-white bg-primary bg-gradient">
+  <ul class="nav nav-pills flex-column mb-auto my-5">
+    <li>
+      <a href="#dashboard "
+        class="nav-link text-white "  >
+        Dashboard
+      </a>
+    </li>
+      <li>
+      <a href="#booking_create "
+        class="nav-link text-white "  >
+        Create | Booking
+      </a>
+    </li>
+
+      <li>
+      <a href="#booking_list "
+        class="nav-link text-white "  >
+        All Bookings | सभी बुकिंग
+
+      </a>
+    </li>
+
+    <li>
+      <a href="#return_list"
+        class="nav-link text-white ">
+        Returns | कपड़े वापस
+
+      </a>
+    </li>
+
+    <li>
+      <a href="{% url 'product_list' %}"
+        class="nav-link text-white">
+        Dresses | सभी कपड़े
+
+      </a>
+    </li>
+    <li>
+      <a href="{% url 'category_list' %}"
+        class="nav-link text-white">
+        Category | श्रेणियाँ
+      </a>
+    </li>
+{#    <li>#}
+{#      <a href="{% url 'shop_list' %}"#}
+{#        class="nav-link text-white">#}
+{#        Shops | दुकानें#}
+{#      </a>#}
+{#    </li>#}
+
+    <li>
+      <a href="#customer_list"
+        class="nav-link text-white">
+        Customers | ग्राहक
+</a>
+    </li>
+    <li>
+        <a href="#staff_list"
+        class="nav-link text-white">
+            Staff | कर्मचारी
+      </a>
+    </li>
+
+       <li>
+        <a href="#product_bulk_upload"
+        class="nav-link text-white">
+                Bulk Upload | कपड़े अपलोड
+
+      </a>
+    </li>
+{#          <li>#}
+{#        <a href="{% url 'report' %}"#}
+{#        class="nav-link text-white">#}
+{#            Reports | रिपोर्ट#}
+{#      </a>#}
+{#    </li>#}
+  </ul>
+</div>
+
+
+<style>
+  .mySidebar {         
+
+    min-height: 100vh ;
+     flex: 1;
+     display: flex;
+     flex-direction: column;
+     position: fixed;
+}
+</style>
+{% endblock sidebar %}

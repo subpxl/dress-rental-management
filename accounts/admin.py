@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import *
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import Group
 
 
 class UserAdminBase(UserAdmin):
@@ -13,6 +14,7 @@ class UserAdminBase(UserAdmin):
     fieldsets = ()
     readonly_fields=('password',)
 
+admin.site.unregister(Group)
 # Register your models here.
 admin.site.register(User, UserAdminBase)
 admin.site.register(Address)

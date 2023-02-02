@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # local_apps
     'accounts',
+    'seller',
+    'catalouge',
     # 'api',
     # 3rd party apps
     'rest_framework',
@@ -61,7 +63,7 @@ ROOT_URLCONF = 'orange.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [(os.path.join(BASE_DIR, 'templates')),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

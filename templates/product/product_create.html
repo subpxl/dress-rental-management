@@ -1,0 +1,25 @@
+{% extends 'base.html' %} {% block content %}
+
+
+
+
+
+                {% for message in messages %}
+            <p class="text-danger text-center mt-3">{{message}}</p>
+            {% endfor %}
+
+<div class="container pb-5">
+  <h1 class="text-center">Create Product</h1>
+  <form action=""  enctype="multipart/form-data"
+    method="post">
+    {% csrf_token %}
+    {{form }}
+
+    <input class="btn btn-primary w-100 mt-2"
+      type="submit"
+      value="Submit" />
+  </form>
+</div>
+
+
+{% endblock %}
