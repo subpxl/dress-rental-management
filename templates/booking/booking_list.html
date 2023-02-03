@@ -1,0 +1,88 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container">
+
+<div class="row">
+
+    <div class="col-6">
+  <a  class="btn btn-primary btn-md" href="{% url 'booking_add'  %}">Create Booking</a>
+    </div>
+    <div class="col-6  my-2 ms-auto">
+
+        <form class="form-inline" action="{% url 'booking_list'  %}" method="post">
+            {% csrf_token %}
+            <input class="form-control" required type="date" name="startDate">
+            <input class="form-control"  required type="date" name="endDate">
+            <button class="btn btn-sm btn-primary">Go</button>
+        </form>
+    </div>
+</div>
+  <button class="btn  btn-md btn-dark float-end " onclick="printDiv()">print</button>
+
+<hr>
+
+  <h1 class="text-center">All Bookings</h1>
+
+<div class="container" id='section-to-print'>
+<h4> start : <strong>{{ startDate }}</strong>  End : <strong>{{ endDate }}</strong>   </h4>
+
+  <ul class="list-group" >
+    {% for booking in booking_list %}
+
+    <li class="list-group-item">
+      <div class="row">
+        <div class=" my-auto col col-2">{{ booking.customerName }}</div>
+        <div class=" my-auto col col-2">{{ booking.mobileNumber  }}</div>
+              <div class=" my-auto col col-2">
+              <ul>
+                       {%  for booked_product in booking.products.all %}
+                            <li> {{booked_product.name}}
+                            {{ booked_product.tag }}</li>
+                        {% endfor %}
+              </ul>
+              </div>
+
+        <div class=" my-auto col col-1">{{ booking.startDate }}</div>
+        <div class=" my-auto col col-1">{{ booking.endDate }}</div>
+
+          <div class="col col-3">
+            <div class="row">
+                <div class="col-4">
+                              <a href="#booking_details"
+            class="btn btn-md btn-primary">View</a>
+                </div>
+                <div class="col-4">
+                              <a href="#booking_update"
+            class="btn btn-md btn-success">Return </a>
+                </div>
+                <div class="col-4">
+          <a href="#booking_delete"
+            class="btn btn-md btn-danger">Delete</a>
+                </div>
+            </div>
+
+        </div>
+
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+{% include 'paginate_component.html' %}
+</div>
+
+</div>
+<script>
+  function printDiv() {
+    console.log("gog")
+   var printContents = document.getElementById("section-to-print").innerHTML;
+   var originalContents = document.body.innerHTML;
+   document.body.innerHTML = printContents;
+
+   window.print();
+   document.body.innerHTML = originalContents;
+}
+
+
+</script>
+
+{% endblock %}

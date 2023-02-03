@@ -1,0 +1,85 @@
+ <table class="table">
+          <thead class="thead-dark">
+          <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Size</th>
+              <th>Price</th>
+          </tr>
+          </thead>
+     <tbody>
+     <tr>
+         <td>
+             <div class="row">
+                 <input id="myinput" type="text" class="form-control" placeholder="Type A Dress ID"
+          for="resultselect5" size="30" onkeyup="showResults(this,'resultselect5')" name=""/>
+            </div>
+            <div class="row"><select name="products" class="form-select" id="resultselect5"></select>
+            </div>
+        </td>
+        <td><input class="form-control" placeholder="description" name ="description" ></td>
+        <td><input class="form-control" placeholder="size"  name="size"></td>
+        <td><input class="form-control" placeholder="price"  name="price"></td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="row">
+                <input id="myinput2" type="text" class="form-control" placeholder="Type A Dress ID"
+                for="resultselect6" size="30" onkeyup="showResults(this,'resultselect6')" name=""/>
+            </div>
+            <div class="row"><select name="products" class="form-select" id="resultselect6"></select>
+            </div>
+        </td>
+        <td><input class="form-control" placeholder="description" name ="description" ></td>
+        <td><input class="form-control" placeholder="size"  name="size"></td>
+        <td><input class="form-control" placeholder="price"  name="price"></td>
+    </tr>
+     </tbody>
+ </table>
+<script>
+
+      startDate = document.getElementById('startDate')
+      endDate  =  document.getElementById('endDate')
+      startDateId = document.getElementById('id_startDate')
+      endDateId  =  document.getElementById('id_endDate')
+      var myProductArray =[]
+      dateForm = document.getElementById('dateForm')
+      dateForm.addEventListener("submit",async (e)=>{
+          e.preventDefault()
+          payload = new FormData(dateForm)
+          fetch("{% url 'booked_product_search' %}",{
+              method:"POST",
+              body:payload
+          }).then(res =>res.json()).then(data =>{
+              myProductArray=data
+              console.log("array is ; ",myProductArray)
+          }).then(()=> {
+                  startDateId.value = startDate.value
+                  endDateId.value = endDate.value
+              }
+          )
+      })
+
+
+    var nameArr = '';
+    function showResults(e , inputid ){
+        const searchresult = document.getElementById(inputid)
+        searchresult.innerHTML = "<option style='color:red;' disabled> select a product </option>"
+        var typedInput= e.value
+        console.log("typed input : ",typedInput, searchresult)
+        if(myProductArray.length>=1){
+            console.log(myProductArray)
+            let newarr = myProductArray.filter(a=>(a.tag.match(typedInput)))
+            console.log('newarr => ',newarr)
+            newarr.forEach((item,index) => {
+                searchresult.innerHTML += `<option style='color:green;' class="options" selected   value=${item.id}` + '>' + `${item.color}  ${item.tag} `   +"</option>"
+                return item
+            })
+        } else{
+            searchresult.innerHTML = "<option style='color:red;'  selected  value=  > no products found </option>"
+            console.log("nothing here")
+            return
+        }
+    }
+</script>
