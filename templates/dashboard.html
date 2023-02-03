@@ -1,0 +1,142 @@
+{% extends 'base.html' %} {% block content%}
+
+<section class="">
+<div class="container ">
+    <h1>Dashboard</h1>
+        <h4>Today is {% now "jS F Y H:i" %}</h4>
+            <form class="form-inline" action="#dashboard" method="post">
+            {% csrf_token %}
+            <input class="form-control" type="date" name="startDate">
+{#                <input class="form-control"  type="date" name="endDate">#}
+                <button class="btn btn-sm btn-primary">Search</button>
+            </form>
+<h3> From  <strong>{{ fromDate }}</strong>   To <strong>{{ toDate }}</strong></h3>
+    <div class="row py-2">
+        <div class="col-4 bg-white">
+        <div class="card">
+            <h4 class="card-title text-center">To Send</h4>
+             <div class="card-body text-center">
+                 <h1>{{ toSend.count }}</h1>
+             </div>
+        </div>
+        </div>
+<div class="col-4 bg-white">
+        <div class="card">
+            <h4 class="card-title text-center">To Recieve</h4>
+             <div class="card-body text-center">
+                 <h1>{{ toRecieve.count }}</h1>
+             </div>
+        </div>
+        </div>
+    </div>
+    </div>
+
+<div class="container">
+  <button class="btn  btn-md btn-dark float-end " onclick="printDiv()">print</button>
+
+</div>
+
+    <div class="container py-4" id='section-to-print'>
+
+    <table class="table pt-5 table-hover ">
+      <h1>To Send </h1>
+        <thead class="table-light">
+        <tr>
+            <th>Name</th>
+            <th>Mobile Number</th>
+            <th>Products</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th class="text-right"> View</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for booking in toSend %}
+<tr>
+            <td>{{ booking.customerName }}</td>
+            <td>{{ booking.mobileNumber }}</td>
+            <td>
+            <ul>
+
+                          {%  for booked_product in booking.products.all %}
+                            <li> {{booked_product.name}}
+                            {{ booked_product.tag }}</li>
+                        {% endfor %}
+                        </ul>
+
+            </td>
+            <td> <strong>{{ booking.startDate }}</strong> </td>
+            <td>{{ booking.endDate }}</td>
+            <td>
+                <a class="btn btn-primary btn-sm float-right" href="#booking_details">view</a>
+            </td>
+        </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <table class="table pt-5 table-hover ">
+    <h1>To Recieve </h1>
+        <thead class="table-light">
+        <tr>
+            <th>Name</th>
+            <th>Mobile Number</th>
+            <th>Products</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th class="text-right">View</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for booking in toRecieve %}
+<tr>
+            <td>{{ booking.customerName }}</td>
+            <td>{{ booking.mobileNumber }}</td>
+                <td>
+                <ul>
+
+                          {%  for booked_product in booking.products.all %}
+                            <li> {{booked_product.name}}
+                            {{ booked_product.tag }}</li>
+                        {% endfor %}
+                </ul>
+
+            </td>
+
+            <td>{{ booking.startDate }}</td>
+            <td><strong>{{ booking.endDate }}</strong> </td>
+            <td>
+                <a class="btn btn-primary btn-sm float-right" href="#booking_details">view</a>
+            </td>
+        </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</section>
+
+    <style>
+        .card{
+            height: 200px;
+            margin: 4px;
+            border-radius: 10px;
+        }
+
+    </style>
+
+
+    <script>
+  function printDiv() {
+    console.log("gog")
+   var printContents = document.getElementById("section-to-print").innerHTML;
+   var originalContents = document.body.innerHTML;
+   document.body.innerHTML = printContents;
+
+   window.print();
+   document.body.innerHTML = originalContents;
+}
+
+
+</script>
+{% endblock %}
