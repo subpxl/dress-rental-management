@@ -1,0 +1,57 @@
+{% include 'header.html' %}
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-light  bg-primary">
+  <a class="navbar-brand text-white" href="#">Dress Rental System</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+
+</nav>
+
+<div class="container-fluid vh-100 ">
+  <div class="row  ">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card border-0  bg-white shadow rounded-3 my-5">
+        <div class="card-body p-4 p-sm-5">
+
+          <img src="" alt="">
+          <h5 class="card-title text-center mb-5 fw-light fs-5 ">Register</h5>
+
+            <div class="text-center">
+
+            <img height="100"  width="100" src="{% static 'images/logo.png' %}" alt="Dress Rental System">
+            </div>
+            {% include 'includes/errors.html' %}
+          <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label class="form-label">Business Name</label>
+              <input class="form-control" placeholder="Your Business Name" type="text" name='bus_name' />
+          </div>
+          <div class="mb-3">
+              <label class="form-label">First Name</label>
+              <input class="form-control" placeholder="Your First Name" type="text" name='f_name' />
+          </div>
+          <div class="mb-3">
+              <label class="form-label">Last Name</label>
+              <input class="form-control" placeholder="Your Last Name" type="text" name='l_name' />
+          </div>
+          <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input class="form-control" placeholder="Your email" type="text" name='email'/>
+          </div>
+          <!-- form-group// -->
+          <div class="mb-3">
+              <label class="form-label">Create password</label>
+              <input class="form-control" placeholder="Password" type="password" name='password'/>
+          </div>
+          <button type="submit" class="text-center p-2 mx-auto d-block mb-5 btn btn-primary">Register Here</a>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,7 +2,7 @@
 
 <nav class="navbar navbar-expand-lg  fixed-top navbar-dark text-white   bg-primary">
 
-    <a href="#dashboard" class="navbar-brand text-center">Dress Rental System</a>
+    <a href="{% url 'dashboard'  %}" class="navbar-brand text-center">Dress Rental System</a>
     <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -18,7 +18,7 @@
 
         </div>
         <div class="navbar-nav ms-auto">
-            <a href="#logout" class="nav-item nav-link"><strong>{{request.user.username}}</strong>
+            <a href="{% url 'logout'  %}" class="nav-item nav-link"><strong>{{request.user.username}}</strong>
                 Logout</a>
         </div>
     </div>

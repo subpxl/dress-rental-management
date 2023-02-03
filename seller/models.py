@@ -1,7 +1,41 @@
 from django.db import models
 from django.urls import reverse
+from accounts.models import User
 
-# Create your models here.
+class Seller(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    user = models.OneToOneField(
+        User, related_name='user', on_delete=models.CASCADE)
+    cover_photo = models.ImageField(
+        upload_to='seller/cover_photo', blank=True, null=True, default='/default/seller-profile.jpg')
+    banner = models.ImageField(
+        upload_to='seller/banner', blank=True, null=True, default='/default/seller-profile.jpg')
+    phone_number = models.CharField(max_length=50)
+    address = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50, null=True, blank=True)
+    description = models.CharField(max_length=255, null=True)
+    license = models.ImageField(upload_to='seller/license')
+    rating = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    num_of_reviews = models.PositiveIntegerField(default=0)
+    is_approved = models.BooleanField(default=False)
+    is_completed = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now=True)
+    modified_at = models.DateTimeField(auto_now=True)
+    owner_name = models.CharField(max_length=50, null=True)
+    reg_no = models.CharField(max_length=50, null=True)
+    gst = models.CharField(max_length=50, null=True)
+    city = models.CharField(max_length=50, null=True)
+    pincode = models.CharField(max_length=50, null=True)
+    state = models.CharField(max_length=50, null=True)
+    lat = models.DecimalField(max_digits=9, decimal_places=6, null=True)
+    long = models.DecimalField(max_digits=9, decimal_places=6, null=True)
+    policy = models.TextField(null=True)
+    about = models.TextField(null=True)
+
+
+    def __str__(self) :
+        return f'{self.name}'
+
 class Shop(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=100)

@@ -18,14 +18,16 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from .views import dashboard
+from django.views.generic import TemplateView
 
 urlpatterns = [
-    path('',dashboard,name='dashboard'),
-    path('admin/', admin.site.urls),
+    path('', TemplateView.as_view(template_name='index.html') , name='home'),
     path('',include('accounts.urls')),
     path('',include('catalouge.urls')),
     path('',include('booking.urls')),
     path('api/',include('api.urls')),
     path('shop/',include('seller.urls')),
+    path('dashboard/',dashboard,name='dashboard'),
+    path('admin/', admin.site.urls),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

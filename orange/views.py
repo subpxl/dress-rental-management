@@ -21,16 +21,18 @@ def dashboard(request):
             'toRecieve': toRecieve
         }
         return  render(request,template_name,context)
-
     try:
         toSend = Booking.objects.filter(startDate=date.today())
         toRecieve = Booking.objects.filter(endDate=date.today())
     except Booking.DoesNotExist:
         toSend = None
         toRecieve =None
-
+    is_approved = False
+    if request.user.is_authenticated and request.user.is_active:
+        is_approved = True
     context = {
         'toSend':toSend,
-        'toRecieve':toRecieve
+        'toRecieve':toRecieve,
+        'is_approved':is_approved
     }
     return  render(request,template_name,context)
