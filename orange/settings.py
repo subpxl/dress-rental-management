@@ -42,11 +42,16 @@ INSTALLED_APPS = [
     'accounts',
     'seller',
     'catalouge',
-    # 'api',
+    'api',
+    'booking',
     # 3rd party apps
+    'crispy_forms',
     'rest_framework',
     'rest_framework_simplejwt',
 ]
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

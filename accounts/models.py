@@ -88,7 +88,8 @@ class User(AbstractBaseUser):
         return user_role
 
 class Address(models.Model):
-    name = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
 
     def _str_(self):
         return f'{self.name}'
