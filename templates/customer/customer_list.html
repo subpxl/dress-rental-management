@@ -1,0 +1,67 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container">
+  <h1 class="text-center">All Customers</h1>
+
+<table class="table">
+<thead class="table-dark">
+<tr>
+    <th>Name</th>
+    <th>Address</th>
+    <th>Mobile No.</th>
+    <th>Alternate No.</th>
+    <th>View</th>
+    <th style="text-align: center;">Update</th>
+    <th style="text-align: center;">Delete</th>
+</tr>
+</thead>
+<tbody>
+
+
+    {% for customer in customer_list %}
+<tr>
+    <td>
+        <h5>
+        {{ customer.name }}
+        </h5>
+    </td>
+    <td>
+        <h5>
+        {{ customer.address }}
+        </h5>
+    </td>
+    <td>
+        <h5>
+        {{ customer.mobilenumber }}
+        </h5>
+    </td>
+    <td>
+        <h5>
+        {{ customer.alternatenumber }}
+        </h5>
+    </td>
+    <td>
+        <div class="col col-3">
+            <a class="btn btn-primary btn-sm" href="#booking_details">View</a>
+        </div>
+    </td>
+
+    <td>
+      <div class="col col-3">
+        <a href="{% url 'customer_update'  customer.pk %}"
+          class="btn btn-warning btn-sm">Update</a>
+      </div>
+      </td>
+      <td>
+      <div class="col col-3">
+        <a href="{% url 'customer_delete'  customer.pk %}"
+          class="btn btn-danger btn-sm">delete</a>
+      </div>
+    </td>
+    </tr>
+    {% endfor %}
+</tbody>
+
+</table>
+{% include 'paginate_component.html' %}
+{% endblock %}

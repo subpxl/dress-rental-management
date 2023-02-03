@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 class CustomerList(ListView):
     model = Customer
     context_object_name = "customer_list"
-    template_name = 'customer/../templates/booking/customer_list.html'
+    template_name = 'customer/customer_list.html'
 
 
 class CustomerCreate(CreateView):
