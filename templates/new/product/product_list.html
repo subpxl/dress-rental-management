@@ -1,56 +1,42 @@
 {% extends 'base.html' %} {% block content %}
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>All Products <a href="{% url 'product_create' %}" style="float: right;" class="btn btn-md btn-primary">Create Category</a></h1>
+  </div>
+  <section class="section dashboard">
+    <div class="row">
+      <div class="col-12">
+        <div class="card-body pb-0">
+          <h5 class="card-title">Product List</h5>
 
-<div class="container">
-  <a  class="btn btn-primary btn-md" href="{% url 'product_create' %}">Create Product</a>
-
-              <h1 class="justify-content-center d-flex mb-5">
-                All Products
-              </h1>
-
-            <form    class="form-inline" id="searchForm" action="#product_search" method="get" >
-                <input required placeholder="search product tag" id="resultselect"  class="form-control" name="product" >
-                <button class="btn btn-primary btn-md" >Go</button>
-            </form>
-
-
-  <ul class="list-group">
-    {% for product in product_list %}
-
-    <li class="list-group-item list-group-item-action">
-      <div class="row">
-
-          <div class="col col-2">{{ product.name }}</div>
-          <div class="col col-1">{{ product.tag }}</div>
-          <div class="col col-1"><img  class="imageZoom" src="{{ product.image.url }}" height="50" /></div>
-          <div class="col col-1">{{ product.status }}</div>
-
-
-          <div class="col col-2">
-            <a href="#product_details"
-            class="btn btn-primary btn-md">View</a>
-          </div>
-          <div class="col col-2">
-            <a href="{% url 'product_update'  product.pk %}"
-            class="btn btn-warning btn-md">Update</a>
-          </div>
-          <div class="col col-2">
-            <a href="{% url 'product_delete'  product.pk %}"
-            class="btn btn-danger btn-md" >delete</a>
-          </div>
+          <table class="table table-borderless">
+            <thead>
+                <th style="width:15%">Image</th>
+                <th style="width:10%;">Product</th>
+                <th style="width:15%">Tag</th>
+                <th style="width:15%">Status</th>
+                <th style="width:15%">Update</th>
+                <th style="width:15%">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for product in product_list %}
+              <tr>
+                <th scope="row"><a href="#"><img src="{{product.image.url}}" height="80px" width="100px" alt=""></a></th>
+                <td>{{product.name}}</td>
+                <td>{{product.tag}}</td>
+                <td>{{product.status}}</td>
+                <td><a href="{% url 'product_update'  product.pk %}" class="btn btn-md btn-success">Update</a></td>
+                <td>
+                  <a href="{% url 'product_delete'  product.pk %}" class="btn btn-md btn-danger">Delete</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
-      </li>
-    {% endfor %}
-  </ul>
-{% include 'paginate_component.html' %}
-</div>
-
-
-
-    <style>
-    .imageZoom:hover{
-        transform: scale(300%);
-    }
-
-    </style>
-
+      </div>
+    </div>
+  </section>
+</main>
 {% endblock %}
