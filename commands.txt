@@ -1,0 +1,5 @@
+cd /home/django/mango/
+git pull
+service gunicorn restart
+service nginx restart
+systemctl daemon-reload
