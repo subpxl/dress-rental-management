@@ -1,37 +1,38 @@
 {% extends 'base.html' %} {% block content %}
 
 <main id="main" class="main">
-  <div class="pagetitle">
+  <div class="pagetitle mb-3">
     <h1>Categories <a href="{% url 'category_create' %}" style="float: right;" class="btn btn-md btn-primary">Create Category</a></h1>
   </div>
   <section class="section dashboard">
     <div class="row">
       <div class="col-12">
-        <div class="card-body pb-0">
-          <h5 class="card-title">Category List</h5>
+        <div class="card top-selling overflow-auto">
+          <div class="card-body pb-0">
+            <h5 class="card-title">Category List</h5>
 
-          <table class="table table-borderless">
-            <thead>
-              <tr>
-                <th style="width:10%">#</th>
-                <th style="width:40%">Name</th>
-                <th style="width:25%">Update</th>
-                <th style="width:25%">Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for category in category_list %}
-              <tr>
-                <td>{{forloop.counter}}</td>
-                <td>{{category.name}}</td>
-                <td><a href="{% url 'category_update'  category.pk %}" class="btn btn-md btn-success">Update</a></td>
-                <td>
-                  <a href="{% url 'category_delete'  category.pk %}" class="btn btn-md btn-danger">Delete</a>
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+            <table class="table table-borderless" >
+              <thead>
+                <tr>
+                  <th style="width:5%">#</th>
+                  <th style="width:10%">Name</th>
+                  <th style="width:70%">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for category in category_list %}
+                <tr>
+                  <td>{{forloop.counter}}</td>
+                  <td>{{category.name}}</td>
+                  <td>
+                    <a href="{% url 'category_update'  category.pk %}" class="btn btn-md btn-success">Update</a>
+                    <a href="{% url 'category_delete'  category.pk %}" class="btn btn-md btn-danger">Delete</a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

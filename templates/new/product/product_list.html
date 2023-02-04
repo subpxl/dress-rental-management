@@ -1,40 +1,41 @@
 {% extends 'base.html' %} {% block content %}
 <main id="main" class="main">
-  <div class="pagetitle">
-    <h1>All Products <a href="{% url 'product_create' %}" style="float: right;" class="btn btn-md btn-primary">Create Category</a></h1>
+  <div class="pagetitle mb-3">
+    <h1>All Products <a href="{% url 'product_create' %}" style="float: right;" class="btn btn-md btn-primary">Create Product</a></h1>
   </div>
   <section class="section dashboard">
     <div class="row">
       <div class="col-12">
-        <div class="card-body pb-0">
-          <h5 class="card-title">Product List</h5>
+        <div class="card top-selling overflow-auto">
+          <div class="card-body pb-0">
+            <h5 class="card-title">Product List</h5>
 
-          <table class="table table-borderless">
-            <thead>
-                <th style="width:15%">Image</th>
-                <th style="width:10%;">Product</th>
-                <th style="width:15%">Tag</th>
-                <th style="width:15%">Status</th>
-                <th style="width:15%">Update</th>
-                <th style="width:15%">Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for product in product_list %}
-              <tr>
-                <th scope="row"><a href="#"><img src="{{product.image.url}}" height="80px" width="100px" alt=""></a></th>
-                <td>{{product.name}}</td>
-                <td>{{product.tag}}</td>
-                <td>{{product.status}}</td>
-                <td><a href="{% url 'product_update'  product.pk %}" class="btn btn-md btn-success">Update</a></td>
-                <td>
-                  <a href="{% url 'product_delete'  product.pk %}" class="btn btn-md btn-danger">Delete</a>
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
+            <table class="table table-borderless">
+              <thead>
+                  <th style="width:10%">Image</th>
+                  <th style="width:10%;">Product</th>
+                  <th style="width:10%">Tag</th>
+                  <th style="width:10%">Status</th>
+                  <th style="width:50%;"> Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for product in product_list %}
+                <tr>
+                  <th scope="row"><a href="#"><img src="{{product.image.url}}" height="60px" width="160px" alt=""></a></th>
+                  <td>{{product.name}}</td>
+                  <td>{{product.tag}}</td>
+                  <td>{{product.status}}</td>
+                  <td>
+                    <a href="{% url 'product_update'  product.pk %}" class="btn btn-md btn-success">Update</a>
+                    <a href="{% url 'product_delete'  product.pk %}" class="btn btn-md btn-danger">Delete</a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>  
       </div>
     </div>
   </section>

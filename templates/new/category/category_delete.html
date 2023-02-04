@@ -8,13 +8,15 @@
     <section class="section dashboard">
       <div class="row">
         <div class="col-12">
-          <div class="card-body pb-0">
-            <h5 class="card-title">{{category.name|title}}</h5>
-            <form action="" method="post">
-                {% csrf_token %}
-                <p>Are you sure you want to delete "{{ category.name }}"?</p>
-                <input class="btn btn-danger" type="submit" value="Confirm" />
-            </form>
+          <div class="card top-selling overflow-auto">
+            <div class="card-body pb-0">
+              <h5 class="card-title">{{category.name|title}}</h5>
+              <form action="" method="post">
+                  {% csrf_token %}
+                  <p>Are you sure you want to delete "{{ category.name }}"?</p>
+                  <input class="btn btn-danger mb-3" type="submit" value="Confirm" />
+              </form>
+            </div>
           </div>
         </div>
       </div>
