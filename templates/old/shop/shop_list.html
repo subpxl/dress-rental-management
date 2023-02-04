@@ -1,0 +1,42 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container">
+  <a  class="btn btn-primary" href="{% url 'shop_create' %}">Create Shop</a>
+  
+  <hr>
+  <h1 class="text-center">All Shops</h1>
+  <ul class="list-group">
+    {% for shop in shop_list %}
+
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col col-4">{{ shop.name }}</div>
+
+          <div class="col-6">
+
+          <div class="row">
+              <div class="col-4">
+                            <a href="{% url 'shop_details'  shop.pk %}"
+            class="btn btn-primary btn-md">View</a>
+              </div>
+        <div class="col col-4">
+          <a href="{% url 'shop_update'  shop.pk %}"
+            class="btn btn-warning btn-md">Update</a>
+        </div>
+        <div class="col col-4">
+          <a href="{% url 'shop_delete'  shop.pk %}"
+            class="btn btn-danger btn-md">delete</a>
+        </div>
+          </div>
+          </div>
+
+
+
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% block navbar %}
+
+<nav class="navbar navbar-expand-lg  fixed-top navbar-dark text-white   bg-primary">
+
+    <a href="{% url 'dashboard'  %}" class="navbar-brand text-center">Dress Rental System</a>
+    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+
+        <div class="navbar-nav">
+
+{#            <a href="{% url 'category_list' %}" class="nav-item nav-link active">Category</a>#}
+
+
+
+
+
+        </div>
+        <div class="navbar-nav ms-auto">
+            <a href="{% url 'logout'  %}" class="nav-item nav-link"><strong>{{request.user.username}}</strong>
+                Logout</a>
+        </div>
+    </div>
+    </div>
+</nav>
+
+<style>
+    .navbar {
+        min-height: 50px;
+    }
+</style>
+{% endblock navbar %}

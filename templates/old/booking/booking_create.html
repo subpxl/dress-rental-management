@@ -1,0 +1,49 @@
+{% extends 'base.html' %} {% block content %}
+{%load crispy_forms_tags %}
+{% include 'includes/alert.html' %}
+<div class="container pb-5">
+  <h1 class="text-center">Create Booking</h1>
+  {% include 'includes/product_search.html' %}
+  <form method="POST"  enctype="multipart/form-data"  id="bookigFrom" >
+    {% csrf_token %}
+    <div class="row">
+      <div  style="display: none" class=" col-6">{{ bookingForm.startDate|as_crispy_field }}</div>
+      <div style="display: none" class=" col-6">{{ bookingForm.endDate|as_crispy_field }}</div>
+      <div class="col-6">{{ bookingForm.customerName|as_crispy_field }}</div>
+      <div class="col-6">{{ bookingForm.mobileNumber|as_crispy_field }}</div>
+      <div class="col-6">{{ bookingForm.alternateNumber|as_crispy_field }}</div>
+      <div class="col-6">{{ bookingForm.address|as_crispy_field }}</div>
+      <div class="col-6">{{ bookingForm.referenceNo|as_crispy_field }}</div>
+      <div class="col-6">{{ bookingForm.shop|as_crispy_field }}</div>
+    </div>
+    <h1>Add Products</h1>
+    {% include 'includes/booking_product_component.html' %}
+    <h1>Total</h1>
+    <div class="row">
+      <div class="col-4">{{ bookingForm.totalAmount|as_crispy_field }}</div>
+      <div class="col-4">{{ bookingForm.amountPaid|as_crispy_field }}</div>
+      <div onclick="doMath()" class="col-4">{{ bookingForm.amountDue|as_crispy_field }}</div>
+    </div>
+      <hr/>
+    <input class="btn btn-success btn" type="submit" value="Submit" />
+  </form>
+</div>
+<script>
+    submitDate = document.getElementById('submitDate')
+        bookigFrom.style.display ='none'
+
+    bookigFrom = document.getElementById('bookigFrom')
+
+    submitDate.addEventListener('click',()=>{
+        console.log('clickedd')
+        bookigFrom.style.display ='block'
+    })
+    function doMath()
+    {
+        var total = document.getElementById('id_totalAmount').value;
+        var amountPaid = document.getElementById('id_amountPaid').value;
+        var sum = Number(total) -  Number(amountPaid);
+        document.getElementById("id_amountDue").value = sum;
+    }
+</script>
+{% endblock %}

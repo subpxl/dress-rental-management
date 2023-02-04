@@ -1,0 +1,470 @@
+{% include 'header.html' %}
+{% load static %}
+
+
+
+
+<body>
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+      <h1 class="logo"><a href="index.html">Dress Rental System</a></h1>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="#about">About</a></li>
+          <li>
+            <a class="nav-link scrollto" href="#services">Products</a>
+            <a class="nav-link scrollto" href="#services"></a>
+            <a class="nav-link scrollto" href="#services"></a>
+          </li>
+          <li><a class="nav-link scrollto" href="/contactus">Contact</a></li>
+          <li><a class="getstarted scrollto" href="/users/login">Login</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>
+      <!-- .navbar -->
+    </div>
+  </header>
+  <!-- End Header -->
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex align-items-center">
+    <div class="container-fluid" data-aos="fade-up">
+      <div class="row justify-content-center">
+        <div class="col-xl-5 col-lg-6 pt-3 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
+          <h1>Dress Rental System</h1>
+          <h2>Digital reminders Made Easy</h2>
+          <div><a href="#about" class="btn-get-started scrollto">Get Started</a></div>
+        </div>
+        <div class="col-xl-4 col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="150">
+          <img src="{% static 'images/hero-img.png' %}" class="img-fluid animated" alt="" />
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Hero -->
+  <main id="main">
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 order-1 order-lg-2" data-aos="zoom-in" data-aos-delay="150">
+            <img src="{% static '/images/about.jpg' %}" class="img-fluid" alt="" />
+          </div>
+          <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content" data-aos="fade-right">
+            <h3>Dress Rental System</h3>
+            <p class="fst-italic">
+              Dress Rental System is a Payment reminder service that can help classes and students to
+              have a smooth transaction with best experience.
+            </p>
+            <ul>
+              <li>
+                <h2>
+                  <span style="
+                        background-color: var(--bs-body-bg);
+                        font-family: 'Open Sans', sans-serif;
+                        font-size: var(--bs-body-font-size);
+                        font-weight: var(--bs-body-font-weight);
+                        text-align: var(--bs-body-text-align);
+                      ">Dress Rental System is a finance software company based in Mumbai.Our business
+                    policies are inclined towards benefiting customers in best possible ways,
+                    giving full value of their time and money. DfinSoft is the first software
+                    product introduced by us which is web &amp; mobile based
+                    application.It&rsquo;s a finance management application with wide range of
+                    features that helps both the business and end users.</span><br />
+                </h2>
+              </li>
+            </ul>
+            <a href="#" class="read-more">Read More <i class="bi bi-long-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="services section-bg">
+      <div class="container" data-aos="fade-up">
+        <div class="section-title">
+          <h2>PRODUCTS</h2>
+          <p>payment reminders&nbsp; Whatsapp Based</p>
+        </div>
+        <div class="row gy-4">
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+            <div class="icon-box iconbox-blue">
+              <div class="icon">
+                <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke="none" stroke-width="0" fill="#f5f5f5"
+                    d="M300,521.0016835830174C376.1290562159157,517.8887921683347,466.0731472004068,529.7835943286574,510.70327084640275,468.03025145048787C554.3714126377745,407.6079735673963,508.03601936045806,328.9844924480964,491.2728898941984,256.3432110539036C474.5976632858925,184.082847569629,479.9380746630129,96.60480741107993,416.23090153303,58.64404602377083C348.86323505073057,18.502131276798302,261.93793281208167,40.57373210992963,193.5410806939664,78.93577620505333C130.42746243093433,114.334589627462,98.30271207620316,179.96522072025542,76.75703585869454,249.04625023123273C51.97151888228291,328.5150500222984,13.704378332031375,421.85034740162234,66.52175969318436,486.19268352777647C119.04800174914682,550.1803526380478,217.28368757567262,524.383925680826,300,521.0016835830174">
+                  </path>
+                </svg><i class="bx bxl-dribbble"></i>
+              </div>
+              <h4><a href="">Whatsapp Reminder</a></h4>
+              <p class="text-start">
+                Whatsapp Based Payment Reminders with payment links for ease or recieving
+                payments.
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
+            <div class="icon-box iconbox-orange">
+              <div class="icon">
+                <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke="none" stroke-width="0" fill="#f5f5f5"
+                    d="M300,582.0697525312426C382.5290701553225,586.8405444964366,449.9789794690241,525.3245884688669,502.5850820975895,461.55621195738473C556.606425686781,396.0723002908107,615.8543463187945,314.28637112970534,586.6730223649479,234.56875336149918C558.9533121215079,158.8439757836574,454.9685369536778,164.00468322053177,381.49747125262974,130.76875717737553C312.15926192815925,99.40240125094834,248.97055460311594,18.661163978235184,179.8680185752513,50.54337015887873C110.5421016452524,82.52863877960104,119.82277516462835,180.83849132639028,109.12597500060166,256.43424936330496C100.08760227029461,320.3096726198365,92.17705696193138,384.0621239912766,124.79988738764834,439.7174275375508C164.83382741302287,508.01625554203684,220.96474134820875,577.5009287672846,300,582.0697525312426">
+                  </path>
+                </svg><i class="bx bx-file"></i>
+              </div>
+              <h4><a href="">Class Management</a></h4>
+              <p>Class Management with teachers , courses , students and payments reminders</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="300">
+            <div class="icon-box iconbox-pink">
+              <div class="icon">
+                <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke="none" stroke-width="0" fill="#f5f5f5"
+                    d="M300,541.5067337569781C382.14930387511276,545.0595476570109,479.8736841581634,548.3450877840088,526.4010558755058,480.5488172755941C571.5218469581645,414.80211281144784,517.5187510058486,332.0715597781072,496.52539010469104,255.14436215662573C477.37192572678356,184.95920475031193,473.57363656557914,105.61284051026155,413.0603344069578,65.22779650032875C343.27470386102294,18.654635553484475,251.2091493199835,5.337323636656869,175.0934190732945,40.62881213300186C97.87086631185822,76.43348514350839,51.98124368387456,156.15599469081315,36.44837278890362,239.84606092416172C21.716077023791087,319.22268207091537,43.775223500013084,401.1760424656574,96.891909868211,461.97329694683043C147.22146801428983,519.5804099606455,223.5754009179313,538.201503339737,300,541.5067337569781">
+                  </path>
+                </svg><i class="bx bx-tachometer"></i>
+              </div>
+              <h4><a href="">Payment Reminder</a></h4>
+              <p>Reminders for classes , playemtns and a suite of services.</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100"></div>
+        </div>
+      </div>
+    </section>
+    <!-- End Services Section -->
+    <!-- ======= Features Section ======= -->
+    <section id="features" class="features">
+      <div class="container" data-aos="fade-up">
+        <div class="section-title">
+          <h2>Features</h2>
+          <p class="float-none text-start">
+            dFin By&nbsp; Dress Rental System is a tool that helps classes of all sizes to manage
+            customer enrollment and makes the hectic process of collecting the dues on time easy
+            with the help of a dedicated payment reminder tool that helps the organization to send
+            reminders to the users with payment links making the whole process more easy ,simple
+            and automated.&nbsp;
+          </p>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column align-items-lg-center">
+            <div class="icon-box mt-5 mt-lg-0" data-aos="fade-up" data-aos-delay="100">
+              <i class="bx bx-receipt"></i>
+              <h4>Payment Reminder</h4>
+              <p>Whatsapp based reminder for payments</p>
+            </div>
+            <div class="icon-box mt-5" data-aos="fade-up" data-aos-delay="300">
+              <i class="bx bx-images"></i>
+              <h4>Class Management</h4>
+              <p>
+                Class Management tool for admins to manage courses , prices , teachers at
+                scale&nbsp;
+              </p>
+            </div>
+            <div class="icon-box mt-5" data-aos="fade-up" data-aos-delay="400">
+              <i class="bx bx-shield"></i>
+              <h4>Automated Payments&nbsp;</h4>
+              <p>
+                Payment reminders contains links so the process of payment is smooth and easy.
+              </p>
+            </div>
+          </div>
+          <div class="image col-lg-6 order-1 order-lg-2" data-aos="zoom-in" data-aos-delay="100">
+            <img src="{% static '/images/features.svg'  %}" alt="" class="img-fluid" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing" class="pricing section-bg">
+      <div class="container" data-aos="fade-up">
+        <div class="section-title">
+          <h2>Pricing</h2>
+          <p>
+            Pricing Plans for DFin by beyond acccounts has a play tailr for your
+            organization&apos;s specific needs.&nbsp;
+          </p>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="box">
+              <h3>Starter</h3>
+              <h4><sup>Rs</sup>499<span> / month</span></h4>
+              <ul>
+                <li>Reminders</li>
+                <li>1 admin</li>
+                <li>3 teachers</li>
+                <li class="na">chat support</li>
+                <li class="na">mail support</li>
+              </ul>
+              <div class="btn-wrap">
+                <a href="https://paytm.me/U-eNobp" class="btn-buy">Buy Now</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 mt-4 mt-md-0" data-aos="fade-up" data-aos-delay="200">
+            <div class="box featured">
+              <h3>Basic</h3>
+              <h4><sup>Rs</sup>999<span> / month</span></h4>
+              <ul>
+                <li>Reminders</li>
+                <li>1 admin</li>
+                <li>1 manager</li>
+                <li>53 teachers</li>
+                <li class="na">email support</li>
+              </ul>
+              <div class="btn-wrap">
+                <a href="https://paytm.me/b72-XXz" class="btn-buy">Buy Now</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="300">
+            <div class="box">
+              <h3>Professional</h3>
+              <h4><sup>Rs</sup>1499<span>/ month</span></h4>
+              <ul>
+                <li>Reminders</li>
+                <li>payment forecast</li>
+                <li>1 admin , manager</li>
+                <li>student profile</li>
+                <li>email support</li>
+              </ul>
+              <div class="btn-wrap">
+                <a href="https://paytm.me/swB-2b8" class="btn-buy">Buy Now</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="400">
+            <div class="box">
+              <span class="advanced">Advanced</span>
+              <h3>Ultimate</h3>
+              <h4><sup>Rs</sup>1999<span> / month</span></h4>
+              <ul>
+                <li>Reminders</li>
+                <li>Payment forecast</li>
+                <li>1 Admin 3 managers</li>
+                <li>student profile</li>
+                <li>email support</li>
+              </ul>
+              <div class="btn-wrap">
+                <a href="https://paytm.me/CNpg-Em" class="btn-buy">Buy Now</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="faq">
+      <div class="container" data-aos="fade-up">
+        <div class="section-title">
+          <h2>Frequently Asked Questions</h2>
+          <p>
+            Dfin By Dress Rental System can help your organization grow at scale . here are the
+            questions you may have&nbsp;
+          </p>
+        </div>
+        <div class="faq-list">
+          <ul>
+            <li data-aos="fade-up" data-aos="fade-up" data-aos-delay="100">
+              <i class="bx bx-help-circle icon-help"></i><a data-bs-toggle="collapse" class="collapse"
+                data-bs-target="#faq-list-1">What is a payment reminder<br /><i
+                  class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-1" class="collapse show" data-bs-parent=".faq-list">
+                <p>
+                  Payment reminder is a reminder whatsapp message sent to the customer for the
+                  dues of pyment with a payment link . it sends daily messages till the payment is
+                  made.&nbsp;
+                </p>
+              </div>
+            </li>
+            <li data-aos="fade-up" data-aos-delay="200">
+              <i class="bx bx-help-circle icon-help"></i><a data-bs-toggle="collapse" data-bs-target="#faq-list-2"
+                class="collapsed">How Can I use dFin in my classes?<br /><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-2" class="collapse" data-bs-parent=".faq-list">
+                <p>
+                  Contact us we will enroll your classes ans setup the business . you can manage
+                  all of it with our app.
+                </p>
+              </div>
+            </li>
+            <li data-aos="fade-up" data-aos-delay="300">
+              <i class="bx bx-help-circle icon-help"></i><a data-bs-toggle="collapse" data-bs-target="#faq-list-3"
+                class="collapsed">Who will be in control of my classes?<br /><i
+                  class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-3" class="collapse" data-bs-parent=".faq-list">
+                <p>
+                  You as the class admin will be in total control of your classes , you can set
+                  reminders and update them or stop them for a single user or bulk , wthichever
+                  suits your business needs.
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact section-bg">
+      <div class="container" data-aos="fade-up">
+        <div class="section-title">
+          <h2>Contact</h2>
+          <p>
+            YOu can send us a email for your queries or connect with us on chat, still have some
+            queries ? just connect with us with given below details . we are always happy to help
+            you.
+          </p>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="info-box mb-4">
+              <i class="bx bx-map"></i>
+              <h3>Our Address</h3>
+              <p>Vashi Mumbai Maharashtra, 400703</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="info-box mb-4">
+              <i class="bx bx-envelope"></i>
+              <h3>Email Us</h3>
+              <p>beyondacconts@gmail.com</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="info-box mb-4">
+              <i class="bx bx-phone-call"></i>
+              <h3>Call Us</h3>
+              <p>+91 5589 55488 55</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13328.187619921559!2d73.08405687845296!3d19.230172177952245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7be1d9fe8cf57%3A0xa8234a9b3a850a72!2sMillennium%20Park%2C%20Mahatma%20Phule%20Rd%2C%20Garibachawada.%2C%20Dombivli%20West%2C%20Dombivli%2C%20Maharashtra%20421202!5e0!3m2!1sen!2sin!4v1651308836046!5m2!1sen!2sin"
+              width="600" height="450" style="border: 0" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+          <div class="col-lg-6">
+            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required />
+                </div>
+                <div class="col-md-6 form-group mt-3 mt-md-0">
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required />
+                </div>
+              </div>
+              <div class="form-group mt-3">
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required />
+              </div>
+              <div class="form-group mt-3">
+                <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+              </div>
+              <div class="my-3">
+                <div class="loading">Loading</div>
+                <div class="error-message"></div>
+                <div class="sent-message">Your message has been sent. Thank you!</div>
+              </div>
+              <div class="text-center">
+                <button type="submit">Send Message</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Contact Section -->
+  </main>
+  <!-- End #main -->
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h3>beyond Accouunts</h3>
+            <p>
+              702/N ,Mellenium Park , Building No. 01, New Vijay Society,M.P. Road, Dombivali
+              West, Kalyan, Thane, Maharashtra - 421202
+            </p>
+            <p>
+              <br />
+              <strong>Phone:</strong> +91 9998887771<br />
+              <strong>Email:&nbsp;&nbsp;</strong>beyondacconts@gmail.com<br />
+            </p>
+          </div>
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Our Services</h4>
+            <ul>
+              <li>
+                <i class="bx bx-chevron-right"></i><a href="PrivacyPolicy.html">Privacy Policy</a>
+              </li>
+              <li>
+                <i class="bx bx-chevron-right"></i><a href="TermsAndCondition.html">Terms Of Service</a>
+              </li>
+              <li>
+                <i class="bx bx-chevron-right"></i><a href="ReturnAndRefund.html">Return Policy</a>
+              </li>
+              <li></li>
+            </ul>
+          </div>
+          <div class="col-lg-4 col-md-6 footer-newsletter">
+            <h4>Join Our Newsletter</h4>
+            <p>Stay Connectd with the latest tech.</p>
+            <form action="" method="post">
+              <input type="email" name="email" />
+              <input type="submit" value="Subscribe" />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="copyright-wrap d-md-flex py-4">
+        <div class="me-md-auto text-center text-md-start">
+          <div class="copyright">
+            &copy; Copyright <strong><span>Dress Rental System</span></strong>. All Rights Reserved
+          </div>
+          <div class="credits">
+            <a href="http://jurasystems.in/">
+              Developed And Maintained By Jura Systems Pvt. Ltd
+            </a>
+          </div>
+        </div>
+        <div class="social-links text-center text-md-right pt-3 pt-md-0">
+          <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+          <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+          <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+          <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+          <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- End Footer --><a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+  <div id="preloader"></div>
+  <!-- Vendor JS Files -->
+  <script src="{% static '/vendor/purecounter/purecounter.js' %}"></script>
+  <script src="{% static '/vendor/aos/aos.js' %}"></script>
+  <script src="{% static '/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static '/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static '/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static '/vendor/swiper/swiper-bundle.min.js' %}"></script>
+
+  <script src="{% static '/js/main.js' %}"></script>
+</body>
+
+</html>
