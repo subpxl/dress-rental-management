@@ -1,0 +1,79 @@
+{% block sidebar%}
+{% load static %}
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'dashboard' %}">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'booking_add'  %}">
+          <i class="bi bi-grid"></i>
+          <span>Create | Booking</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'booking_list' %}">
+          <i class="bi bi-grid"></i>
+          <span>All Bookings | सभी बुकिंग</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="#return_list">
+          <i class="bi bi-grid"></i>
+          <span>Returns | कपड़े वापस</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'product_list' %}">
+          <i class="bi bi-grid"></i>
+          <span>Dresses | सभी कपड़े</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'category_list' %}">
+          <i class="bi bi-grid"></i>
+          <span>Category | श्रेणियाँ</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'customer_list' %}">
+          <i class="bi bi-grid"></i>
+          <span>Customers | ग्राहक</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="#staff_list">
+          <i class="bi bi-grid"></i>
+          <span>Staff | कर्मचारी</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="#product_bulk_upload">
+          <i class="bi bi-grid"></i>
+          <span>Bulk Upload | कपड़े अपलोड</span>
+        </a>
+      </li>
+      <li class="nav-heading">Account</li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#">
+          <i class="bi bi-person"></i>
+          <span>Profile</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'logout' %}">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <span>Logout</span>
+        </a>
+      </li><!-- End Login Page Nav -->
+    </ul>
+
+  </aside><!-- End Sidebar-->
+{% endblock sidebar %}
