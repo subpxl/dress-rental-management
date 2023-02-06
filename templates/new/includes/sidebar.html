@@ -8,7 +8,7 @@
       <li class="nav-item">
         <a class="nav-link " href="{% url 'dashboard' %}">
           <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
+          <span class="text-black"> Dashboard</span>
         </a>
       </li>
       <li class="nav-item">
@@ -59,9 +59,9 @@
           <span>Bulk Upload</span>
         </a>
       </li>
-      <li class="nav-heading">Account</li>
+      {% comment %} <li class="nav-heading">Account</li> {% endcomment %}
 
-      <li class="nav-item">
+      {% comment %} <li class="nav-item">
         <a class="nav-link collapsed" href="#">
           <i class="bi bi-person"></i>
           <span>Profile</span>
@@ -72,7 +72,7 @@
           <i class="bi bi-box-arrow-in-right"></i>
           <span>Logout</span>
         </a>
-      </li><!-- End Login Page Nav -->
+      </li><!-- End Login Page Nav --> {% endcomment %}
     </ul>
 
   </aside><!-- End Sidebar-->
