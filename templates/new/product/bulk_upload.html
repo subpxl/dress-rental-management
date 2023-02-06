@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<main id="main" class="main">
+  <div class="pagetitle col-lg-10">
+    <h1>Bulk Upload</h1>
+    <div class="row justify-content-between mt-3">
+      <div class="col-12 col-lg-4">
+        <form class="form-inline" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <input class="form-control" type="file" required id="dealCsv" name="myfile">
+          <button class="btn btn-md btn-primary mt-1" type="submit">Upload</button>
+        </form>
+      </div>
+      <div class="col-12 col-lg-4 text-end">
+        <a href="{%  static 'sample/sample.csv' %}" class="btn btn-md btn-info">Download Sample</a>
+      </div>
+    </div>
+  </div><!-- End Page Title -->
+  {% include 'includes/alert.html' %}
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-10">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Product</h5>
+            <div class="container">
+              <table id="mytable" class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Tag</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Color</th>
+                    <th scope="col">Size</th>
+                    <th scope="col">Shop</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Price</th>
+                  </tr>
+                </thead>
+                <tbody id="mytablebody">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<script>
+  function uploadDealcsv() { }
+
+  /*------ Method for read uploded csv file ------*/
+  uploadDealcsv.prototype.getCsv = function (e) {
+    let input = document.getElementById("dealCsv");
+    input.addEventListener("change", function () {
+      if (this.files && this.files[0]) {
+        var myFile = this.files[0];
+        var reader = new FileReader();
+
+        reader.addEventListener("load", function (e) {
+          let csvdata = e.target.result;
+          parseCsv.getParsecsvdata(csvdata); // calling function for parse csv data
+        });
+
+        reader.readAsBinaryString(myFile);
+      }
+    });
+  };
+
+  /*------- Method for parse csv data and display --------------*/
+  uploadDealcsv.prototype.getParsecsvdata = function (data) {
+    let parsedata = [];
+
+    let newLinebrk = data.split("\n");
+    for (let i = 0; i < newLinebrk.length; i++) {
+      parsedata.push(newLinebrk[i].split(","));
+    }
+
+    var t = "";
+    for (var i = 1; i < parsedata.length - 1; i++) {
+      var tr = "<tr>";
+      tr += "<td>" + i + "</td>";
+      tr += "<td>" + parsedata[i][0] + "</td>";
+      tr += "<td>" + parsedata[i][1] + "</td>";
+      tr += "<td>" + parsedata[i][2] + "</td>";
+      tr += "<td>" + parsedata[i][3] + "</td>";
+      tr += "<td>" + parsedata[i][4] + "</td>";
+      tr += "<td>" + parsedata[i][5] + "</td>";
+      tr += "<td>" + parsedata[i][6] + "</td>";
+      tr += "<td>" + parsedata[i][7] + "</td>";
+      tr += "<td>" + parsedata[i][8] + "</td>";
+      tr += "<td>" + parsedata[i][9] + "</td>";
+      tr += "</tr>";
+      t += tr;
+    }
+    // document.getElementById("posts").innerHTML += t;
+    document.getElementById("mytablebody").innerHTML += t;
+
+    console.table(t);
+  };
+
+  var parseCsv = new uploadDealcsv();
+  parseCsv.getCsv();
+</script>
+{% endblock %}

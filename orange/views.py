@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from booking.models import  Booking
-from datetime import  date
+from datetime import  date, datetime
 
 def dashboard(request):
     template_name = "dashboard.html"
     if request.method=="POST":
-        fromDate = request.POST.get('startDate')
+        fromDate = datetime.today()
         # toDate = request.POST.get('endDate')
         try:
             toSend = Booking.objects.filter(startDate=fromDate)
@@ -22,8 +22,8 @@ def dashboard(request):
         }
         return  render(request,template_name,context)
     try:
-        toSend = Booking.objects.filter(startDate=date.today())
-        toRecieve = Booking.objects.filter(endDate=date.today())
+        toSend = Booking.objects.filter(startDate__gte=date.today())
+        toRecieve = Booking.objects.filter(endDate__lt=date.today())
     except Booking.DoesNotExist:
         toSend = None
         toRecieve =None

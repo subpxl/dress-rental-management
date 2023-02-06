@@ -95,6 +95,25 @@ class BookingList(ListView):
             'booking_list': bookings
         }
         return render(request, 'booking/booking_list.html', context)
+        
+def return_list(request):
+    if request.method=="POST":
+        startDate = request.POST.get("startDate","")
+        endDate = request.POST.get("endDate","")
+        # return_list = Booking.objects.filter( startDate__range=[startDate,endDate],status=Config.Returned)
+        return_list = Booking.objects.filter( status=Config.Returned)
+        context = {
+            'startDate':startDate,
+            'endDate':endDate,
+            'return_list':return_list
+        }
+        return render(request, 'booking/return_list.html', context)
+    else:
+        return_list = Booking.objects.filter(status=Config.Returned)
+        context = {
+                'return_list':return_list
+        }
+        return  render(request,'booking/return_list.html',context)
 
 class CustomerList(ListView):
     model = Customer

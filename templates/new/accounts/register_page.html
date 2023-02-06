@@ -1,57 +1,123 @@
-{% include 'includes/header.html' %}
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
-<nav class="navbar navbar-expand-lg navbar-light  bg-primary">
-  <a class="navbar-brand text-white" href="#">Dress Rental System</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
+  <title>Register orange</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
 
-</nav>
+  <!-- Favicons -->
+  <link href="{% static '/img/favicon.png' %}" rel="icon">
+  <link href="{% static '/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
 
-<div class="container-fluid vh-100 ">
-  <div class="row  ">
-    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-      <div class="card border-0  bg-white shadow rounded-3 my-5">
-        <div class="card-body p-4 p-sm-5">
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
 
-          <img src="" alt="">
-          <h5 class="card-title text-center mb-5 fw-light fs-5 ">Register</h5>
+  <!-- Vendor CSS Files -->
+  <link href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/quill/quill.snow.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/quill/quill.bubble.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/simple-datatables/style.css' %}" rel="stylesheet">
 
-            <div class="text-center">
+  <!-- Template Main CSS File -->
+  <link href="{% static '/css/style.css' %}" rel="stylesheet">
 
-            <img height="100"  width="100" src="{% static 'images/logo.png' %}" alt="Dress Rental System">
+  <!-- =======================================================
+  * Template Name: NiceAdmin - v2.5.0
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <main>
+    <div class="container">
+
+      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 d-flex flex-column align-items-center justify-content-center">
+
+              <div class="d-flex justify-content-center py-4">
+                <a href="index.html" class="logo d-flex align-items-center w-auto">
+                  <img src="{% static '/img/logo.png' %}" alt="">
+                  <span class="d-none d-lg-block">Xail</span>
+                </a>
+              </div><!-- End Logo -->
+
+              <div class="card mb-3">
+
+                <div class="card-body">
+
+                  <div class="pt-4 pb-2">
+                    <h5 class="card-title text-center pb-0 fs-4">Register Your Account</h5>
+                    <p class="text-center small">Enter your details</p>
+                  </div>
+                  {% include 'includes/errors.html' %}
+                  <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                      <label class="form-label">Business Name</label>
+                      <input class="form-control" placeholder="Your Business Name" type="text" name='bus_name' />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">First Name</label>
+                      <input class="form-control" placeholder="Your First Name" type="text" name='f_name' />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Last Name</label>
+                      <input class="form-control" placeholder="Your Last Name" type="text" name='l_name' />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Email</label>
+                      <input class="form-control" placeholder="Your email" type="text" name='email' />
+                    </div>
+                    <!-- form-group// -->
+                    <div class="mb-3">
+                      <label class="form-label">Create password</label>
+                      <input class="form-control" placeholder="Password" type="password" name='password' />
+                    </div>
+                    <button type="submit" class="text-center p-2 mx-auto d-block mb-5 btn btn-primary">Register Here</a>
+                  </form>
+                </div>
+              </div>
             </div>
-            {% include 'includes/errors.html' %}
-          <form method="post">
-            {% csrf_token %}
-            <div class="mb-3">
-              <label class="form-label">Business Name</label>
-              <input class="form-control" placeholder="Your Business Name" type="text" name='bus_name' />
           </div>
-          <div class="mb-3">
-              <label class="form-label">First Name</label>
-              <input class="form-control" placeholder="Your First Name" type="text" name='f_name' />
-          </div>
-          <div class="mb-3">
-              <label class="form-label">Last Name</label>
-              <input class="form-control" placeholder="Your Last Name" type="text" name='l_name' />
-          </div>
-          <div class="mb-3">
-              <label class="form-label">Email</label>
-              <input class="form-control" placeholder="Your email" type="text" name='email'/>
-          </div>
-          <!-- form-group// -->
-          <div class="mb-3">
-              <label class="form-label">Create password</label>
-              <input class="form-control" placeholder="Password" type="password" name='password'/>
-          </div>
-          <button type="submit" class="text-center p-2 mx-auto d-block mb-5 btn btn-primary">Register Here</a>
-          </form>
-
         </div>
-      </div>
+
+      </section>
+
     </div>
-  </div>
-</div>
+  </main><!-- End #main -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static '/vendor/apexcharts/apexcharts.min.js' %}"></script>
+  <script src="{% static '/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static '/vendor/chart.js/chart.umd.js' %}"></script>
+  <script src="{% static '/vendor/echarts/echarts.min.js' %}"></script>
+  <script src="{% static '/vendor/quill/quill.min.js' %}"></script>
+  <script src="{% static '/vendor/simple-datatables/simple-datatables.js' %}"></script>
+  <script src="{% static '/vendor/tinymce/tinymce.min.js' %}"></script>
+  <script src="{% static '/vendor/php-email-form/validate.js' %}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static '/js/main.js' %}"></script>
+
+</body>
+
+</html>
