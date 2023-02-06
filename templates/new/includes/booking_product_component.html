@@ -1,85 +1,99 @@
- <table class="table">
-          <thead class="thead-dark">
-          <tr>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Size</th>
-              <th>Price</th>
-          </tr>
-          </thead>
-     <tbody>
-     <tr>
-         <td>
-             <div class="row">
-                 <input id="myinput" type="text" class="form-control" placeholder="Type A Dress ID"
-          for="resultselect5" size="30" onkeyup="showResults(this,'resultselect5')" name=""/>
-            </div>
-            <div class="row"><select name="products" class="form-select" id="resultselect5"></select>
-            </div>
-        </td>
-        <td><input class="form-control" placeholder="description" name ="description" ></td>
-        <td><input class="form-control" placeholder="size"  name="size"></td>
-        <td><input class="form-control" placeholder="price"  name="price"></td>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <div class="row">
-                <input id="myinput2" type="text" class="form-control" placeholder="Type A Dress ID"
-                for="resultselect6" size="30" onkeyup="showResults(this,'resultselect6')" name=""/>
-            </div>
-            <div class="row"><select name="products" class="form-select" id="resultselect6"></select>
-            </div>
-        </td>
-        <td><input class="form-control" placeholder="description" name ="description" ></td>
-        <td><input class="form-control" placeholder="size"  name="size"></td>
-        <td><input class="form-control" placeholder="price"  name="price"></td>
-    </tr>
-     </tbody>
- </table>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Size</th>
+            <th>Price</th>
+            <th style="width: 10%;text-align: center;font-size: 25px;padding: 0;font-weight: bolder;cursor: pointer;"><span onclick="addProductForm()">+</span></th>
+        </tr>
+    </thead>
+    <tbody id='productForms'>
+        <tr>
+            <td>
+                <div class="row mr-0">
+                    <input type="text" class="form-control" placeholder="Type A Dress ID" size="30"
+                        onkeyup="showResults(this)" name="" />
+                </div>
+                <div class="row mr-0"><select name="products" class="form-select"></select>
+                </div>
+            </td>
+            <td><input class="form-control" placeholder="description" name="description"></td>
+            <td><input class="form-control" placeholder="size" name="size"></td>
+            <td><input class="form-control" placeholder="price" name="price"></td>
+            <td style="width: 10%;text-align: center;cursor: pointer;">
+                <span onclick="removeProductForm(this)"><i class="fa fa-trash" aria-hidden="true"></i>
+            </span></td>
+            </td>
+        </tr>
+    </tbody>
+</table>
 <script>
-
-      startDate = document.getElementById('startDate')
-      endDate  =  document.getElementById('endDate')
-      startDateId = document.getElementById('id_startDate')
-      endDateId  =  document.getElementById('id_endDate')
-      var myProductArray =[]
-      dateForm = document.getElementById('dateForm')
-      dateForm.addEventListener("submit",async (e)=>{
-          e.preventDefault()
-          payload = new FormData(dateForm)
-          fetch("{% url 'booked_product_search' %}",{
-              method:"POST",
-              body:payload
-          }).then(res =>res.json()).then(data =>{
-              myProductArray=data
-              console.log("array is ; ",myProductArray)
-          }).then(()=> {
-                  startDateId.value = startDate.value
-                  endDateId.value = endDate.value
-              }
-          )
-      })
-
-
+    startDate = document.getElementById('startDate')
+    endDate = document.getElementById('endDate')
+    startDateId = document.getElementById('id_startDate')
+    endDateId = document.getElementById('id_endDate')
+    var myProductArray = []
+    dateForm = document.getElementById('dateForm')
+    dateForm.addEventListener("submit", async (e) => {
+        e.preventDefault()
+        payload = new FormData(dateForm)
+        fetch("{% url 'booked_product_search' %}", {
+            method: "POST",
+            body: payload
+        }).then(res => res.json()).then(data => {
+            myProductArray = data
+            console.log("array is ; ", myProductArray)
+        }).then(() => {
+            startDateId.value = startDate.value
+            endDateId.value = endDate.value
+        }
+        )
+    })
     var nameArr = '';
-    function showResults(e , inputid ){
-        const searchresult = document.getElementById(inputid)
+    function showResults(ele) {
+        const searchresult = ele.parentElement.nextElementSibling.childNodes[0];
         searchresult.innerHTML = "<option style='color:red;' disabled> select a product </option>"
-        var typedInput= e.value
-        console.log("typed input : ",typedInput, searchresult)
-        if(myProductArray.length>=1){
+        var typedInput = ele.value
+        console.log("typed input : ", typedInput, searchresult)
+        if (myProductArray.length >= 1) {
             console.log(myProductArray)
-            let newarr = myProductArray.filter(a=>(a.tag.match(typedInput)))
-            console.log('newarr => ',newarr)
-            newarr.forEach((item,index) => {
-                searchresult.innerHTML += `<option style='color:green;' class="options" selected   value=${item.id}` + '>' + `${item.color}  ${item.tag} `   +"</option>"
+            let newarr = myProductArray.filter(a => (a.tag.match(typedInput)))
+            console.log('newarr => ', newarr)
+            newarr.forEach((item, index) => {
+                searchresult.innerHTML += `<option style='color:green;' class="options" selected   value=${item.id}` + '>' + `${item.color}  ${item.tag} ` + "</option>"
                 return item
             })
-        } else{
+        } else {
             searchresult.innerHTML = "<option style='color:red;'  selected  value=  > no products found </option>"
             console.log("nothing here")
             return
         }
+    }
+</script>
+<script>
+    function addProductForm() {
+        let tr = document.createElement('tr');
+        tr.innerHTML = '<td>'
+            + '<div class="row mr-0">'
+            + '<input type="text" class="form-control" placeholder="Type A Dress ID"'
+            + 'size="30" onkeyup="showResults(this)" name=""/>'
+            + '</div>'
+            + '<div class="row mr-0"><select name="products" class="form-select"></select>'
+            + '</div>'
+            + '</td>'
+            + '<td><input class="form-control" placeholder="description" name ="description" ></td>'
+            + '<td><input class="form-control" placeholder="size"  name="size"></td>'
+            + '<td><input class="form-control" placeholder="price"  name="price"></td>'
+            + '<td style="width: 10%;text-align: center;cursor: pointer;">'
+            + '<span onclick="removeProductForm(this)"><i class="fa fa-trash" aria-hidden="true"></i>'
+            + '</span></td>'
+        console.log(tr.innerHTML);
+        document.getElementById('productForms').appendChild(tr);
+        return;
+    };
+    function removeProductForm(ele){
+        ele.parentNode.parentElement.remove();
+        return;
     }
 </script>
