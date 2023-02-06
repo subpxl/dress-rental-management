@@ -1,4 +1,4 @@
-cd /home/django/mango/
+cd /home/django/orange/
 git pull
 service gunicorn restart
 service nginx restart
