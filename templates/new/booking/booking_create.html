@@ -48,7 +48,9 @@
     bookingSection = document.getElementById('bookingSection')
 
     submitDate.addEventListener('click',()=>{
-        bookingSection.classList.remove('d-none');
+      if(document.getElementById('startDate').value !=  "" && document.getElementById('endDate').value != ""){
+          bookingSection.classList.remove('d-none');
+      }
     })
     function doMath()
     {

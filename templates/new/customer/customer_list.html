@@ -1,67 +1,51 @@
 {% extends 'base.html' %} {% block content %}
+<main id="main" class="main">
+    <div class="pagetitle mb-3">
+        <h1>Customers <a href="{% url 'customer_add' %}" style="float: right;" class="btn btn-md btn-primary">Create
+                Customer</a></h1>
+    </div>
+    <section class="section dashboard">
+        <div class="row">
+            <div class="col-12">
+                <div class="card top-selling overflow-auto">
+                    <div class="card-body pb-0">
+                        <h5 class="card-title">Customer List</h5>
 
-<div class="container">
-  <h1 class="text-center">All Customers</h1>
-
-<table class="table">
-<thead class="table-dark">
-<tr>
-    <th>Name</th>
-    <th>Address</th>
-    <th>Mobile No.</th>
-    <th>Alternate No.</th>
-    <th>View</th>
-    <th style="text-align: center;">Update</th>
-    <th style="text-align: center;">Delete</th>
-</tr>
-</thead>
-<tbody>
-
-
-    {% for customer in customer_list %}
-<tr>
-    <td>
-        <h5>
-        {{ customer.name }}
-        </h5>
-    </td>
-    <td>
-        <h5>
-        {{ customer.address }}
-        </h5>
-    </td>
-    <td>
-        <h5>
-        {{ customer.mobilenumber }}
-        </h5>
-    </td>
-    <td>
-        <h5>
-        {{ customer.alternatenumber }}
-        </h5>
-    </td>
-    <td>
-        <div class="col col-3">
-            <a class="btn btn-primary btn-sm" href="#booking_details">View</a>
+                        <table class="table table-borderless table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="width:5%">#</th>
+                                    <th style="width:10%">Name</th>
+                                    <th style="width:10%">Address</th>
+                                    <th style="width:10%">Mobile No.</th>
+                                    <th style="width:10%">Alternate No.</th>
+                                    <th style="width:50%;text-align: right;"> <span
+                                            style="margin-right: 5%;">Action</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for customer in customer_list %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{customer.name}}</td>
+                                    <td>{{customer.address}}</td>
+                                    <td>{{customer.mobilenumber}}</td>
+                                    <td>{{customer.alternatenumber}}</td>
+                                    <td style="text-align: right;">
+                                        <a href="{% url 'customer_update'  customer.pk %}" class="btn btn-md"><i
+                                                class="fa fa-pencil" aria-hidden="true"></i></a>
+                                        <a href="{% url 'customer_update'  customer.pk %}" class="btn btn-md"><i
+                                                class="fa fa-eye" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-    </td>
-
-    <td>
-      <div class="col col-3">
-        <a href="{% url 'customer_update'  customer.pk %}"
-          class="btn btn-warning btn-sm">Update</a>
-      </div>
-      </td>
-      <td>
-      <div class="col col-3">
-        <a href="{% url 'customer_delete'  customer.pk %}"
-          class="btn btn-danger btn-sm">delete</a>
-      </div>
-    </td>
-    </tr>
-    {% endfor %}
-</tbody>
-
-</table>
+    </section>
+</main>
 {% include 'paginate_component.html' %}
 {% endblock %}

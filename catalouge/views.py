@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from  django.contrib.auth.mixins import PermissionRequiredMixin
 # from django.contrib.auth.decorators import permission_required
 from django.shortcuts import render
+from booking.models import Booking
 
 class ProductList(ListView):
     paginate_by = 20
@@ -33,14 +34,14 @@ class ProductDelete(DeleteView):
 
 
 # @permission_required('product.view_product')
-# def product_details(request,pk):
-#     product = Product.objects.get(id=pk)
-#     bookings = Booking.objects.filter(products  =pk)
-#     context = {
-#         'product':product,
-#         'bookings':bookings
-#     }
-#     return  render(request,'product/product_details.html',context)
+def product_details(request,pk):
+    product = Product.objects.get(id=pk)
+    bookings = Booking.objects.filter(products  =pk)
+    context = {
+        'product':product,
+        'bookings':bookings
+    }
+    return  render(request,'product/product_details.html',context)
 
 class CategoryList(ListView):
     model = Category

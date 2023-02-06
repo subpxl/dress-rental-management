@@ -10,13 +10,13 @@
           <div class="card-body pb-0">
             <h5 class="card-title">Product List</h5>
 
-            <table class="table table-borderless">
+            <table class="table table-borderless table-hover">
               <thead>
                   <th style="width:10%">Image</th>
                   <th style="width:10%;">Product</th>
                   <th style="width:10%">Tag</th>
                   <th style="width:10%">Status</th>
-                  <th style="width:50%;text-align: center;"> Action</th>
+                  <th style="width:50%;text-align: right;"> <span style="margin-right: 5%;">Action</span></th>
                 </tr>
               </thead>
               <tbody>
@@ -26,9 +26,9 @@
                   <td>{{product.name}}</td>
                   <td>{{product.tag}}</td>
                   <td>{{product.status}}</td>
-                  <td style="text-align: center;">
-                    <a href="{% url 'product_update'  product.pk %}" class="btn btn-md btn-success">Update<i class="fa fa-pencil" style="margin-left  : 10px;" aria-hidden="true"></i>
-                    </a>
+                  <td style="text-align: right;">
+                    <a href="{% url 'product_update'  product.pk %}" class="btn btn-md"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a href="{% url 'product_detail'  product.pk %}" class="btn btn-md"><i class="fa fa-eye" aria-hidden="true"></i></a>
                   </td>
                 </tr>
                 {% endfor %}

@@ -1,0 +1,75 @@
+{% extends 'base.html' %} {% block content %}
+<main id="main" class="main">
+  <div class="pagetitle mb-3">
+    <h1>{{product.name|title}} <a href="{% url 'product_update' product.pk %}" style="float: right;" class="btn btn-md btn-primary">Update</a></h1>
+  </div>
+  <section class="section dashboard">
+    <div class="row">
+      <div class="col-12 col-lg-10">
+        <div class="card top-selling overflow-auto">
+          <div class="card-body pb-0">
+            <h5 class="card-title">Product Details</h5>
+
+            <div class="row">
+              <div class="col text-center">
+                <img src="{{ product.image.url }}" class="my-3 rounded" width="200" height="200">
+              </div>
+              <div class="col">
+                <h4>Design Number : {{product.tag}}</h4>
+                <p class="border-bottom"> Color : {{product.color}}</p>
+                <p class="border-bottom">Size : {{product.size}}</p>
+                <p class="border-bottom"> Description : {{product.description}}</p>
+                <p class="border-bottom">Category : {{product.category}}</p>
+          
+              </div>
+              <div class="row">
+                <div class="col mx-auto">
+          
+                  <div id="datepicker"></div>
+                </div>
+              </div>
+              <div class="container-fluid px-0" id='section-to-print'>
+          
+          
+          
+                <table class="table table-hover">
+                  <thead class="thead-dark  " style="background-color: #212529; color:white;border:2px white">
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Customer Name</th>
+                      <th scope="col">Mobile Number</th>
+                      <th scope="col">Address</th>
+                      <th scope="col">Date Of Booking</th>
+                      <th scope="col">Date Of Return</th>
+                      <th scope="col" id="removeprint">View</th>
+          
+                    </tr>
+                  </thead>
+                  <tbody>
+          
+                    {% for booking in bookings %}
+                    <tr>
+                      <th scope="row"> </th>
+                      <td>{{ booking.customerName}}</td>
+                      <td>{{ booking.mobileNumber }} </td>
+                      <td>{{ booking.address }}</td>
+                      <td>{{ booking.startDate }}</td>
+                      <td>{{ booking.endDate }}</td>
+          
+                      <td id="removeprint"> <a class="btn btn-primary btn-md"
+                          href="#booking_details">View</a></td>
+                    </tr>
+          
+                    {% endfor %}
+                  </tbody>
+                </table>
+          
+              </div>
+            </div>
+          </div>
+        </div>  
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}

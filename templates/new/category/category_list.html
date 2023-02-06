@@ -11,12 +11,12 @@
           <div class="card-body pb-0">
             <h5 class="card-title">Category List</h5>
 
-            <table class="table table-borderless" >
+            <table class="table table-borderless table-hover" >
               <thead>
                 <tr>
                   <th style="width:10%">#</th>
-                  <th style="width:40%">Name</th>
-                  <th style="width:50%;">Actions</th>
+                  <th style="width:40%">Name</th>                  
+                  <th style="width:50%;text-align: right;"> <span style="margin-right: 5%;">Action</span></th>
                 </tr>
               </thead>
               <tbody>
@@ -24,8 +24,9 @@
                 <tr>
                   <td>{{forloop.counter}}</td>
                   <td>{{category.name}}</td>
-                  <td>
-                    <a href="{% url 'category_update'  category.pk %}" class="btn btn-md btn-success">Update<i class="fa fa-pencil" style="margin-left  : 10px;" aria-hidden="true"></i></a>
+                  <td style="text-align: right;">
+                    <a href="{% url 'category_update'  category.pk %}" class="btn btn-md"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a href="{% url 'category_update'  category.pk %}" class="btn btn-md"><i class="fa fa-eye" aria-hidden="true"></i></a>
                   </td>
                 </tr>
                 {% endfor %}
