@@ -16,7 +16,7 @@
                   <th style="width:10%;">Product</th>
                   <th style="width:10%">Tag</th>
                   <th style="width:10%">Status</th>
-                  <th style="width:50%;"> Action</th>
+                  <th style="width:50%;text-align: center;"> Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -26,9 +26,9 @@
                   <td>{{product.name}}</td>
                   <td>{{product.tag}}</td>
                   <td>{{product.status}}</td>
-                  <td>
-                    <a href="{% url 'product_update'  product.pk %}" class="btn btn-md btn-success">Update</a>
-                    <a href="{% url 'product_delete'  product.pk %}" class="btn btn-md btn-danger">Delete</a>
+                  <td style="text-align: center;">
+                    <a href="{% url 'product_update'  product.pk %}" class="btn btn-md btn-success">Update<i class="fa fa-pencil" style="margin-left  : 10px;" aria-hidden="true"></i>
+                    </a>
                   </td>
                 </tr>
                 {% endfor %}
