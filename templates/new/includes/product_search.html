@@ -1,26 +1,18 @@
-
-    <section class=" py-2">
-
-        <form action="{% url 'booked_product_search' %}" id="dateForm" method="post">
-            
-            <div class="row">
-
-                <div class="col-6 form-group">
-                    <label>Booking Date</label>
-                    <input type="date"  class= " form-control" name="startDate" id="startDate" required >
-                </div>
-            
-                <div class="col-6 form-group">
-                    <label>Return Date</label>
-                    <input type="date" class=" form-control" name="endDate"  id="endDate" required >
-                </div>
-                <div class="col-4 form-group">
-
-                    <button class="btn btn mt-3 btn btn-primary" id="submitDate" type="submit">Start Booking  </button>
-                </div>
+<section class=" py-2">
+    <form action="{% url 'booked_product_search' %}" id="dateForm" method="post">
+        <div class="row">
+            <div class="col-6 col-lg-4 form-group">
+                <label>Booking Date</label>
+                <input type="date" class=" form-control" name="startDate" id="startDate" required>
+            </div>
+            <div class="col-6 col-lg-4 form-group">
+                <label>Return Date</label>
+                <input type="date" class=" form-control" name="endDate" id="endDate" required>
+            </div>
+            <div class="col-12"></div>
+            <div class="col-4 form-group">
+                <button class="btn btn mt-3 btn btn-primary" id="submitDate" type="submit">Start Booking </button>
+            </div>
+        </div>
     </form>
-
-    </section>
-
-
-
+</section>

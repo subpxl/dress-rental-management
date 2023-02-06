@@ -20,6 +20,9 @@
               </div>
               <div class="">
                 <button type="submit" class="btn btn-primary">Submit</button>
+                {% if form.instance.pk %}
+                    <a href="{% url 'category_delete'  category.pk %}" style="float: right;" class="btn btn-md btn-danger">Delete</a>
+                {% endif %}
               </div>
             </form><!-- End Horizontal Form -->
           </div>

@@ -14,9 +14,9 @@
             <table class="table table-borderless" >
               <thead>
                 <tr>
-                  <th style="width:5%">#</th>
-                  <th style="width:10%">Name</th>
-                  <th style="width:70%">Actions</th>
+                  <th style="width:10%">#</th>
+                  <th style="width:40%">Name</th>
+                  <th style="width:50%;">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -25,8 +25,7 @@
                   <td>{{forloop.counter}}</td>
                   <td>{{category.name}}</td>
                   <td>
-                    <a href="{% url 'category_update'  category.pk %}" class="btn btn-md btn-success">Update</a>
-                    <a href="{% url 'category_delete'  category.pk %}" class="btn btn-md btn-danger">Delete</a>
+                    <a href="{% url 'category_update'  category.pk %}" class="btn btn-md btn-success">Update<i class="fa fa-pencil" style="margin-left  : 10px;" aria-hidden="true"></i></a>
                   </td>
                 </tr>
                 {% endfor %}
