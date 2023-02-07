@@ -30,13 +30,13 @@
             <table class="table" >
               <thead>
                 <tr>
-                  <th style="width:5%">#</th>
+                  <th style="width:3%">#</th>
                   <th style="width:10%">Customer</th>
                   <th style="width:10%;">Contact</th>
-                  <th style="width:10%;">Products</th>
+                  <th style="width:12%;">Products</th>
                   <th style="width:10%;">StarDate</th>
                   <th style="width:10%;">EndDate</th>
-                  <!-- <th style="width:10%;">Actions</th> -->
+                  <th style="width:45%;text-align: right;"> <span style="margin-right: 5%;">Action</span></th>
                 </tr>
               </thead>
               <tbody>
@@ -46,14 +46,18 @@
                   <td style="vertical-align: top;">{{booking.customerName}}</td>
                   <td style="vertical-align: top;">{{booking.mobileNumber}}</td>
                   <td style="vertical-align: top;">
-                    <ul class="list-group list-group-flush col col-6">
+                    <ul class="list-group list-group-flush col col-10">
                       {%  for booked_product in booking.products.all %}
-                          <li class="list-group-item p-0" style="padding-bottom: 2px !important;">{{booked_product.name}} {{booked_product.tag}}</li>
+                          <li class="list-group-item p-0" style="padding-bottom: 2px !important;">{{booked_product.name|title}} {{booked_product.tag}}</li>
                       {% endfor %}
                     </ul>
                   </td>
                   <td style="vertical-align: top;">{{booking.startDate}}</td>
                   <td style="vertical-align: top;">{{booking.endDate}}</td>
+                  <td style="text-align: right;">
+                    <a href="{% url 'booking_details'  booking.pk %}" class="btn btn-md"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                    <a href="{% url 'booking_update'  booking.pk %}" class="btn btn-md"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                  </td>
                 </tr>
                 {% endfor %}
               </tbody>

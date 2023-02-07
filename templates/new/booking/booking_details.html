@@ -1,0 +1,196 @@
+{% extends 'base.html' %} {% block content %}
+<style>
+  .invoice-title h2,
+  .invoice-title h3 {
+    display: inline-block;
+  }
+
+  .table > tbody > tr > .no-line {
+    border-top: none;
+  }
+
+  .table > thead > tr > .no-line {
+    border-bottom: none;
+  }
+
+  .table > tbody > tr > .thick-line {
+    border-top: 2px solid;
+  }
+
+  @media print {
+  body * {
+    visibility: hidden;
+      font-weight: bold;
+  }
+  #section-to-print, #section-to-print * {
+    visibility: visible;
+  }
+  #section-to-print {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+@page { size: auto;  margin: 0mm; }
+</style>
+<main id="main" class="main">
+  <div class="pagetitle">
+    <button class=" btn btn-info text-dark my-5" onclick="printDiv()">print</button>
+    <a class="btn btn-success text-white" href="{% url 'booking_update' booking.id %}">Return Products</a>
+  </div><!-- End Page Title -->
+  <section class="section" id='bookingSection'>
+    <div class="row">
+      <div class="col-lg-10">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Booking Detail</h5>
+            <div class="container p-3" id="section-to-print">
+
+              <div class="row px-2">
+                <div class="px-2 col col-6">
+                  <h2>Invoice</h2>
+                </div>
+                <div class="px-2 col col-6">
+                  <h3 class="float-end">Order No. <strong>{{ booking.orderNo }} </strong> </h3>
+                </div>
+              </div>
+            
+              <div class="row px-2">
+                <div class="col col-6">
+                  <address>
+                    <strong>Billed To :</strong><br />
+            
+                    <strong>Name : {{ booking.customerName }}</strong><br />
+                    <strong>Address : {{ booking.address }}</strong><br />
+            
+                    <strong>Contact No. : {{ booking.mobileNumber }} </strong><br />
+                    <strong>Alternate No.: {{ booking.alternateNumber }}</strong>
+                  </address>
+                </div>
+            
+                <div class=" px-2 col col-6 ">
+                  <address class="float-end text-end">
+                    <strong>Shop {{ booking.shop.name }}</strong><br />
+                    <strong>Address : {{ booking.shop.address }}</strong><br />
+                    <strong>{{ booking.shop.address2 }}</strong> <br />
+                    <strong>City : {{ booking.shop.city }}</strong><br />
+                    <strong>Pincode : {{ booking.shop.pincode }}</strong><br />
+                    <strong>Contact : {{ booking.shop.mobileNumber }}</strong><br />
+                  </address>
+                </div>
+              </div>
+              <hr>
+            
+              <div class="row px-2">
+                <div class="col-4"><strong>Pickup Date:<br />
+                    {{ booking.startDate }}</div></strong>
+                <div class="col-4"><strong>Return Date:<br />
+                    {{ booking.endDate }}</div></strong>
+                <div class="col-4 text-end">
+                  <address>
+                    <strong>Order Date:<br />
+                      {{ booking.orderdate }} </strong><br /><br />
+                  </address>
+                </div>
+              </div>
+            
+              <hr>
+            
+              <div class="row p-2">
+                <div class="panel-heading">
+                  <h3><strong>Order summary</strong></h3>
+                </div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th><strong>#</strong></th>
+                      <th><strong>Product</strong></th>
+                      <th><strong>Tag</strong></th>
+                      <th><strong>Status</strong></th>
+                      <th class="text-center"><strong>Size</strong></th>
+                      <th class="text-center"><strong>Description</strong></th>
+                      <th class="text-end"><strong>Price</strong></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for booked_product in booked_product_list %}
+                    <tr>
+                      <td>{{ forloop.counter }}</td>
+                      <td> <strong>{{booked_product.product.name}}</strong></td>
+                      <td><strong>{{ booked_product.product.tag }} </strong></td>
+                      <td><strong>{% if booked_product.product.status == 'Available' %}Returned{% else %} {{booked_product.product.status}}{% endif %} </strong></td>
+                      <td class="text-center"><strong>{{ booked_product.size }}</strong></td>
+                      <td class="text-center"><strong>{{booked_product.description}} </strong></td>
+                      <td class="text-end"><strong>{{booked_product.price}} </strong></td>
+                    </tr>
+                    {% endfor %}
+            
+                    <tr>
+            
+                      <td class="thick-line"></td>
+                      <td class="thick-line"></td>
+                      <td class="thick-line"></td>
+                      <td class="thick-line"></td>
+            
+                      <td class="thick-line text-center"><strong>Total</strong></td>
+                      <td class="thick-line text-end"><strong>Rs. {{ booking.totalAmount }}</strong> </td>
+                    </tr>
+                    <tr>
+                      <td class="no-line"></td>
+                      <td class="no-line"></td>
+                      <td class="no-line"></td>
+                      <td class="no-line"></td>
+                      <td class="no-line text-center"><strong>Paid </strong></td>
+                      <td class="no-line text-end"><strong>Rs. {{ booking.amountPaid }}</strong> </td>
+                    </tr>
+                    <tr>
+                      <td class="no-line"></td>
+                      <td class="no-line"></td>
+                      <td class="no-line"></td>
+                      <td class="no-line"></td>
+                      <td class="no-line text-center"><strong>Due</strong></td>
+                      <td class="no-line text-end"> <strong>Rs.{{ booking.amountDue }}</strong> </td>
+                    </tr>
+                  </tbody>
+                </table>
+            
+                <p style="text-align: center;">powered by xail.in</p>
+            
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<script>
+
+        // Get HTML head element
+        var head = document.getElementsByTagName('HEAD')[0];
+
+        // Create new link Element
+        var link = document.createElement('link');
+
+        // set the attributes for link element
+        link.rel = 'stylesheet';
+
+        link.type = 'text/css';
+
+        link.href = '/css/style.css';
+
+        // Append link element to HTML head
+        head.appendChild(link);
+
+    function printDiv() {
+     var printContents = document.getElementById("section-to-print").innerHTML;
+     var originalContents = document.body.innerHTML;
+
+     document.body.innerHTML = printContents;
+
+     window.print();
+     document.body.innerHTML = originalContents;
+}
+
+</script>
+{% endblock %}

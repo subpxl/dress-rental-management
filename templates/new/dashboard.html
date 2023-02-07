@@ -9,6 +9,7 @@
   {% if not is_approved %}
     {% include 'includes/alert.html' %}
   {% else %}
+  {% include 'includes/alert.html' %}
   <section class="section dashboard">
     <div class="row">
 
@@ -20,21 +21,8 @@
           <div class="col-xxl-4 col-md-6">
             <div class="card info-card revenue-card">
 
-              <div class="filter">
-                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
-              </div>
-
               <div class="card-body">
-                <h5 class="card-title">Revenue <span>| This Month</span></h5>
+                <h5 class="card-title">Revenue</h5>
 
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -54,21 +42,8 @@
           <!-- Send Card -->
           <div class="col-xxl-4 col-md-6">
             <div class="card info-card sales-card">
-              <div class="filter">
-                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
-              </div>
-
               <div class="card-body">
-                <h5 class="card-title">To Send <span>| Today</span></h5>
+                <h5 class="card-title"><a href="{% url 'send_list' %}" style="color: inherit;">To Send</a></h5>
 
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -88,21 +63,8 @@
 
             <div class="card info-card customers-card">
 
-              <div class="filter">
-                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
-              </div>
-
               <div class="card-body">
-                <h5 class="card-title">To Recieve <span>| This Year</span></h5>
+                <h5 class="card-title"><a href="{% url 'receive_list' %}" style="color: inherit;">To Recieve</a></h5>
 
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -121,19 +83,6 @@
           <!-- Reports -->
           <div class="col-12">
             <div class="card">
-
-              <div class="filter">
-                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
-              </div>
 
               <div class="card-body">
                 <h5 class="card-title">Report <span>/Today</span></h5>
@@ -204,21 +153,8 @@
           <div class="col-12">
             <div class="card recent-sales overflow-auto">
 
-              <div class="filter">
-                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
-              </div>
-
               <div class="card-body">
-                <h5 class="card-title">To Send <span>| Today</span></h5>
+                <h5 class="card-title"><a href="{% url 'send_list' %}" style="color: inherit;">To Send</a></h5>
 
                 <table class="table table-borderless datatable">
                   <thead>
@@ -254,21 +190,8 @@
           <div class="col-12">
             <div class="card recent-sales overflow-auto">
 
-              <div class="filter">
-                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
-              </div>
-
               <div class="card-body">
-                <h5 class="card-title">To Receive <span>| Today</span></h5>
+                <h5 class="card-title"><a href="{% url 'receive_list' %}" style="color: inherit;">To Recieve</a></h5>
 
                 <table class="table table-borderless datatable">
                   <thead>
@@ -306,21 +229,8 @@
           <div class="col-12">
             <div class="card top-selling overflow-auto">
 
-              <div class="filter">
-                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
-              </div>
-
               <div class="card-body pb-0">
-                <h5 class="card-title">Top Pending <span>| Today</span></h5>
+                <h5 class="card-title">Top Pending</h5>
 
                 <table class="table table-borderless">
                   <thead>
@@ -376,7 +286,7 @@
           </div>
 
           <div class="card-body pb-0">
-            <h5 class="card-title">Dresses Booked  <span>| Today</span></h5>
+            <h5 class="card-title">Dresses Booked </h5>
 
             <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
 
@@ -454,7 +364,7 @@
           </div>
 
           <div class="card-body pb-0">
-            <h5 class="card-title">News &amp; Updates <span>| Today</span></h5>
+            <h5 class="card-title">News &amp; Updates</h5>
 
             <div class="news">
               <div class="post-item clearfix">
@@ -509,7 +419,7 @@
           </div>
 
           <div class="card-body">
-            <h5 class="card-title">Recent Activity <span>| Today</span></h5>
+            <h5 class="card-title">Recent Activity</h5>
 
             <div class="activity">
 
@@ -582,7 +492,7 @@
           </div>
 
           <div class="card-body pb-0">
-            <h5 class="card-title">Budget Report <span>| This Month</span></h5>
+            <h5 class="card-title">Budget Report</h5>
 
             <div id="budgetChart" style="min-height: 400px;" class="echart"></div>
 

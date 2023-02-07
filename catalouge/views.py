@@ -76,7 +76,6 @@ def product_bulk_upload(request):
                 description=column[7],
                 price=column[9],
             )
-            print(product[0])
             product[0].image.save(
                 os.path.basename(column[1]),
                 File(open(image[0], 'rb'))

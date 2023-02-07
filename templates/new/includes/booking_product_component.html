@@ -1,3 +1,15 @@
+<style>
+    .d-ak{
+        position: relative;
+        top:-38px;
+        z-index: 1;
+    }
+    .in-ak{
+        width: 90%;
+        z-index: 99;
+        height: 38px;
+    }
+</style>
 <table class="table">
     <thead class="thead-dark">
         <tr>
@@ -12,10 +24,10 @@
         <tr>
             <td>
                 <div class="row mr-0">
-                    <input type="text" class="form-control" placeholder="Type A Dress ID" size="30"
-                        onkeyup="showResults(this)" name="" />
+                    <input type="text" class="form-control in-ak" placeholder="Type A Dress ID" size="30"
+                        onkeyup="showResults(this)" onfocus="showResults(this)" name="" />
                 </div>
-                <div class="row mr-0"><select name="products" class="form-select"></select>
+                <div class="row mr-0"><select onchange="assingV(this)" name="products" class="form-select d-ak"></select>
                 </div>
             </td>
             <td><input class="form-control" placeholder="description" name="description"></td>
@@ -51,6 +63,10 @@
         )
     })
     var nameArr = '';
+    function assingV(ele){
+        const inputV = ele.parentElement.previousElementSibling.childNodes[1];
+        inputV.value = ele.options[ele.selectedIndex].text;
+    }
     function showResults(ele) {
         const searchresult = ele.parentElement.nextElementSibling.childNodes[0];
         searchresult.innerHTML = "<option style='color:red;' disabled> select a product </option>"
@@ -61,11 +77,11 @@
             let newarr = myProductArray.filter(a => (a.tag.match(typedInput)))
             console.log('newarr => ', newarr)
             newarr.forEach((item, index) => {
-                searchresult.innerHTML += `<option style='color:green;' class="options" selected   value=${item.id}` + '>' + `${item.color}  ${item.tag} ` + "</option>"
+                searchresult.innerHTML += `<option style='color:green;' class="options" value=${item.id}` + '>' + `${item.color}  ${item.tag} ` + "</option>"
                 return item
             })
         } else {
-            searchresult.innerHTML = "<option style='color:red;'  selected  value=  > no products found </option>"
+            searchresult.innerHTML = "<option style='color:red;' value=  > no products found </option>"
             console.log("nothing here")
             return
         }
@@ -76,10 +92,10 @@
         let tr = document.createElement('tr');
         tr.innerHTML = '<td>'
             + '<div class="row mr-0">'
-            + '<input type="text" class="form-control" placeholder="Type A Dress ID"'
-            + 'size="30" onkeyup="showResults(this)" name=""/>'
+            + '<input type="text" class="form-control in-ak" placeholder="Type A Dress ID"'
+            + 'size="30" onkeyup="showResults(this)" onfocus="showResults(this)" name=""/>'
             + '</div>'
-            + '<div class="row mr-0"><select name="products" class="form-select"></select>'
+            + '<div class="row mr-0"><select name="products" class="form-select d-ak"></select>'
             + '</div>'
             + '</td>'
             + '<td><input class="form-control" placeholder="description" name ="description" ></td>'

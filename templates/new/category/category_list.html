@@ -15,8 +15,8 @@
               <thead>
                 <tr>
                   <th style="width:10%">#</th>
-                  <th style="width:40%">Name</th>                  
-                  <th style="width:40%">Product Count</th>                  
+                  <th style="width:20%">Name</th>                  
+                  <th style="width:20%">Product Count</th>                  
                   <th style="width:50%;text-align: right;"> <span style="margin-right: 5%;">Action</span></th>
                 </tr>
               </thead>
@@ -25,10 +25,10 @@
                 <tr>
                   <td>{{forloop.counter}}</td>
                   <td>{{category.name}}</td>
-                  <th style="width:40%">product count here</th>                  
+                  <td>{{category.get_prod_count}}</td>                  
 
                   <td style="text-align: right;">
-                    <a href="{% url 'category_update'  category.pk %}" class="btn btn-md"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a href="{% url 'category_update'  category.pk %}" style="margin-right: 5%;" class="btn btn-md"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                   </td>
                 </tr>
                 {% endfor %}

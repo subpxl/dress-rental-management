@@ -1,16 +1,18 @@
+from urllib import request
 from .models import Customer
 from django.urls import reverse_lazy
-import datetime
+from datetime import datetime
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.forms import formset_factory
 from .models import Booking,BookedProduct
-from .forms import  BookingForm,BookedProductForm
+from .forms import  BookingForm, BookedProductForm, BookingReturnForm
 from django.contrib import  messages
 from config.config import  Config
 from django.contrib.auth.decorators import  permission_required
 from  django.contrib.auth.mixins import PermissionRequiredMixin
 import json
+from django.db.models import Q
 from catalouge.models import Product
 from django.http import  HttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -80,7 +82,7 @@ class BookingList(ListView):
     def post(self,request):
         startDate = request.POST.get("startDate","")
         endDate = request.POST.get("endDate","")
-        bookings = Booking.objects.filter( startDate__range=[startDate,endDate])
+        bookings = Booking.objects.filter( startDate__range=[startDate,endDate]).exclude(status=Config.Returned)
         # return  HttpResponse(endDate)
         context = {
             'startDate':startDate,
@@ -90,18 +92,67 @@ class BookingList(ListView):
         return  render(request,'booking/booking_list.html',context)
 
     def get(self,request):
-        bookings = Booking.objects.filter(status=Config.Booking)
+        bookings = Booking.objects.all().exclude(status=Config.Returned)
         context = {
             'booking_list': bookings
         }
         return render(request, 'booking/booking_list.html', context)
-        
+
+# @permission_required('booking.view_booking')
+def booking_details(request,pk):
+    booking = Booking.objects.get(id=pk)
+    booked_product_list = BookedProduct.objects.filter(booking=pk)
+    context ={
+        'booking':booking,
+        'booked_product_list':booked_product_list
+    }
+    return render(request,'booking/booking_details.html',context)
+
+def booking_update(request, pk):
+    booking = Booking.objects.get(id=pk)
+    booked_product_list = BookedProduct.objects.filter(booking=pk,product__in=booking.products.all())
+    if request.method == 'POST':
+        data = request.POST
+        total = booking.totalAmount 
+        data.getlist('booked_product')
+        for prod in data.getlist('booked_product'):
+            product = Product.objects.get(id=prod)
+            product.status = Config.Available
+            product.save()
+            booking.products.remove(product)
+            total -= product.price
+        amount_paid = data['amountPaid']
+        booking.amountPaid = amount_paid
+        amount_due = total-int(amount_paid)
+        if booking.products.count() == 0:
+            booking.status = Config.Returned
+        booking.save()
+        return redirect('booking_list')
+    context ={
+        'booking':booking,
+        'booked_product_list':booked_product_list
+    }
+    return render(request,'booking/return_booking.html',context)
+
+def booking_delete(request, pk):
+    booking = Booking.objects.get(id=pk)
+    if request.method == 'POST':
+        for prod in booking.products.all():
+            prod.status = Config.Available
+            prod.save()
+        booking.delete()
+        return redirect('booking_list')
+    context = {
+        'booking':booking,
+    }
+    return render(request,'booking/booking_delete.html',context)
+
 def return_list(request):
     if request.method=="POST":
         startDate = request.POST.get("startDate","")
         endDate = request.POST.get("endDate","")
-        # return_list = Booking.objects.filter( startDate__range=[startDate,endDate],status=Config.Returned)
-        return_list = Booking.objects.filter( status=Config.Returned)
+        return_list = Booking.objects.filter(startDate__range=[startDate,endDate],status=Config.Returned)
+        # return_list = Booking.objects.filter( status=Config.Returned)
         context = {
             'startDate':startDate,
             'endDate':endDate,
@@ -114,6 +165,40 @@ def return_list(request):
                 'return_list':return_list
         }
         return  render(request,'booking/return_list.html',context)
+
+
+def pending_list(request):
+    if request.method=="POST":
+        startDate = request.POST.get("startDate","")
+        endDate = request.POST.get("endDate","")
+        pending_list = Booking.objects.filter(startDate__range=[startDate,endDate]).exclude(status=Config.Returned)
+        # pending_list = Booking.objects.filter( status=Config.Returned)
+        context = {
+            'startDate':startDate,
+            'endDate':endDate,
+            'pending_list':pending_list
+        }
+        return render(request, 'booking/pending_list.html', context)
+    else:
+        pending_list = Booking.objects.all().exclude(status=Config.Returned)
+        context = {
+                'pending_list':pending_list
+        }
+        return  render(request,'booking/pending_list.html',context)
+
+def send_list(request):
+    send_list = Booking.objects.filter(startDate__gte=datetime.today()).exclude(status=Config.Returned)
+    context = {
+            'send_list':send_list
+    }
+    return  render(request,'booking/send_list.html',context)
+
+def receive_list(request):
+    receive_list = Booking.objects.filter(endDate__lte=datetime.today()).exclude(status=Config.Returned)
+    context = {
+            'receive_list':receive_list
+    }
+    return  render(request,'booking/receive_list.html',context)
 
 class CustomerList(ListView):
     model = Customer

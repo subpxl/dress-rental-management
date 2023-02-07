@@ -36,3 +36,23 @@ class BookingForm(forms.ModelForm):
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
 
+class BookingReturnForm(forms.ModelForm):
+    class Meta:
+        model = Booking
+        fields =['startDate','customerName','products','mobileNumber','endDate','amountPaid','status','note']
+        widgets = {
+            'startDate': DateInput(),
+            'endDate': DateInput(),
+            'products': forms.SelectMultiple,
+            'status':forms.TextInput(attrs={'readonly': 'readonly'}),
+            'customerName':forms.TextInput(attrs={'readonly': 'readonly'}),
+            'mobileNumber': forms.TextInput(attrs={'readonly': 'readonly'}),
+            'startDate': forms.TextInput(attrs={'readonly': 'readonly'}),
+            'endDate': forms.TextInput(attrs={'readonly': 'readonly'}),
+        }
+    def __init__(self, *args, **kwargs):
+        super(BookingReturnForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
+        booking = kwargs['initial']['booking']
+        self.fields['products'].queryset = booking.products

@@ -52,8 +52,6 @@ def register(request):
         seller.user = user
         seller.save()
         print('Seller created successfully')
-        messages.success(
-            request, 'An email has been sent to your mail id, please verify your account')
         context_email = {
             'domain':get_current_site(request).domain,
             'user':user,

@@ -36,7 +36,7 @@ class Booking(models.Model):
     shop=models.ForeignKey(Shop,on_delete=models.CASCADE,default=1)
     note = models.CharField(max_length=100,blank=True,null=True)
     status = models.CharField(
-        max_length=100, choices=STATUS, default=Config.Booking)
+        max_length=100, choices=STATUS,default=Config.Booking)
 
     def __str__(self):
         return "%s " % (self.customerName)

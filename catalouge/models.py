@@ -11,6 +11,9 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         return reverse("category_list")
+    
+    def get_prod_count(self):
+        return self.product_set.all().count()
 
 
 class Product(models.Model):
@@ -28,7 +31,7 @@ class Product(models.Model):
         max_length=100, choices=Config.STATUS, default=Config.Available)
 
     def __str__(self):
-        return "%s " % (self.color)
+        return "%s %s" % (self.name, self.color)
 
     def get_absolute_url(self):
         return reverse("product_list")
