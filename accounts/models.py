@@ -91,6 +91,14 @@ class User(AbstractBaseUser):
             user_role = 'Customer'
         return user_role
 
+# class Staff User
+#     seller = fk
+
+
+# class Customer User
+
+
+
 class Address(models.Model):
     address = models.CharField(max_length=100)
     user = models.OneToOneField(User,on_delete=models.CASCADE)
