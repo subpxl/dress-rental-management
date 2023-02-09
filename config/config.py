@@ -8,12 +8,12 @@ class Config:
         ('Other', Other),
     )
     Available = "Available"
-    Booking = 'Borrowed'
+    Booked = 'Booked'
     NotAvailable = 'Not Available'
     Returned="Returned"
     STATUS = (
         ('Available', Available),
-        ('Booking', Booking),
+        ('Booked', Booked),
         ('Not Available',NotAvailable ),
         ('Returned',Returned)
     )

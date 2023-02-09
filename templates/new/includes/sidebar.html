@@ -65,20 +65,20 @@
           <span>Bulk Upload</span>
         </a>
       </li>
-      {% comment %} <li class="nav-heading">Account</li> {% endcomment %}
+      <li class="nav-heading">Account</li>
 
-      {% comment %} <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'seller_profile' %}">
           <i class="bi bi-person"></i>
           <span>Profile</span>
         </a>
       </li><!-- End Profile Page Nav -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{% url 'logout' %}">
+        <a class="nav-link" href="{% url 'logout' %}">
           <i class="bi bi-box-arrow-in-right"></i>
           <span>Logout</span>
         </a>
-      </li><!-- End Login Page Nav --> {% endcomment %}
+      </li><!-- End Login Page Nav --> 
     </ul>
 
   </aside><!-- End Sidebar-->

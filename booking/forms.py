@@ -23,13 +23,12 @@ class BookedProductForm(forms.ModelForm):
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
-        exclude = ['status']
+        exclude = ['status','shop']
         widgets = {
             'startDate': DateInput(),
             'endDate': DateInput(),
             'products': forms.SelectMultiple,
-            'amountDue':forms.TextInput(attrs={'readonly': 'readonly'})
-
+            'amountDue':forms.TextInput(attrs={'readonly': 'readonly'}),
         }
     def __init__(self, *args, **kwargs):
         super(BookingForm, self).__init__(*args, **kwargs)

@@ -28,12 +28,13 @@
             <table class="table" >
               <thead>
                 <tr>
-                  <th style="width:5%">#</th>
+                  <th style="width:3%">#</th>
                   <th style="width:10%">Customer</th>
                   <th style="width:10%;">Contact</th>
-                  <th style="width:10%;">Products</th>
+                  <th style="width:12%;">Products</th>
                   <th style="width:10%;">StarDate</th>
                   <th style="width:10%;">EndDate</th>
+                  <th style="width:45%;text-align: right;"> <span style="margin-right: 5%;">Action</span></th>
                   <!-- <th style="width:10%;">Actions</th> -->
                 </tr>
               </thead>
@@ -52,6 +53,9 @@
                   </td>
                   <td style="vertical-align: top;">{{booking_return.startDate}}</td>
                   <td style="vertical-align: top;">{{booking_return.endDate}}</td>
+                  <td style="text-align: right;">
+                    <a href="{% url 'booking_details'  booking_return.pk %}" style='margin-right: 5%;'class="btn btn-md"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                  </td>
                 </tr>
                 {% endfor %}
               </tbody>

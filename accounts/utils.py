@@ -9,7 +9,7 @@ def detectUser(user):
         redirectUrl = 'sellerDashboard'
         return redirectUrl
     elif user.role == 2:
-        redirectUrl = 'customerDashboard'
+        redirectUrl = 'dashboard'
         return redirectUrl
     elif user.role == None and user.is_superadmin:
         redirectUrl = 'admin'

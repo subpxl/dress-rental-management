@@ -2,6 +2,7 @@ from urllib import request
 from .models import Customer
 from django.urls import reverse_lazy
 from datetime import datetime
+from seller.models import Seller
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.forms import formset_factory
@@ -58,7 +59,7 @@ def booking_create(request):
             booking = bookingForm.save()
             for x in range(len(products)):
                 product = Product.objects.get(id=products[x])
-                product.status = 'Booking'
+                product.status = 'Booked'
                 product.save()
                 bookedProduct = BookedProduct(booking=booking,product_id=products[x],description=description[x],price=price[x],size=size[x])
                 bookedProduct.save()
@@ -72,6 +73,7 @@ def booking_create(request):
         startDate =request.GET.get("startDate")
         endDate =request.GET.get("endDate")
         print(startDate ,"   ",endDate)
+        context['seller'] = Seller.objects.get(user=request.user)
         context['bookingForm'].startDate = startDate
         return render(request, "booking/booking_create.html", context)
 

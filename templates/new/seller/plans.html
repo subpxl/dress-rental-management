@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block content %}
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Buy Plan</h1>
+  </div><!-- End Page Title -->
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12 mt-5">
+        <div class="row">
+          <!-- Free Tier -->
+          <div class="col-lg-4">
+            <div class="card mb-5 mb-lg-0">
+              <div class="card-body">
+                <h5 class="card-title text-muted text-uppercase text-center">Gold</h5>
+                <h6 class="card-price text-center">Rs. 300<span class="period">/month</span></h6>
+                <hr>
+                <p>Details of the plan will be shown here, Details of the plan will be shown here...</p>
+                <div class="d-grid">
+                  <form method='post'>
+                    {% csrf_token %}
+                    <input type='hidden' name='plan_name' value='Gold' />
+                    <input type='hidden' name='amount' value='300' />
+                    <button type='submit' class="btn btn-primary d-block mx-auto text-uppercase">Buy Now</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Plus Tier -->
+          <div class="col-lg-4">
+            <div class="card mb-5 mb-lg-0">
+              <div class="card-body">
+                <h5 class="card-title text-muted text-uppercase text-center">Diamond</h5>
+                <h6 class="card-price text-center">Rs. 1000<span class="period">/month</span></h6>
+                <hr>
+                <p>Details of the plan will be shown here, Details of the plan will be shown here...</p>
+
+                <div class="d-grid">
+                  <form method='post'>
+                    {% csrf_token %}
+                    <input type='hidden' name='plan_name' value='Diamond' />
+                    <input type='hidden' name='amount' value='1000' />
+                    <button type='submit' class="btn btn-primary d-block mx-auto text-uppercase">Buy Now</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Pro Tier -->
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title text-muted text-uppercase text-center">Platinum</h5>
+                <h6 class="card-price text-center">Rs. 3000<span class="period">/month</span></h6>
+                <hr>
+                <p>Details of the plan will be shown here, Details of the plan will be shown here...</p>
+
+                <div class="d-grid">
+                  <form method='post'>
+                    {% csrf_token %}
+                    <input type='hidden' name='plan_name' value='Platinum' />
+                    <input type='hidden' name='amount' value='3000' />
+                    <button type='submit' class="btn btn-primary d-block mx-auto text-uppercase">Buy Now</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}

@@ -3,7 +3,7 @@
 {% include 'includes/alert.html' %}
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Create Customer</h1>
+    <h1>{% if form.instance.pk %}Update{% else %}Create{% endif %} Customer</h1>
   </div><!-- End Page Title -->
   <section class="section">
     <div class="row">

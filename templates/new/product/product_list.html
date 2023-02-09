@@ -21,16 +21,18 @@
               </thead>
               <tbody>
                 {% for product in product_list %}
-                <tr>
-                  <th scope="row"><a href="#"><img src="{{product.image.url}}" height="60px" width="160px" alt=""></a></th>
-                  <td>{{product.name}}</td>
-                  <td>{{product.tag}}</td>
-                  <td>{{product.status}}</td>
+                <!-- <a href="{% url 'product_detail'  product.pk %}"> -->
+                <tr onclick="window.location='{% url 'product_detail'  product.pk %}'">
+                    <th scope="row"><a href="#"><img src="{{product.image.url}}" height="60px" width="160px" alt=""></a></th>
+                    <td>{{product.name}}</td>
+                    <td>{{product.tag}}</td>
+                    <td>{{product.status}}</td>
                   <td style="text-align: right;">
                     <a href="{% url 'product_detail'  product.pk %}" class="btn btn-md"><i class="fa fa-eye" aria-hidden="true"></i></a>
                     <a href="{% url 'product_update'  product.pk %}" class="btn btn-md"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                   </td>
                 </tr>
+              <!-- </a> -->
                 {% endfor %}
               </tbody>
             </table>

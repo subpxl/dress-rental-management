@@ -16,8 +16,9 @@
                 <tr>
                   <th style="width:10%">#</th>
                   <th style="width:20%">Name</th>
-                  <th style="width:20%">Staff Name</th>                
-                  <th style="width:70%;text-align: right;"> <span style="margin-right: 5%;">Action</span></th>
+                  <th style="width:20%">Staff Name</th>   
+                  <th style="width:20%">Role</th>                
+                  <th style="width:50%;text-align: right;"> <span style="margin-right: 5%;">Action</span></th>
                 </tr>
               </thead>
               <tbody>
@@ -26,6 +27,7 @@
                   <td>{{forloop.counter}}</td>
                   <td>{{staff.user.first_name}} {{staff.user.last_name}}</td>
                   <td>{{staff.name}}</td>
+                  <td>{{staff.role}}</td>
                   <td style="text-align: right;">
                     <a href="{% url 'staff_details'  staff.pk %}" class="btn btn-md"><i class="fa fa-eye" aria-hidden="true"></i></a>
                     <a href="{% url 'staff_update'  staff.pk %}" class="btn btn-md"><i class="fa fa-pencil" aria-hidden="true"></i></a>

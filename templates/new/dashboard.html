@@ -29,8 +29,7 @@
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3">
-                    <h6>Rs. 0</h6>
-                    <span class="text-success small pt-1 fw-bold">0%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                    <h6>Rs. {{revenue}}</h6>
 
                   </div>
                 </div>
@@ -94,17 +93,17 @@
                   document.addEventListener("DOMContentLoaded", () => {
                     new ApexCharts(document.querySelector("#reportsChart"), {
                       series: [{
-                        name: 'Sales',
-                        data: [31, 40, 28, 51, 42, 82, 56],
+                        name: 'Paid',
+                        data: {{data.paid}}
                       }, {
                         name: 'Revenue',
-                        data: [11, 32, 45, 32, 34, 52, 41]
+                        data: {{data.revenue}}
                       }, {
-                        name: 'Customers',
-                        data: [15, 11, 32, 18, 9, 24, 11]
+                        name: 'Due',
+                        data: {{data.due}}
                       }],
                       chart: {
-                        height: 350,
+                        height: '400px',
                         type: 'area',
                         toolbar: {
                           show: false
@@ -132,11 +131,12 @@
                       },
                       xaxis: {
                         type: 'datetime',
-                        categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+                        // categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+                        categories: {{data.dates|safe}}
                       },
                       tooltip: {
                         x: {
-                          format: 'dd/MM/yy HH:mm'
+                          format: 'dd/MM/yy'
                         },
                       }
                     }).render();
@@ -237,26 +237,21 @@
                     <tr>
                       <th scope="col">Preview</th>
                       <th scope="col">Product</th>
+                      <th scope="col">Category</th>
+                      <th scope="col">Color</th>
                       <th scope="col">Price</th>
-                      <th scope="col">Sold</th>
-                      <th scope="col">Revenue</th>
                     </tr>
                   </thead>
                   <tbody>
+                    {% for product in products %}
                     <tr>
-                      <th scope="row"><a href="#"><img src="{% static '/img/product-1.jpg' %}" alt=""></a></th>
-                      <td><a href="#" class="text-primary fw-bold">Ut inventore ipsa voluptas nulla</a></td>
-                      <td>Rs. 64</td>
-                      <td class="fw-bold">124</td>
-                      <td>Rs. 5,828</td>
+                      <th scope="row"><a href="#"><img src="{{product.image.url}}" alt=""></a></th>
+                      <td><a href="#" class="text-primary fw-bold">{{product.name}}</a></td>
+                      <td class="fw-bold">{{product.category}}</td>
+                      <td>{{product.color}}</td>
+                      <td>Rs. {{product.price}}</td>
                     </tr>
-                    <tr>
-                      <th scope="row"><a href="#"><img src="{% static '/img/product-5.jpg' %}" alt=""></a></th>
-                      <td><a href="#" class="text-primary fw-bold">Sit unde debitis delectus repellendus</a></td>
-                      <td>Rs. 79</td>
-                      <td class="fw-bold">41</td>
-                      <td>$3,239</td>
-                    </tr>
+                    {% endfor %}
                   </tbody>
                 </table>
 

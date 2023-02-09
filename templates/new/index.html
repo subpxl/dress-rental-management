@@ -63,7 +63,11 @@
           <li><a href="#services">Services</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#contact">Contact</a></li>
+          {% if user.is_authenticated %}
+          <li><a  href="{% url 'dashboard' %}">Login</a></li>
+          {% else %}
           <li><a  href="{% url 'login' %}">Login</a></li>
+          {% endif %}
           <li><a  href="{% url 'register' %}">Sign Up</a></li>
         </ul>
       </nav><!-- .navbar -->
