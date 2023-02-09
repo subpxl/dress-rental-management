@@ -26,7 +26,7 @@ def dashboard(request):
         return  render(request,template_name,context)
     try:
         toSend = Booking.objects.filter(startDate__gte=date.today()).exclude(status=Config.Returned)
-        toRecieve = Booking.objects.filter(endDate__lt=date.today()).exclude(status=Config.Returned)
+        toRecieve = Booking.objects.filter(endDate__gte=date.today(),startDate__lte=date.today()).exclude(status=Config.Returned)
     except Booking.DoesNotExist:
         toSend = None
         toRecieve =None
@@ -35,7 +35,7 @@ def dashboard(request):
         is_approved = True
     if not is_approved:
         messages.success(
-            request, 'An email has been sent to your mail id, please verify your account')
+            request, 'An email has been sent to your mail id, please verify your account and then log in!')
     context = {
         'toSend':toSend,
         'toRecieve':toRecieve,

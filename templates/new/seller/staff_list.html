@@ -2,31 +2,33 @@
 
 <main id="main" class="main">
   <div class="pagetitle mb-3">
-    <h1>Shops <a href="{% url 'shop_create' %}" style="float: right;" class="btn btn-md btn-primary">Create Shop</a></h1>
+    <h1>Staffs <a href="{% url 'staff_create' %}" style="float: right;" class="btn btn-md btn-primary">Create Staff</a></h1>
   </div>
   <section class="section dashboard">
     <div class="row">
       <div class="col-12">
         <div class="card top-selling overflow-auto">
           <div class="card-body pb-0">
-            <h5 class="card-title">Shop List</h5>
+            <h5 class="card-title">Staff List</h5>
 
             <table class="table table-borderless table-hover" >
               <thead>
                 <tr>
                   <th style="width:10%">#</th>
-                  <th style="width:20%">Name</th>                  
+                  <th style="width:20%">Name</th>
+                  <th style="width:20%">Staff Name</th>                
                   <th style="width:70%;text-align: right;"> <span style="margin-right: 5%;">Action</span></th>
                 </tr>
               </thead>
               <tbody>
-                {% for shop in shop_list %}
+                {% for staff in staff_list %}
                 <tr>
                   <td>{{forloop.counter}}</td>
-                  <td>{{shop.name}}</td>
+                  <td>{{staff.user.first_name}} {{staff.user.last_name}}</td>
+                  <td>{{staff.name}}</td>
                   <td style="text-align: right;">
-                    <a href="{% url 'shop_details'  shop.pk %}" class="btn btn-md"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                    <a href="{% url 'shop_update'  shop.pk %}" class="btn btn-md"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a href="{% url 'staff_details'  staff.pk %}" class="btn btn-md"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                    <a href="{% url 'staff_update'  staff.pk %}" class="btn btn-md"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                   </td>
                 </tr>
                 {% endfor %}

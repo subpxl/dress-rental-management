@@ -3,22 +3,19 @@
 {% include 'includes/alert.html' %}
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Create Shop</h1>
+    <h1>Create Staff</h1>
   </div><!-- End Page Title -->
   <section class="section">
     <div class="row">
       <div class="col-lg-6">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Shop</h5>
+            <h5 class="card-title">Staff</h5>
             <form method='post'>
               {% csrf_token %}
               {{form|crispy}}
               <div class="">
                 <button type="submit" class="btn btn-primary mt-3">Submit</button>
-                {% if form.instance.pk %}
-                    <a href="{% url 'shop_delete'  shop.pk %}" style="float: right;" class="mt-3 btn btn-md btn-danger">Delete</a>
-                {% endif %}
               </div>
             </form><!-- End Horizontal Form -->
           </div>

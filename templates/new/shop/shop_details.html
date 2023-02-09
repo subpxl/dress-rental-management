@@ -1,65 +1,74 @@
 {% extends 'base.html' %} {% block content %}
+<main id="main" class="main">
+  <div class="pagetitle mb-3">
+    <h1>Shop Detail</h1>
+  </div>
+  <section class="section dashboard">
     <div class="container shadow-lg p-3 mb-5 bg-white rounded       ">
-    <h1 class="d-flex justify-content-center my-5"> {{shop.name}}</h1>
+      <h1 class="d-flex justify-content-center my-5"> {{shop.name}}</h1>
 
 
-   <div class="row">
-     <div class="col text-center">
+      <div class="row">
+        <div class="col text-center">
 
-     </div>
-     <div class="col">
+        </div>
+        <div class="col">
 
-      <h4 >Shop name : {{shop.name}}</h4>
+          <h4>Shop name : {{shop.name}}</h4>
 
-      <p class="border-bottom"> Address : {{shop.address}}</p>
-      <p class="border-bottom">Contact Number : {{shop.mobileNumber}}</p>
-{#      <p class="border-bottom"> Manager : {{shop.customuser_set.name    }}</p>#}
-{#      <p class="border-bottom">Category :  {{}}</p>#}
+          <p class="border-bottom"> Address : {{shop.address}}</p>
+          <p class="border-bottom">Contact Number : {{shop.mobileNumber}}</p>
+          {# <p class="border-bottom"> Manager : {{shop.customuser_set.name }}</p>#}
+          {# <p class="border-bottom">Category : {{}}</p>#}
 
-     </div>
-     <div class="row">
-       <div class="col mx-auto">
+        </div>
+        <div class="row">
+          <div class="col mx-auto">
 
-         <div id="datepicker"></div>
-       </div>
-     </div>
+            <div id="datepicker"></div>
+          </div>
+        </div>
 
-{##}
-{#      <div class="container-fluid px-0" id='section-to-print'>#}
-{##}
-{##}
-{##}
-{#        <table class="table " >#}
-{#        <thead class="thead-dark  " style="background-color: #212529; color:white;border:2px white">#}
-{#         <tr>#}
-{#           <th scope="col">#</th>#}
-{#           <th scope="col">Customer  Name</th>#}
-{#           <th scope="col">Customer Number</th>#}
-{#           <th scope="col">Date Of Booking</th>#}
-{#           <th scope="col">Date Of Return</th>#}
-{#         <th scope="col">Description</th>#}
-{#         <th scope="col" id="removeprint">View</th>#}
-{##}
-{#         </tr>#}
-{#       </thead>#}
-{#       <tbody>#}
-{##}
-{#       {% for booking in bookings %}#}
-{#       <tr>#}
-{#           <th scope="row"> </th>#}
-{#           <td>{{ booking.customer}}</td>#}
-{#           <td>{{ booking.customer.mobilenumber }}  </td>#}
-{#           <td>{{ booking.startDate }}</td>#}
-{#           <td>{{ booking.endDate }}</td>#}
-{##}
-{#           <td>{{ booking.description }}</td>#}
-{#           <td id="removeprint">  <a class="btn btn-primary btn-md" href="{% url 'booking_details' booking.pk %}">View</a></td>#}
-{#         </tr>#}
-{##}
-{#       {% endfor %}#}
-{#       </tbody>#}
-{#     </table>#}
+        {##}
+        {# <div class="container-fluid px-0" id='section-to-print'>#}
+          {##}
+          {##}
+          {##}
+          {# <table class="table ">#}
+            {# <thead class="thead-dark  " style="background-color: #212529; color:white;border:2px white">#}
+              {# <tr>#}
+                {# <th scope="col">#</th>#}
+                {# <th scope="col">Customer Name</th>#}
+                {# <th scope="col">Customer Number</th>#}
+                {# <th scope="col">Date Of Booking</th>#}
+                {# <th scope="col">Date Of Return</th>#}
+                {# <th scope="col">Description</th>#}
+                {# <th scope="col" id="removeprint">View</th>#}
+                {##}
+                {# </tr>#}
+              {# </thead>#}
+            {# <tbody>#}
+              {##}
+              {# {% for booking in bookings %}#}
+              {# <tr>#}
+                {# <th scope="row"> </th>#}
+                {# <td>{{ booking.customer}}</td>#}
+                {# <td>{{ booking.customer.mobilenumber }} </td>#}
+                {# <td>{{ booking.startDate }}</td>#}
+                {# <td>{{ booking.endDate }}</td>#}
+                {##}
+                {# <td>{{ booking.description }}</td>#}
+                {# <td id="removeprint"> <a class="btn btn-primary btn-md" href="#booking_details">View</a></td>#}
+                {# </tr>#}
+              {##}
+              {# {% endfor %}#}
+              {# </tbody>#}
+            {# </table>#}
 
-   </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
 
 {% endblock %}

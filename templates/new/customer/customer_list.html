@@ -32,10 +32,8 @@
                                     <td>{{customer.mobilenumber}}</td>
                                     <td>{{customer.alternatenumber}}</td>
                                     <td style="text-align: right;">
-                                        <a href="{% url 'customer_update'  customer.pk %}" class="btn btn-md"><i
-                                                class="fa fa-pencil" aria-hidden="true"></i></a>
-                                        <a href="{% url 'customer_update'  customer.pk %}" class="btn btn-md"><i
-                                                class="fa fa-eye" aria-hidden="true"></i></a>
+                                        <a href="{% url 'customer_update'  customer.pk %}" style="margin-right: 5%;" class="btn btn-md"><i
+                                                class="fa fa-pencil" aria-hidden="true" ></i></a>
                                     </td>
                                 </tr>
                                 {% endfor %}

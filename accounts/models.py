@@ -39,11 +39,15 @@ class User(AbstractBaseUser):
     SELLER = 1
     CUSTOMER = 2
     AFFILIATE = 3
+    STAFF = 4
+    MANAGER = 5
 
     ROLE_CHOICE = (
         (SELLER, 'Seller'),
         (CUSTOMER, 'Customer'),
         (AFFILIATE, 'Affliate'),
+        (STAFF, 'Affliate'),
+        (MANAGER, 'Manager'),
     )
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
