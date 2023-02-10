@@ -57,7 +57,7 @@
                       <td>{{ booking.endDate }}</td>
           
                       <td id="removeprint"> <a class="btn btn-primary btn-md"
-                          href="#booking_details">View</a></td>
+                          href="{% url 'booking_details' booking.pk %}">View</a></td>
                     </tr>
           
                     {% endfor %}

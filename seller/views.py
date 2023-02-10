@@ -2,13 +2,20 @@ from datetime import datetime
 from multiprocessing import context
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView,DetailView
 from .models import Shop, Seller, Subscription
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from accounts.tokens import account_activation_token
 from .forms import SellerCreationForm
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.conf import settings
 import razorpay
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from datetime import datetime
+from django.contrib.sites.shortcuts import get_current_site
+from accounts.utils import send_notification_email
+from django.utils.encoding import force_bytes
+from django.utils.encoding import force_str
+from accounts.models import User
 from django.contrib.auth.decorators import login_required
 
 razorpay_client = razorpay.Client(
@@ -97,33 +104,64 @@ class StaffList(ListView):
     template_name = 'seller/staff_list.html'
 
     def get(self,request):
-        staff_list = Seller.objects.all()
+        shop = Seller.objects.get(user=request.user).shop
+        staff_list = Seller.objects.filter(shop=shop)
         context ={
             "staff_list":staff_list
         }
         return render(request,'seller/staff_list.html',context)
         
-class StaffCreate(CreateView):
-    # permission_required = ('users.create_user')
-    model = Seller
-    form_class = SellerCreationForm
-    template_name = 'seller/staff_create.html'
-    success_url = reverse_lazy('staff_list')
+def staff_create(request):
+    if request.method == 'POST':
+        form = SellerCreationForm(request.POST)
+        if form.is_valid():
+            seller_obj = form.save(commit=False)
+            email = request.POST.get('email')
+            f_name = request.POST.get('f_name')
+            l_name = request.POST.get('l_name')
+            password = request.POST.get('password')
+            user = User.objects.create_user(
+                first_name = f_name,
+                last_name = l_name,
+                username = email,
+                email=email,
+                password=password
+            )
+            user.role = User.SELLER
+            user.save()
+            seller_obj.user = user
+            seller_obj.shop = Seller.objects.get(user=request.user).shop
+            seller_obj.save()
+        
+        context_email = {
+            'domain':get_current_site(request).domain,
+            'user':user,
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': account_activation_token.make_token(user),
+        }
+        send_notification_email("Verify your email","accounts/emails/approve_email.html",email,context_email)
+        return redirect('staff_list')
+    else:
+        form = SellerCreationForm()
+        context = {
+            'form':form,
+        }
+        return render(request,'seller/staff_create.html',context)
 
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+def staff_update(request, pk):
+    seller = Seller.objects.get(id=pk)
+    if request.method == 'POST':
+        form = SellerCreationForm(request.POST, instance=seller)
+        if form.is_valid():
+            form.save()
+        return redirect('staff_list')
+    else:
+        form = SellerCreationForm(instance=seller)
+        context = {
+            'form':form,
+        }
+        return render(request,'seller/staff_create.html',context)
 
-class StaffUpdate(UpdateView):
-    # permission_required = ('users.update_user')
-    model = Seller
-    form_class = SellerCreationForm
-    template_name = "seller/staff_create.html"
-    success_url = reverse_lazy('staff_list')
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
 
 class StaffDelete(DeleteView):
     # permission_required = ('users.delete_user')

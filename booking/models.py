@@ -1,3 +1,4 @@
+from inspect import CO_ASYNC_GENERATOR
 from django.urls import reverse
 from django.db import models
 from catalouge.models import Product
@@ -31,7 +32,7 @@ class Booking(models.Model):
     amountPaid = models.PositiveIntegerField()
     amountDue = models.PositiveIntegerField()
     products = models.ManyToManyField(Product ,blank=False, )
-    orderNo = ShortUUIDField( length=6, max_length=6,  unique=True, db_index=True, editable=False)
+    orderNo = ShortUUIDField(length=6, max_length=6,  unique=True, db_index=True, editable=False)
     referenceNo = models.CharField(max_length=100, default="", null=True, blank=True)
     shop=models.ForeignKey(Shop,on_delete=models.CASCADE,default=1)
     note = models.CharField(max_length=100,blank=True,null=True)
@@ -44,6 +45,9 @@ class Booking(models.Model):
     def get_absolute_url(self):
         return reverse("booking_list")
 
+    def available_count(self):
+        count = self.bookedproduct_set.filter(product__status=Config.Available).count()
+        return count
 
 
 class BookedProduct(models.Model):

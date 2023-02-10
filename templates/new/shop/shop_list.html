@@ -21,7 +21,7 @@
               </thead>
               <tbody>
                 {% for shop in shop_list %}
-                <tr>
+                <tr onclick="window.location='{% url 'shop_details'  shop.pk %}'">
                   <td>{{forloop.counter}}</td>
                   <td>{{shop.name}}</td>
                   <td style="text-align: right;">

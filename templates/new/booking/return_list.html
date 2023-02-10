@@ -32,15 +32,15 @@
                   <th style="width:10%">Customer</th>
                   <th style="width:10%;">Contact</th>
                   <th style="width:12%;">Products</th>
-                  <th style="width:10%;">StarDate</th>
-                  <th style="width:10%;">EndDate</th>
+                  <th style="width:10%;">Booking Date</th>
+                  <th style="width:10%;">Return Date</th>
                   <th style="width:45%;text-align: right;"> <span style="margin-right: 5%;">Action</span></th>
                   <!-- <th style="width:10%;">Actions</th> -->
                 </tr>
               </thead>
               <tbody>
                 {% for booking_return in return_list %}
-                <tr>
+                <tr onclick="window.location='{% url 'booking_details'  booking_return.pk %}'">
                   <td style="vertical-align: top;">{{forloop.counter}}</td>
                   <td style="vertical-align: top;">{{booking_return.customerName}}</td>
                   <td style="vertical-align: top;">{{booking_return.mobileNumber}}</td>

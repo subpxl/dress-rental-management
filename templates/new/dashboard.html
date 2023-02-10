@@ -5,6 +5,24 @@
 
   <div class="pagetitle">
     <h1>Dashboard</h1>
+    {% if is_approved %}
+    <form class="mt-3" action="{% url 'dashboard'  %}" method="post">
+      {% csrf_token %}
+        <div class="row">
+          <div class="col-6 col-lg-3 form-group">
+              <label>Start Date</label>
+              <input type="date" class=" form-control" name="startDate" id="startDate" required>
+          </div>
+          <div class="col-6 col-lg-3 form-group">
+            <label>End Date</label>
+            <input type="date" class=" form-control" name="endDate" id="endDate" required>
+        </div>
+          <div class="col-12 form-group">
+              <button class="btn btn mt-3 btn btn-primary" id="submitDate" type="submit">Search</button>
+          </div>
+      </div>
+    </form>
+    {% endif %}
   </div><!-- End Page Title -->
   {% if not is_approved %}
     {% include 'includes/alert.html' %}
@@ -159,25 +177,34 @@
                 <table class="table table-borderless datatable">
                   <thead>
                     <tr>
-                      <th scope="col">Product Tag</th>
-                      <th scope="col">Customer</th>
-                      <th scope="col">Customer No.</th>
-                      <th scope="col">Product</th>
-                      <th scope="col">Price</th>
+                      <tr>
+                        <th style="width:5%">#</th>
+                        <th style="width:15%">Customer</th>
+                        <th style="width:15%;">Total Price</th>
+                        <th style="width:15%;">Products</th>
+                        <th style="width:15%;">Booking Date</th>
+                        <th style="width:15%;">Return Date</th>
+                      </tr>
                     </tr>
                   </thead>
                   <tbody>
                     {% for booking in toSend %}
-                      {%  for booked_product in booking.products.all %}
                     <tr>
-                      <th scope="row"><a href="#">{{ booked_product.tag }}</a></th>
-                      <td>{{ booking.customerName }}</td>
-                      <td>{{ booking.mobileNumber }}</td>
-                      <td><a href="#" class="text-primary">{{ booked_product.name }}</a></td>
-                      <td>Rs. {{ booked_product.price }}</td>
+                      <td style="vertical-align: top;">{{forloop.counter}}</td>
+                      <th scope="row"><a href="#">{{booking.customerName}}</a></th>
+                      <td style="vertical-align: top;">Rs. {{booking.totalAmount}}</td>
+                      <td style="vertical-align: top;">
+                        <ul class="list-group list-group-flush col col-10">
+                          {%  for booked_product in booking.products.all %}
+                              <li class="list-group-item p-0" style="padding-bottom: 2px !important;">{{booked_product.name|title}} {{booked_product.tag}}</li>
+                          {% endfor %}
+                        </ul>
+                      </td>
+                      <td style="vertical-align: top;">{{booking.startDate}}</td>
+                      <td style="vertical-align: top;">{{booking.endDate}}</td>
+                      
                     </tr>
                       {% endfor %}
-                    {% endfor %}
                   </tbody>
                 </table>
 
@@ -196,25 +223,34 @@
                 <table class="table table-borderless datatable">
                   <thead>
                     <tr>
-                      <th scope="col">Product Tag</th>
-                      <th scope="col">Customer</th>
-                      <th scope="col">Customer No.</th>
-                      <th scope="col">Product</th>
-                      <th scope="col">Price</th>
+                      <tr>
+                        <th style="width:5%">#</th>
+                        <th style="width:15%">Customer</th>
+                        <th style="width:15%;">Total Price</th>
+                        <th style="width:15%;">Products</th>
+                        <th style="width:15%;">Booking Date</th>
+                        <th style="width:15%;">Return Date</th>
+                      </tr>
                     </tr>
                   </thead>
                   <tbody>
                     {% for booking in toRecieve %}
-                      {%  for booked_product in booking.products.all %}
                     <tr>
-                      <th scope="row"><a href="#">{{ booked_product.tag }}</a></th>
-                      <td>{{ booking.customerName }}</td>
-                      <td>{{ booking.mobileNumber }}</td>
-                      <td><a href="#" class="text-primary">{{ booked_product.name }}</a></td>
-                      <td>Rs. {{ booked_product.price }}</td>
+                      <td style="vertical-align: top;">{{forloop.counter}}</td>
+                      <th scope="row"><a href="#">{{booking.customerName}}</a></th>
+                      <td style="vertical-align: top;">Rs. {{booking.totalAmount}}</td>
+                      <td style="vertical-align: top;">
+                        <ul class="list-group list-group-flush col col-10">
+                          {%  for booked_product in booking.products.all %}
+                              <li class="list-group-item p-0" style="padding-bottom: 2px !important;">{{booked_product.name|title}} {{booked_product.tag}}</li>
+                          {% endfor %}
+                        </ul>
+                      </td>
+                      <td style="vertical-align: top;">{{booking.startDate}}</td>
+                      <td style="vertical-align: top;">{{booking.endDate}}</td>
+                      
                     </tr>
                       {% endfor %}
-                    {% endfor %}
                   </tbody>
                 </table>
 
@@ -235,23 +271,33 @@
                 <table class="table table-borderless">
                   <thead>
                     <tr>
-                      <th scope="col">Preview</th>
-                      <th scope="col">Product</th>
-                      <th scope="col">Category</th>
-                      <th scope="col">Color</th>
-                      <th scope="col">Price</th>
+                      <tr>
+                        <th style="width:5%">#</th>
+                        <th style="width:15%">Customer</th>
+                        <th style="width:15%;">Amount Due</th>
+                        <th style="width:15%;">Products</th>
+                        <th style="width:15%;">Booking Date</th>
+                        <th style="width:15%;">Return Date</th>
+                      </tr>
                     </tr>
                   </thead>
                   <tbody>
-                    {% for product in products %}
+                    {% for booking in top_bookings %}
                     <tr>
-                      <th scope="row"><a href="#"><img src="{{product.image.url}}" alt=""></a></th>
-                      <td><a href="#" class="text-primary fw-bold">{{product.name}}</a></td>
-                      <td class="fw-bold">{{product.category}}</td>
-                      <td>{{product.color}}</td>
-                      <td>Rs. {{product.price}}</td>
+                      <td style="vertical-align: top;">{{forloop.counter}}</td>
+                      <th scope="row"><a href="#">{{booking.customerName}}</a></th>
+                      <td style="vertical-align: top;">Rs. {{booking.amountDue}}</td>
+                      <td style="vertical-align: top;">
+                        <ul class="list-group list-group-flush col col-10">
+                          {%  for booked_product in booking.products.all %}
+                              <li class="list-group-item p-0" style="padding-bottom: 2px !important;">{{booked_product.name|title}} {{booked_product.tag}}</li>
+                          {% endfor %}
+                        </ul>
+                      </td>
+                      <td style="vertical-align: top;">{{booking.startDate}}</td>
+                      <td style="vertical-align: top;">{{booking.endDate}}</td>
                     </tr>
-                    {% endfor %}
+                      {% endfor %}
                   </tbody>
                 </table>
 

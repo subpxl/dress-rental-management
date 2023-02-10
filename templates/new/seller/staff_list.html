@@ -23,7 +23,7 @@
               </thead>
               <tbody>
                 {% for staff in staff_list %}
-                <tr>
+                <tr onclick="window.location='{% url 'staff_details'  staff.pk %}'">
                   <td>{{forloop.counter}}</td>
                   <td>{{staff.user.first_name}} {{staff.user.last_name}}</td>
                   <td>{{staff.name}}</td>

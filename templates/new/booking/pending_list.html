@@ -32,14 +32,15 @@
                   <th style="width:10%">Customer</th>
                   <th style="width:10%;">Contact</th>
                   <th style="width:10%;">Products</th>
-                  <th style="width:10%;">StarDate</th>
-                  <th style="width:10%;">EndDate</th>
+                  <th style="width:10%;">Booking Date</th>
+                  <th style="width:10%;">Return Date</th>
                   <!-- <th style="width:10%;">Actions</th> -->
                 </tr>
               </thead>
               <tbody>
                 {% for booking_pending in pending_list %}
-                <tr>
+                {% if booking_pending.available_count > 0 %}
+                <tr onclick="window.location='{% url 'booking_details'  booking_pending.pk %}'">
                   <td style="vertical-align: top;">{{forloop.counter}}</td>
                   <td style="vertical-align: top;">{{booking_pending.customerName}}</td>
                   <td style="vertical-align: top;">{{booking_pending.mobileNumber}}</td>
@@ -55,6 +56,7 @@
                   <td style="vertical-align: top;">{{booking_pending.startDate}}</td>
                   <td style="vertical-align: top;">{{booking_pending.endDate}}</td>
                 </tr>
+                {% endif %}
                 {% endfor %}
               </tbody>
             </table>

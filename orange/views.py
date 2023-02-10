@@ -22,7 +22,7 @@ def dashboard(request):
     revenue_list = BookedProduct.objects.filter(product__shop=seller.shop)
     revenue = revenue_list.aggregate(Sum('price'))['price__sum']
     dates = Booking.objects.order_by('startDate').values('startDate').distinct()
-    products = Product.objects.order_by('-price').filter(status=Config.Booked)[:5]
+    top_bookings = Booking.objects.order_by('-amountDue').filter(status=Config.Booked)[:5]
     data = {
         'revenue':[],
         'paid':[],
@@ -51,26 +51,24 @@ def dashboard(request):
         data['due'].append(due)
         data['dates'].append(date['startDate'].strftime("%Y-%m-%d"))
         data['max'] = max(data['max'],revenue,paid,due)
-    print("\n\n\n data => ", data)
     if request.method=="POST":
-        fromDate = datetime.today()
-        # toDate = request.POST.get('endDate')
+        startDate = request.POST.get('startDate')
+        endDate = request.POST.get('endDate')
         try:
-            toSend = Booking.objects.filter(startDate=fromDate).exclude(status=Config.Returned)
-            toRecieve = Booking.objects.filter(endDate=fromDate).exclude(status=Config.Returned)
+            toSend = Booking.objects.filter(startDate__range=[startDate,endDate]).exclude(status=Config.Returned)
+            toRecieve = Booking.objects.filter(endDate__range=[startDate,endDate]).exclude(status=Config.Returned)
         except Booking.DoesNotExist:
             toSend = None
             toRecieve = None
         # bookings = Booking.objects.get(startDate=fromDate)
         context = {
-            'revenue':revenue,
-            'products':products,
-            'data' : data,
-            'fromDate':fromDate,
-            # 'toDate':toDate,
-            'toSend': toSend,
-            'toRecieve': toRecieve
-        }
+        'revenue':revenue,
+        'top_bookings':top_bookings,
+        'data' : data,
+        'toSend':toSend,
+        'toRecieve':toRecieve,
+        'is_approved':is_approved
+    }
         return  render(request,template_name,context)
     try:
         toSend = Booking.objects.filter(startDate__gte=dt.today()).exclude(status=Config.Returned)
@@ -80,7 +78,7 @@ def dashboard(request):
         toRecieve =None
     context = {
         'revenue':revenue,
-        'products':products,
+        'top_bookings':top_bookings,
         'data' : data,
         'toSend':toSend,
         'toRecieve':toRecieve,

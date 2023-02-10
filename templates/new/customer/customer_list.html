@@ -25,7 +25,7 @@
                             </thead>
                             <tbody>
                                 {% for customer in customer_list %}
-                                <tr>
+                                <tr onclick="window.location='{% url 'customer_update'  customer.pk %}'">
                                     <td>{{forloop.counter}}</td>
                                     <td>{{customer.name}}</td>
                                     <td>{{customer.address}}</td>

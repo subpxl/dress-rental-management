@@ -59,7 +59,7 @@ def booking_create(request):
             booking = bookingForm.save()
             for x in range(len(products)):
                 product = Product.objects.get(id=products[x])
-                product.status = 'Booked'
+                product.status = Config.Booked
                 product.save()
                 bookedProduct = BookedProduct(booking=booking,product_id=products[x],description=description[x],price=price[x],size=size[x])
                 bookedProduct.save()
@@ -189,14 +189,24 @@ def pending_list(request):
         return  render(request,'booking/pending_list.html',context)
 
 def send_list(request):
-    send_list = Booking.objects.filter(startDate__gte=datetime.today()).exclude(status=Config.Returned)
+    if request.method=="POST":
+        startDate = request.POST.get("startDate","")
+        endDate = request.POST.get("endDate","")
+        send_list = Booking.objects.filter(startDate__range=[startDate,endDate]).exclude(status=Config.Returned)
+    else:
+        send_list = Booking.objects.filter(startDate__gte=datetime.today()).exclude(status=Config.Returned)
     context = {
             'send_list':send_list
     }
     return  render(request,'booking/send_list.html',context)
 
 def receive_list(request):
-    receive_list = Booking.objects.filter(endDate__lte=datetime.today()).exclude(status=Config.Returned)
+    if request.method=="POST":
+        startDate = request.POST.get("startDate","")
+        endDate = request.POST.get("endDate","")
+        receive_list = Booking.objects.filter(endDate__range=[startDate,endDate]).exclude(status=Config.Returned)
+    else:
+        receive_list = Booking.objects.filter(endDate__gte=datetime.today()).exclude(status=Config.Returned)
     context = {
             'receive_list':receive_list
     }

@@ -22,7 +22,7 @@
               </thead>
               <tbody>
                 {% for category in category_list %}
-                <tr>
+                <tr onclick="window.location='{% url 'category_update'  category.pk %}'">
                   <td>{{forloop.counter}}</td>
                   <td>{{category.name}}</td>
                   <td>{{category.get_prod_count}}</td>                  
