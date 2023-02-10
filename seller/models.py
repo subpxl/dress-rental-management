@@ -15,7 +15,7 @@ class Shop(models.Model):
         return "%s " % (self.name)
 
     def get_absolute_url(self):
-        return reverse("shop_list")
+        return reverse("create_profile")
 
 class Seller(models.Model):
     name = models.CharField(max_length=50, unique=True)

@@ -49,6 +49,13 @@ class Booking(models.Model):
         count = self.bookedproduct_set.filter(product__status=Config.Available).count()
         return count
 
+    class Meta:
+        permissions = [
+            ("user_create_booking", "Can create bookings"),
+            ("user_update_booking", "Can update bookings"),
+            ("user_delete_booking", "Can delete bookings"),
+            ("user_view_booking", "Can view bookings"),
+        ]
 
 class BookedProduct(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

@@ -13,6 +13,26 @@
             <h5 class="card-title">Staff</h5>
             <form method='post' enctype="multipart/form-data">
               {% csrf_token %}
+              {% if form.instance.pk %}
+              {% else %}
+              <div class="mb-3">
+                <label class="form-label">First Name</label>
+                <input class="form-control" type="text" name='f_name' />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Last Name</label>
+                <input class="form-control" type="text" name='l_name' />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input class="form-control" type="text" name='email' />
+              </div>
+              <!-- form-group// -->
+              <div class="mb-3">
+                <label class="form-label">Create password</label>
+                <input class="form-control" type="password" name='password' />
+              </div>
+              {% endif %}
               {{form|crispy}}
               <div class="">
                 <button type="submit" class="btn btn-primary mt-3">Submit</button>

@@ -11,6 +11,7 @@ urlpatterns = [
     path("shop/update/<int:pk>/", ShopUpdate.as_view(), name="shop_update"),
     path("shop/delete/<int:pk>/", ShopDelete.as_view(), name="shop_delete"),
     path("profile/",seller_profile,name="seller_profile"),
+    path("create-profile/",create_profile,name="create_profile"),
     path("staff/",StaffList.as_view(),name="staff_list"),
     path("staff/create/",staff_create,name="staff_create"),
     path("staff/<int:pk>/", StaffDetails.as_view(), name="staff_details"),

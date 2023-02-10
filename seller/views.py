@@ -1,3 +1,4 @@
+from audioop import reverse
 from datetime import datetime
 from multiprocessing import context
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView,DetailView
@@ -63,8 +64,12 @@ def payment_success(request):
 class ShopList(ListView):
     # permission_required = ('shop.view_shop')
     model = Shop
-    context_object_name = "shop_list"
-    template_name = 'shop/shop_list.html'
+    def get(self,request):
+        shop = Seller.objects.get(user=request.user).shop
+        context ={
+            "shop_list":[shop]
+        }
+        return render(request,'shop/shop_list.html',context)
 
 
 class ShopCreate(CreateView):
@@ -161,6 +166,28 @@ def staff_update(request, pk):
             'form':form,
         }
         return render(request,'seller/staff_create.html',context)
+
+@login_required
+def create_profile(request):
+    seller = Seller.objects.get(user=request.user)
+    if request.method == 'POST':
+        form = SellerCreationForm(request.POST, instance=seller)
+        if form.is_valid():
+            print(form.cleaned_data['role'])
+            if form.cleaned_data['role'] == 'ShopAdmin':
+                request.user.has_perms('booking.user_view_booking')
+                request.user.has_perms('booking.user_update_booking')
+                request.user.has_perms('booking.user_create_booking')
+                request.user.has_perms('booking.user_delete_booking')
+            form.save()
+        return redirect('seller_profile')
+    else:
+        form = SellerCreationForm(instance=seller)
+        context = {
+            'form':form,
+        }
+    return render(request,'seller/create_profile.html',context)
+
 
 
 class StaffDelete(DeleteView):

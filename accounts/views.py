@@ -24,14 +24,13 @@ class ActivateAccount(View):
             user.save()
             auth.login(request, user)
             messages.success(request, ('Your account have been confirmed.'))
-            return redirect('dashboard')
+            return redirect('shop_create')
         else:
             messages.warning(request, ('The confirmation link was invalid, possibly because it has already been used.'))
             return redirect('register')
 
 
 def register(request):
-    print("hello user")
     if request.method == "POST":
         bus_name = request.POST.get('bus_name')
         email = request.POST.get('email')
@@ -60,7 +59,9 @@ def register(request):
         }
 
         send_notification_email("Verify your email","accounts/emails/approve_email.html",email,context_email)
-        return redirect('dashboard')
+        if seller.shop:
+            return redirect('dashboard')
+        return redirect('shop_create')
     return render(request,'accounts/register_page.html')
 
 def login_view(request):
