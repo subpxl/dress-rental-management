@@ -59,7 +59,7 @@ def register(request):
             'token': account_activation_token.make_token(user),
         }
 
-        send_notification_email("Verify your email","accounts/emails/approve_email.html",email,context_email)
+        # send_notification_email("Verify your email","accounts/emails/approve_email.html",email,context_email)
         return redirect('dashboard')
     return render(request,'accounts/register_page.html')
 
@@ -71,7 +71,9 @@ def login_view(request):
         # print(user)
         if user is not None:
             login(request, user)
-            return redirect("dashboard")
+            if user.role=="Seller":
+                return redirect("dashboard")
+            
         else:
             redirect('login')
             messages.info(request, "username or password is incorrect")

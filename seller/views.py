@@ -1,7 +1,7 @@
 from datetime import datetime
 from multiprocessing import context
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView,DetailView
-from .models import Shop, Seller, Subscription
+from .models import Seller, Subscription
 from django.shortcuts import render, redirect
 from accounts.tokens import account_activation_token
 from .forms import SellerCreationForm
@@ -60,37 +60,37 @@ def plans(request):
 def payment_success(request):
     return render(request,'seller/payment_success.html')
 
-class ShopList(ListView):
-    # permission_required = ('shop.view_shop')
-    model = Shop
-    context_object_name = "shop_list"
-    template_name = 'shop/shop_list.html'
+# class ShopList(ListView):
+#     # permission_required = ('shop.view_shop')
+#     model = Shop
+#     context_object_name = "shop_list"
+#     template_name = 'shop/shop_list.html'
 
 
-class ShopCreate(CreateView):
-    # permission_required = ('shop.create_shop')
-    model = Shop
-    fields = "__all__"
-    template_name = "shop/shop_create.html"
+# class ShopCreate(CreateView):
+#     # permission_required = ('shop.create_shop')
+#     model = Shop
+#     fields = "__all__"
+#     template_name = "shop/shop_create.html"
 
 
-class ShopUpdate(UpdateView):
-    # permission_required = ('shop.update_shop')
-    model = Shop
-    fields = "__all__"
-    template_name = "shop/shop_create.html"
+# class ShopUpdate(UpdateView):
+#     # permission_required = ('shop.update_shop')
+#     model = Shop
+#     fields = "__all__"
+#     template_name = "shop/shop_create.html"
 
-class ShopDelete(DeleteView):
-    # permission_required = ('shop.delete_shop')
-    model = Shop
-    template_name = 'shop/shop_delete.html'
-    success_url = reverse_lazy('shop_list')
+# class ShopDelete(DeleteView):
+#     # permission_required = ('shop.delete_shop')
+#     model = Shop
+#     template_name = 'shop/shop_delete.html'
+#     success_url = reverse_lazy('shop_list')
 
 
-class ShopDetails(DetailView):
-    # permission_required = ('shop.view_shop')
-    model = Shop
-    template_name = 'shop/shop_details.html'
+# class ShopDetails(DetailView):
+#     # permission_required = ('shop.view_shop')
+#     model = Shop
+#     template_name = 'shop/shop_details.html'
 
 @login_required
 def seller_profile(request):
