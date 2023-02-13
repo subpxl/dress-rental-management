@@ -61,23 +61,11 @@ def plans(request):
 def payment_success(request):
     return render(request,'seller/payment_success.html')
 
-<<<<<<< HEAD
-class ShopList(ListView):
-    # permission_required = ('shop.view_shop')
-    model = Shop
-    def get(self,request):
-        shop = Seller.objects.get(user=request.user).shop
-        context ={
-            "shop_list":[shop]
-        }
-        return render(request,'shop/shop_list.html',context)
-=======
 # class ShopList(ListView):
 #     # permission_required = ('shop.view_shop')
 #     model = Shop
 #     context_object_name = "shop_list"
 #     template_name = 'shop/shop_list.html'
->>>>>>> b96f1d173c52537c64bcf7c0569570ab7a32a052
 
 
 # class ShopCreate(CreateView):

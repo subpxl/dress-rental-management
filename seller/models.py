@@ -14,13 +14,8 @@ from config.config import Config
 #     def __str__(self):
 #         return "%s " % (self.name)
 
-<<<<<<< HEAD
-    def get_absolute_url(self):
-        return reverse("create_profile")
-=======
 #     def get_absolute_url(self):
 #         return reverse("shop_list")
->>>>>>> b96f1d173c52537c64bcf7c0569570ab7a32a052
 
 class Seller(models.Model):
     name = models.CharField(max_length=50, unique=True)
