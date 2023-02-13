@@ -5,11 +5,11 @@ from .views import *
 from .razorpay_views import plan_paymenthandler
 
 urlpatterns = [
-    path("shop/", ShopList.as_view(), name="shop_list"),
-    path("shop/<int:pk>/", ShopDetails.as_view(), name="shop_details"),
-    path("shop/create/", ShopCreate.as_view(), name="shop_create"),
-    path("shop/update/<int:pk>/", ShopUpdate.as_view(), name="shop_update"),
-    path("shop/delete/<int:pk>/", ShopDelete.as_view(), name="shop_delete"),
+    # path("shop/", ShopList.as_view(), name="shop_list"),
+    # path("shop/<int:pk>/", ShopDetails.as_view(), name="shop_details"),
+    # path("shop/create/", ShopCreate.as_view(), name="shop_create"),
+    # path("shop/update/<int:pk>/", ShopUpdate.as_view(), name="shop_update"),
+    # path("shop/delete/<int:pk>/", ShopDelete.as_view(), name="shop_delete"),
     path("profile/",seller_profile,name="seller_profile"),
     path("create-profile/",create_profile,name="create_profile"),
     path("staff/",StaffList.as_view(),name="staff_list"),

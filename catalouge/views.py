@@ -1,7 +1,8 @@
 from math import prod
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import Category, Product
-from booking.models import Shop
+# from booking.models import Shop
+from booking.models import Seller
 from django.urls import reverse_lazy
 from  django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.files import File
@@ -63,7 +64,7 @@ def product_bulk_upload(request):
         for column in csv.reader(io_string, delimiter=',', quotechar="|"):
             print(column[0],column[1],column[2],column[3],column[4],column[5],column[6],column[7],column[8],column[9])
             category = Category.objects.get(name=column[2])
-            shop = Shop.objects.get(name=column[5])
+            seller = Seller.objects.get(name=column[5])
             image = urllib.request.urlretrieve(column[8])
             product = Product.objects.update_or_create(
                 tag=column[0],
@@ -71,7 +72,7 @@ def product_bulk_upload(request):
                 category_id=category.id,
                 color=column[3],
                 size=column[4],
-                shop_id=shop.id,
+                seller_id=seller.id,
                 gender=column[6],
                 description=column[7],
                 price=column[9],

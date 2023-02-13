@@ -1,7 +1,8 @@
 from django.db import models
 from django.urls import reverse
 from config.config import Config
-from seller.models import Shop
+# from seller.models import Shop
+from seller.models import Seller
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -24,7 +25,7 @@ class Product(models.Model):
     gender = models.CharField(choices=Config.GENDER,max_length=100,default=Config.Male)
     description = models.CharField(max_length=100,null=True,blank=True)
     price = models.PositiveIntegerField()
-    shop = models.ForeignKey(Shop, on_delete=models.CASCADE,null=True,blank=True)
+    seller = models.ForeignKey(Seller, on_delete=models.CASCADE,null=True,blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE,blank=True,null=True)
     image = models.ImageField(upload_to='uploads/')
     status = models.CharField(
