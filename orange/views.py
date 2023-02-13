@@ -9,6 +9,7 @@ from datetime import timedelta
 from seller.models import Seller, Subscription
 from catalouge.models import Product
 
+@login_required
 def dashboard(request):
     template_name = "dashboard.html"
     is_approved = False
@@ -17,17 +18,12 @@ def dashboard(request):
     if not is_approved:
         return render(request,template_name)
     seller = Seller.objects.get(user = request.user)
-    revenue_list = BookedProduct.objects.filter(product__shop=seller.shop)
-    revenue = revenue_list.aggregate(Sum('price'))['price__sum']
-    dates = Booking.objects.order_by('startDate').values('startDate').distinct()
-    top_bookings = Booking.objects.order_by('-amountDue').filter(status=Config.Booked)[:5]
-    data = {
-        'revenue':[],
-        'paid':[],
-        'due':[],
-        'max':0,
-        'dates':[]
-    }
+    revenue = 0
+    try:
+        revenue_list = BookedProduct.objects.filter(product__shop=seller.shop)
+        revenue = revenue_list.aggregate(Sum('price'))['price__sum']
+    except:
+        pass
     try:
         subs = Subscription.objects.get(seller = seller)
         exp_date = subs.created_at + timedelta(days=30)
@@ -39,16 +35,7 @@ def dashboard(request):
                 )
     except Exception as e:
         print("Error ", e)
-    for date in dates:
-        bookings = Booking.objects.filter(startDate=date['startDate'])
-        revenue = bookings.aggregate(Sum('totalAmount'))['totalAmount__sum']
-        paid = bookings.aggregate(Sum('amountPaid'))['amountPaid__sum']
-        due = bookings.aggregate(Sum('amountDue'))['amountDue__sum']
-        data['revenue'].append(revenue)
-        data['paid'].append(paid)
-        data['due'].append(due)
-        data['dates'].append(date['startDate'].strftime("%Y-%m-%d"))
-        data['max'] = max(data['max'],revenue,paid,due)
+    
     if request.method=="POST":
         startDate = request.POST.get('startDate')
         endDate = request.POST.get('endDate')
@@ -58,11 +45,8 @@ def dashboard(request):
         except Booking.DoesNotExist:
             toSend = None
             toRecieve = None
-        # bookings = Booking.objects.get(startDate=fromDate)
         context = {
         'revenue':revenue,
-        'top_bookings':top_bookings,
-        'data' : data,
         'toSend':toSend,
         'toRecieve':toRecieve,
         'is_approved':is_approved
@@ -76,8 +60,6 @@ def dashboard(request):
         toRecieve =None
     context = {
         'revenue':revenue,
-        'top_bookings':top_bookings,
-        'data' : data,
         'toSend':toSend,
         'toRecieve':toRecieve,
         'is_approved':is_approved

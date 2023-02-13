@@ -3,19 +3,18 @@
 {% load static %}
 <main id="main" class="main">
   
-  <div class="pagetitle col-lg-10">
-    <h1>Bulk Upload</h1>
+  <div class="pagetitle col-lg-12">
+    <h1>Bulk Upload <a href="{%  static 'sample/sample.csv' %}" style="float:right;" class="btn btn-md btn-info">Download Sample</a></h1>
     <div class="row justify-content-between mt-3">
       <div class="col-12 col-lg-4">
-        
         <form class="row" method="post" enctype="multipart/form-data">
           {% csrf_token %}
           <input class="form-control col-auto" type="file" required id="dealCsv" name="myfile">
-          <button class="btn btn-md btn-primary mt-1 col-auto" type="submit">Upload</button>
+          <button class="btn btn-md btn-primary mt-1 col-auto d-inline" type="submit">Upload</button>
         </form>
       </div>
       <div class="col-12 col-lg-6 text-end">
-        <a href="{%  static 'sample/sample.csv' %}" class="btn btn-md btn-info">Download Sample</a>
+        
       </div>
     </div>
   </div><!-- End Page Title -->

@@ -10,8 +10,8 @@ from .models import Booking,BookedProduct
 from .forms import  BookingForm, BookedProductForm, BookingReturnForm
 from django.contrib import  messages
 from config.config import  Config
-from django.contrib.auth.decorators import  permission_required
-from  django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+# from django.contrib.auth.decorators import  permission_required
+from  django.contrib.auth.mixins import  LoginRequiredMixin
 import json
 from django.db.models import Q
 from catalouge.models import Product
@@ -44,7 +44,7 @@ def booked_product_search(request):
         return HttpResponse(data, content_type="application/json")
 
 @login_required
-@permission_required('booking.user_create_booking')
+# @permission_required('booking.user_create_booking')
 def booking_create(request):
     bookingForm = BookingForm()
     ProductFormSet = formset_factory(BookedProductForm, extra=2)
@@ -79,8 +79,8 @@ def booking_create(request):
         context['bookingForm'].startDate = startDate
         return render(request, "booking/booking_create.html", context)
 
-class BookingList(LoginRequiredMixin,PermissionRequiredMixin, ListView):
-    permission_required = ('booking:user_view_booking')
+class BookingList(LoginRequiredMixin, ListView):
+    # permission_required = ('booking:user_view_booking')
     paginate_by = 20
     context_object_name = "booking_list"
     def post(self,request):
@@ -102,7 +102,7 @@ class BookingList(LoginRequiredMixin,PermissionRequiredMixin, ListView):
         }
         return render(request, 'booking/booking_list.html', context)
 
-@permission_required('booking.user_view_booking')
+# @permission_required('booking.user_view_booking')
 def booking_details(request,pk):
     booking = Booking.objects.get(id=pk)
     booked_product_list = BookedProduct.objects.filter(booking=pk)
@@ -112,7 +112,7 @@ def booking_details(request,pk):
     }
     return render(request,'booking/booking_details.html',context)
 
-@permission_required('booking.user_update_booking')
+# @permission_required('booking.user_update_booking')
 def booking_update(request, pk):
     booking = Booking.objects.get(id=pk)
     booked_product_list = BookedProduct.objects.filter(booking=pk,product__in=booking.products.all())
@@ -140,7 +140,7 @@ def booking_update(request, pk):
     return render(request,'booking/return_booking.html',context)
 
 
-@permission_required('booking.user_delete_booking')
+# @permission_required('booking.user_delete_booking')
 def booking_delete(request, pk):
     booking = Booking.objects.get(id=pk)
     if request.method == 'POST':
@@ -154,7 +154,7 @@ def booking_delete(request, pk):
     }
     return render(request,'booking/booking_delete.html',context)
 
-@permission_required('booking.user_view_booking')
+# @permission_required('booking.user_view_booking')
 def return_list(request):
     if request.method=="POST":
         startDate = request.POST.get("startDate","")
@@ -175,7 +175,7 @@ def return_list(request):
         return  render(request,'booking/return_list.html',context)
 
 
-@permission_required('booking.user_view_booking')
+# @permission_required('booking.user_view_booking')
 def pending_list(request):
     if request.method=="POST":
         startDate = request.POST.get("startDate","")
@@ -195,7 +195,7 @@ def pending_list(request):
         }
         return  render(request,'booking/pending_list.html',context)
 
-@permission_required('booking.user_view_booking')
+# @permission_required('booking.user_view_booking')
 def send_list(request):
     if request.method=="POST":
         startDate = request.POST.get("startDate","")
@@ -208,7 +208,7 @@ def send_list(request):
     }
     return  render(request,'booking/send_list.html',context)
 
-@permission_required('booking.user_view_booking')
+# @permission_required('booking.user_view_booking')
 def receive_list(request):
     if request.method=="POST":
         startDate = request.POST.get("startDate","")

@@ -3,25 +3,25 @@ from django.urls import reverse
 from accounts.models import User
 from config.config import Config
 
-# class Shop(models.Model):
-#     name = models.CharField(max_length=100)
-#     address = models.CharField(max_length=100)
-#     address2 = models.CharField(max_length=100,null=True,blank=True)
-#     city = models.CharField(max_length=100)
-#     pincode = models.CharField(max_length=100)
-#     mobileNumber= models.CharField(max_length=100)
+class Shop(models.Model):
+    name = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+    address2 = models.CharField(max_length=100,null=True,blank=True)
+    city = models.CharField(max_length=100)
+    pincode = models.CharField(max_length=100)
+    mobileNumber= models.CharField(max_length=100)
 
-#     def __str__(self):
-#         return "%s " % (self.name)
+    def __str__(self):
+        return "%s " % (self.name)
 
-#     def get_absolute_url(self):
-#         return reverse("shop_list")
+    # def get_absolute_url(self):
+    #     return reverse("shop_list")
 
 class Seller(models.Model):
     name = models.CharField(max_length=50, unique=True)
     user = models.OneToOneField(
         User, related_name='user', on_delete=models.CASCADE) 
-    # shop = models.ForeignKey(Shop,on_delete=models.CASCADE,null=True)
+    shop = models.ForeignKey(Shop,on_delete=models.CASCADE,null=True)
     role = models.CharField(
         max_length=255, choices=Config.ROLE_CHOICES, default=Config.Staff, blank=True, null=True)
     # cover_photo = models.ImageField(

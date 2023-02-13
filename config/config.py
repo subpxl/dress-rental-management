@@ -23,12 +23,12 @@ class Config:
     )
 
     # roles
-    ShopAdmin='ShopAdmin'
+    ShopOwner='ShopOwner'
     Manager='ShopManager'
     Staff='ShopStaff'
 
     ROLE_CHOICES = [
-        ('ShopAdmin', ShopAdmin),
+        ('ShopOwner', ShopOwner),
         ('Manager', Manager),
         ('Staff', Staff),
     ]

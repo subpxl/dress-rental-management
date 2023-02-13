@@ -6,7 +6,8 @@ from .utils import send_notification_email
 from django.utils.encoding import force_bytes
 from django.utils.encoding import force_str
 from django.views import View
-from seller.models import Seller
+from config.config import Config
+from seller.models import Seller, Shop
 from django.contrib.sites.shortcuts import get_current_site
 from accounts.models import User
 from django.contrib import auth, messages
@@ -46,17 +47,19 @@ def register(request):
                 password=password
             )
         user.role = User.SELLER
+        user.is_active = True
         user.save()
-        seller = Seller(name=bus_name)
-        seller.user = user
+        shop = Shop(name=bus_name)
+        shop.save()
+        seller = Seller(name=bus_name,role=Config.ShopOwner,shop=shop,user=user)
         seller.save()
         print('Seller created successfully')
-        context_email = {
-            'domain':get_current_site(request).domain,
-            'user':user,
-            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            'token': account_activation_token.make_token(user),
-        }
+        # context_email = {
+        #     'domain':get_current_site(request).domain,
+        #     'user':user,
+        #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        #     'token': account_activation_token.make_token(user),
+        # }
 
         # send_notification_email("Verify your email","accounts/emails/approve_email.html",email,context_email)
         return redirect('dashboard')
@@ -71,7 +74,7 @@ def login_view(request):
         if user is not None:
             login(request, user)
             print("\n\n\n user role is =>", user.role)
-            if user.role == "Seller":
+            if user.role == 1:
                 return redirect("dashboard")
         else:
             redirect('login')

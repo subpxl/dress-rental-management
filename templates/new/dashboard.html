@@ -3,22 +3,20 @@
 {% load static %}
 <main id="main" class="main">
 
-  <div class="pagetitle">
+  <div class="pagetitle mb-5">
     <h1>Dashboard</h1>
     {% if is_approved %}
-    <form class="mt-3" action="{% url 'dashboard'  %}" method="post">
+    <form class="my-3" action="{% url 'dashboard'  %}" method="post">
       {% csrf_token %}
         <div class="row">
-          <div class="col-6 col-lg-3 form-group">
-              <label>Start Date</label>
+          <div class="col-6 col-lg-2 form-group">
               <input type="date" class=" form-control" name="startDate" id="startDate" required>
           </div>
-          <div class="col-6 col-lg-3 form-group">
-            <label>End Date</label>
+          <div class="col-6 col-lg-2 form-group">
             <input type="date" class=" form-control" name="endDate" id="endDate" required>
         </div>
-          <div class="col-12 form-group">
-              <button class="btn btn mt-3 btn btn-primary" id="submitDate" type="submit">Search</button>
+          <div class="col-8 form-group">
+              <button class="btn btn  btn btn-primary" id="submitDate" type="submit">Search</button>
           </div>
       </div>
     </form>
@@ -95,6 +93,7 @@
           </div><!-- End Receive Card -->
 
           <!-- Reports -->
+          {% comment %}
           <div class="col-12">
             <div class="card">
 
@@ -163,7 +162,7 @@
 
             </div>
           </div><!-- End Reports -->
-
+          {% endcomment %}
           <!-- To Send -->
           <div class="col-12">
             <div class="card recent-sales overflow-auto">
