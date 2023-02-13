@@ -24,9 +24,6 @@
     </form>
     {% endif %}
   </div><!-- End Page Title -->
-  {% if not is_approved %}
-    {% include 'includes/alert.html' %}
-  {% else %}
   {% include 'includes/alert.html' %}
   <section class="section dashboard">
     <div class="row">
@@ -596,6 +593,5 @@
 
     </div>
   </section>
-  {% endif %}
 </main>
 {% endblock %}

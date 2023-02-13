@@ -15,8 +15,6 @@ def dashboard(request):
     if request.user.is_authenticated and request.user.is_active:
         is_approved = True
     if not is_approved:
-        messages.success(
-            request, 'An email has been sent to your mail id, please verify your account and then log in!')
         return render(request,template_name)
     seller = Seller.objects.get(user = request.user)
     revenue_list = BookedProduct.objects.filter(product__shop=seller.shop)

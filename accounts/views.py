@@ -67,12 +67,12 @@ def login_view(request):
         username = request.POST.get("username")
         password = request.POST.get("password")
         user = authenticate(request, username=username, password=password)
-        # print(user)
+        print(user)
         if user is not None:
             login(request, user)
-            if user.role=="Seller":
+            print("\n\n\n user role is =>", user.role)
+            if user.role == "Seller":
                 return redirect("dashboard")
-            
         else:
             redirect('login')
             messages.info(request, "username or password is incorrect")
