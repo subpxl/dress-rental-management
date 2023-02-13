@@ -36,7 +36,6 @@ def booked_product_search(request):
         list_of_dicts = list(found_product)
         data = json.dumps(list_of_dicts)
         return HttpResponse(data, content_type="application/json")
-
     else:
         found_product = Product.objects.filter(status='Available').values()
         list_of_dicts = list(found_product)
@@ -46,6 +45,7 @@ def booked_product_search(request):
 @login_required
 # @permission_required('booking.user_create_booking')
 def booking_create(request):
+    seller = Seller.objects.get(user = request.user)
     bookingForm = BookingForm()
     ProductFormSet = formset_factory(BookedProductForm, extra=2)
     formset = ProductFormSet()
@@ -58,11 +58,17 @@ def booking_create(request):
         bookingForm = BookingForm(request.POST)
 
         if bookingForm.is_valid():
-            booking = bookingForm.save()
+            booking = bookingForm.save(commit=False)
+            booking.seller = seller
+            booking.shop = seller.shop
+            booking.save()
+            bookingForm.save_m2m()
             for x in range(len(products)):
                 product = Product.objects.get(id=products[x])
                 product.status = Config.Booked
                 product.save()
+                # booking.products.add(product)
+                # booking.save()
                 bookedProduct = BookedProduct(booking=booking,product_id=products[x],description=description[x],price=price[x],size=size[x])
                 bookedProduct.save()
 
@@ -78,7 +84,7 @@ def booking_create(request):
         context['seller'] = Seller.objects.get(user=request.user)
         context['bookingForm'].startDate = startDate
         return render(request, "booking/booking_create.html", context)
-
+        
 class BookingList(LoginRequiredMixin, ListView):
     # permission_required = ('booking:user_view_booking')
     paginate_by = 20

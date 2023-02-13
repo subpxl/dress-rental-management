@@ -21,14 +21,24 @@
                 <div class="col-6">{{ bookingForm.mobileNumber|as_crispy_field }}</div>
                 <div class="col-6">{{ bookingForm.alternateNumber|as_crispy_field }}</div>
                 <div class="col-6">{{ bookingForm.address|as_crispy_field }}</div>
-                <div class="col-6">{{ bookingForm.referenceNo|as_crispy_field }}</div>
-                <div class="col-6">
+                <div class="col-4">{{ bookingForm.referenceNo|as_crispy_field }}</div>
+                <div class="col-4">
                   <div id="div_id_shop" class="form-group">
                     <label for="id_shop" class="">
                       Shop
                     </label>
                     <div>
                       <input disabled type="text" value="{{seller.shop}}" name="shop" maxlength="100" class="form-control textinput textInput" id="id_shop">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div id="div_id_shop" class="form-group">
+                    <label for="id_shop" class="">
+                      Seller
+                    </label>
+                    <div>
+                      <input disabled type="text" value="{{seller.name}}" name="shop" maxlength="100" class="form-control textinput textInput" id="id_shop">
                     </div>
                   </div>
                 </div>

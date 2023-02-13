@@ -171,10 +171,10 @@ def create_profile(request):
         if form.is_valid():
             print(form.cleaned_data['role'])
             if form.cleaned_data['role'] == 'ShopAdmin':
-                request.user.has_perms('booking.user_view_booking')
-                request.user.has_perms('booking.user_update_booking')
-                request.user.has_perms('booking.user_create_booking')
-                request.user.has_perms('booking.user_delete_booking')
+                request.user.has_perm('booking.user_view_booking')
+                request.user.has_perm('booking.user_update_booking')
+                request.user.has_perm('booking.user_create_booking')
+                request.user.has_perm('booking.user_delete_booking')
             form.save()
         return redirect('seller_profile')
     else:

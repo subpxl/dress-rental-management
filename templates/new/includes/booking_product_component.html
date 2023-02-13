@@ -64,11 +64,11 @@
     })
     var nameArr = '';
     function assingV(ele){
-        const inputV = ele.parentElement.previousElementSibling.childNodes[1];
+        let inputV = ele.parentElement.previousElementSibling.getElementsByTagName('input')[0];
         inputV.value = ele.options[ele.selectedIndex].text;
     }
     function showResults(ele) {
-        const searchresult = ele.parentElement.nextElementSibling.childNodes[0];
+        let searchresult = ele.parentElement.nextElementSibling.childNodes[0];
         searchresult.innerHTML = "<option style='color:red;' disabled> select a product </option>"
         var typedInput = ele.value
         console.log("typed input : ", typedInput, searchresult)
@@ -77,11 +77,11 @@
             let newarr = myProductArray.filter(a => (a.tag.match(typedInput)))
             console.log('newarr => ', newarr)
             newarr.forEach((item, index) => {
-                searchresult.innerHTML += `<option style='color:green;' class="options" value=${item.id}` + '>' + `${item.color}  ${item.tag} ` + "</option>"
+                searchresult.innerHTML += `<option style='color:green;' onclick="assingV(this.parentNode)" class="options" value=${item.id}` + '>' + `${item.color}  ${item.tag} ` + "</option>"
                 return item
             })
         } else {
-            searchresult.innerHTML = "<option style='color:red;' value=  > no products found </option>"
+            searchresult.innerHTML += "<option style='color:red;' value=  > no products found </option>"
             console.log("nothing here")
             return
         }
@@ -95,7 +95,7 @@
             + '<input type="text" class="form-control in-ak" placeholder="Type A Dress ID"'
             + 'size="30" onkeyup="showResults(this)" onfocus="showResults(this)" name=""/>'
             + '</div>'
-            + '<div class="row mr-0"><select name="products" class="form-select d-ak"></select>'
+            + '<div class="row mr-0"><select name="products" onchange="assingV(this)" class="form-select d-ak"></select>'
             + '</div>'
             + '</td>'
             + '<td><input class="form-control" placeholder="description" name ="description" ></td>'

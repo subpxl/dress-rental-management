@@ -1,8 +1,8 @@
 from math import prod
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import Category, Product
-# from booking.models import Shop
-from booking.models import Seller
+from .forms import ProductCreationForm
+from seller.models import Seller, Shop
 from django.urls import reverse_lazy
 from  django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.files import File
@@ -14,6 +14,7 @@ import urllib
 import os
 from django.contrib import messages
 from booking.models import Booking
+from django.contrib.auth.decorators import login_required
 
 class ProductList(ListView):
     paginate_by = 20
@@ -21,18 +22,50 @@ class ProductList(ListView):
     context_object_name = "product_list"
     template_name = 'product/product_list.html'
 
+@login_required
+def product_create(request):
+    seller = Seller.objects.get(user=request.user)
+    if request.method == 'POST':
+        form = ProductCreationForm(request.POST, request.FILES)
+        if form.is_valid():
+            product_obj = form.save(commit=False)
+            product_obj.shop = seller.shop
+            product_obj.save()
+            return redirect('product_list')
+        else:
+            print(form.errors)
+            messages.error(request,
+                form.errors
+            )
+            return redirect('product_create')
+    form = ProductCreationForm()
+    context = {
+        'form':form,
+    }
+    return render(request,'product/product_create.html',context)
 
-class ProductCreate(CreateView):
-    # permission_required = ('product.create_product')
-    model = Product
-    fields = "__all__"
-    template_name = "product/product_create.html"
+@login_required
+def product_update(request, pk):
+    seller = Seller.objects.get(user=request.user)
+    product = Product.objects.get(id=pk)
+    if request.method == 'POST':
+        form = ProductCreationForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('product_list')
+        else:
+            print(form.errors)
+            messages.error(request,
+                form.errors
+            )
+            return redirect('product_update', product.pk)
+    form = ProductCreationForm(instance=product)
+    context = {
+        'form':form,
+        'product':product,
+    }
+    return render(request,'product/product_create.html',context)
 
-class ProductUpdate(UpdateView):
-    # permission_required = ('product.update_product')
-    model = Product
-    fields = "__all__"
-    template_name = "product/product_create.html"
 
 
 class ProductDelete(DeleteView):

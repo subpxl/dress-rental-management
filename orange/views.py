@@ -22,6 +22,8 @@ def dashboard(request):
     try:
         revenue_list = BookedProduct.objects.filter(product__shop=seller.shop)
         revenue = revenue_list.aggregate(Sum('price'))['price__sum']
+        if not revenue:
+            revenue = 0
     except:
         pass
     try:

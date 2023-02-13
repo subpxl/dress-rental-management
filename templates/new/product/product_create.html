@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block content %}
 {% load crispy_forms_tags %}
-{% include 'includes/alert.html' %}
 <main id="main" class="main">
+{% include 'includes/alert.html' %}
   <div class="pagetitle">
     <h1>{% if form.instance.pk %}Update{% else %}Create{% endif %} Product</h1>
   </div><!-- End Page Title -->
@@ -33,19 +33,15 @@
                 {{ form.price|as_crispy_field }}
               </div>
               <div class="col-md-4">
-                {{ form.shop|as_crispy_field }}
-              </div>
-              <div class="col-md-4">
                 {{ form.gender|as_crispy_field }}
               </div>
-              <div class="col-md-5">
+              <div class="col-md-4">
                 {{ form.category|as_crispy_field }}
               </div>
-              <div class="col-md-2"></div>
-              <div class="col-md-5">
+              <div class="col-md-4">
                 {{ form.status|as_crispy_field }}
               </div>
-              <div class="col-md-12">
+              <div class="col-md-4">
                 {{ form.image|as_crispy_field }}
               </div>
               <div class="">
