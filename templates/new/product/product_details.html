@@ -49,10 +49,10 @@
           
                     {% for booking in bookings %}
                     <tr>
-                      <th scope="row"> </th>
-                      <td>{{ booking.customerName}}</td>
-                      <td>{{ booking.mobileNumber }} </td>
-                      <td>{{ booking.address }}</td>
+                      <td>{{forloop.counter}}</td>
+                      <td>{{ booking.customer.name}}</td>
+                      <td>{{ booking.customer.mobilenumber }} </td>
+                      <td>{{ booking.customer.address }}</td>
                       <td>{{ booking.startDate }}</td>
                       <td>{{ booking.endDate }}</td>
                       <td id="removeprint" style="text-align: right;"> <a class="btn btn-primary btn-md"

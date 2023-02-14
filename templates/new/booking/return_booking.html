@@ -59,10 +59,10 @@
                   <address>
                     <strong>Billed To :</strong><br />
             
-                    <strong>Name : {{ booking.customerName }}</strong><br />
-                    <strong>Address : {{ booking.address }}</strong><br />
+                    <strong>Name : {{ booking.customer.name }}</strong><br />
+                    <strong>Address : {{ booking.customer.address }}</strong><br />
             
-                    <strong>Contact No. : {{ booking.mobileNumber }} </strong><br />
+                    <strong>Contact No. : {{ booking.customer.mobilenumber }} </strong><br />
                     <strong>Alternate No.: {{ booking.alternateNumber }}</strong>
                   </address>
                 </div>
@@ -74,7 +74,7 @@
                     <strong>{{ booking.shop.address2 }}</strong> <br />
                     <strong>City : {{ booking.shop.city }}</strong><br />
                     <strong>Pincode : {{ booking.shop.pincode }}</strong><br />
-                    <strong>Contact : {{ booking.shop.mobileNumber }}</strong><br />
+                    <strong>Contact : {{ booking.shop.customer.mobilenumber }}</strong><br />
                   </address>
                 </div>
               </div>

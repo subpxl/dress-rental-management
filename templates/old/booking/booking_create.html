@@ -9,8 +9,8 @@
     <div class="row">
       <div  style="display: none" class=" col-6">{{ bookingForm.startDate|as_crispy_field }}</div>
       <div style="display: none" class=" col-6">{{ bookingForm.endDate|as_crispy_field }}</div>
-      <div class="col-6">{{ bookingForm.customerName|as_crispy_field }}</div>
-      <div class="col-6">{{ bookingForm.mobileNumber|as_crispy_field }}</div>
+      <div class="col-6">{{ bookingForm.customer.name|as_crispy_field }}</div>
+      <div class="col-6">{{ bookingForm.customer.mobilenumber|as_crispy_field }}</div>
       <div class="col-6">{{ bookingForm.alternateNumber|as_crispy_field }}</div>
       <div class="col-6">{{ bookingForm.address|as_crispy_field }}</div>
       <div class="col-6">{{ bookingForm.referenceNo|as_crispy_field }}</div>

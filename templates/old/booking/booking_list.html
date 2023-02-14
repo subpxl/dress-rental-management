@@ -31,8 +31,8 @@
 
     <li class="list-group-item">
       <div class="row">
-        <div class=" my-auto col col-2">{{ booking.customerName }}</div>
-        <div class=" my-auto col col-2">{{ booking.mobileNumber  }}</div>
+        <div class=" my-auto col col-2">{{ booking.customer.name }}</div>
+        <div class=" my-auto col col-2">{{ booking.customer.mobilenumber  }}</div>
               <div class=" my-auto col col-2">
               <ul>
                        {%  for booked_product in booking.products.all %}
@@ -67,7 +67,7 @@
     </li>
     {% endfor %}
   </ul>
-{% include 'paginate_component.html' %}
+{% include 'includes/paginate_component.html' %}
 </div>
 
 </div>

@@ -42,8 +42,8 @@
                 {% if booking_pending.available_count > 0 %}
                 <tr onclick="window.location='{% url 'booking_details'  booking_pending.pk %}'">
                   <td style="vertical-align: top;">{{forloop.counter}}</td>
-                  <td style="vertical-align: top;">{{booking_pending.customerName}}</td>
-                  <td style="vertical-align: top;">{{booking_pending.mobileNumber}}</td>
+                  <td style="vertical-align: top;">{{booking_pending.customer.name}}</td>
+                  <td style="vertical-align: top;">{{booking_pending.customer.mobilenumber}}</td>
                   <td style="vertical-align: top;">
                     <ul class="list-group list-group-flush col col-6">
                     {% for booked_product in booking_pending.bookedproduct_set.all %}
@@ -62,7 +62,7 @@
             </table>
           </div>
         </div>
-        {% include 'paginate_component.html' %}
+        {% include 'includes/paginate_component.html' %}
       </div>
     </div>
   </section>

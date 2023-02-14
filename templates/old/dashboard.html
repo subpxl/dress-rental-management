@@ -56,8 +56,8 @@
         <tbody>
             {% for booking in toSend %}
 <tr>
-            <td>{{ booking.customerName }}</td>
-            <td>{{ booking.mobileNumber }}</td>
+            <td>{{ booking.customer.name }}</td>
+            <td>{{ booking.customer.mobilenumber }}</td>
             <td>
             <ul>
 
@@ -93,8 +93,8 @@
         <tbody>
             {% for booking in toRecieve %}
 <tr>
-            <td>{{ booking.customerName }}</td>
-            <td>{{ booking.mobileNumber }}</td>
+            <td>{{ booking.customer.name }}</td>
+            <td>{{ booking.customer.mobilenumber }}</td>
                 <td>
                 <ul>
 

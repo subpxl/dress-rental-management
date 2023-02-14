@@ -2,7 +2,8 @@
 
 <main id="main" class="main">
   <div class="pagetitle mb-3">
-    <h1>Categories <a href="{% url 'category_create' %}" style="float: right;" class="btn btn-md btn-primary">Create Category</a></h1>
+    <h1>Categories <a href="{% url 'category_create' %}" style="float: right;" class="btn btn-md btn-primary">Create
+        Category</a></h1>
   </div>
   <section class="section dashboard">
     <div class="row">
@@ -11,12 +12,12 @@
           <div class="card-body pb-0">
             <h5 class="card-title">Category List</h5>
 
-            <table class="table table-borderless table-hover" >
+            <table class="table table-borderless table-hover">
               <thead>
                 <tr>
                   <th style="width:10%">#</th>
-                  <th style="width:20%">Name</th>                  
-                  <th style="width:20%">Product Count</th>                  
+                  <th style="width:20%">Name</th>
+                  <th style="width:20%">Product Count</th>
                   <th style="width:50%;text-align: right;"> <span style="margin-right: 5%;">Action</span></th>
                 </tr>
               </thead>
@@ -25,10 +26,11 @@
                 <tr onclick="window.location='{% url 'category_update'  category.pk %}'">
                   <td>{{forloop.counter}}</td>
                   <td>{{category.name}}</td>
-                  <td>{{category.get_prod_count}}</td>                  
+                  <td>{{category.get_prod_count}}</td>
 
                   <td style="text-align: right;">
-                    <a href="{% url 'category_update'  category.pk %}" style="margin-right: 5%;" class="btn btn-md"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a href="{% url 'category_update'  category.pk %}" style="margin-right: 5%;" class="btn btn-md"><i
+                        class="fa fa-pencil" aria-hidden="true"></i></a>
                   </td>
                 </tr>
                 {% endfor %}
@@ -36,6 +38,7 @@
             </table>
           </div>
         </div>
+        {% include 'includes/paginate_component.html' %}
       </div>
     </div>
   </section>

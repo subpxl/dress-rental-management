@@ -17,6 +17,15 @@ class Shop(models.Model):
     # def get_absolute_url(self):
     #     return reverse("shop_list")
 
+class Branch(models.Model):
+    main_shop = models.ForeignKey(Shop,on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+    address2 = models.CharField(max_length=100,null=True,blank=True)
+    city = models.CharField(max_length=100)
+    pincode = models.CharField(max_length=100)
+    mobileNumber= models.CharField(max_length=100)
+
 class Seller(models.Model):
     name = models.CharField(max_length=50, unique=True)
     user = models.OneToOneField(

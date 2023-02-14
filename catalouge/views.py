@@ -17,7 +17,7 @@ from booking.models import Booking
 from django.contrib.auth.decorators import login_required
 
 class ProductList(ListView):
-    paginate_by = 20
+    paginate_by = 1
     model = Product
     context_object_name = "product_list"
     template_name = 'product/product_list.html'
@@ -65,6 +65,16 @@ def product_update(request, pk):
         'product':product,
     }
     return render(request,'product/product_create.html',context)
+
+@login_required
+def product_search(request):
+    product = request.GET.get('product')
+    try:
+        product =Product.objects.get(tag=product)
+        return redirect('product_detail', product.pk)
+    except:
+        messages.error(request, f"{product} tag not found")
+        return redirect('product_list')
 
 
 
@@ -120,6 +130,7 @@ def product_bulk_upload(request):
 
 
 class CategoryList(ListView):
+    paginate_by = 1
     model = Category
     context_object_name = "category_list"
     template_name = 'category/category_list.html'

@@ -1,43 +1,57 @@
 {% extends 'base.html' %} {% block content %}
 <main id="main" class="main">
   <div class="pagetitle mb-3">
-    <h1>Products <a href="{% url 'product_create' %}" style="float: right;" class="btn btn-md btn-primary">Create Product</a></h1>
+    <h1>Products <a href="{% url 'product_create' %}" style="float: right;" class="btn btn-md btn-primary">Create
+        Product</a></h1>
   </div>
   <section class="section dashboard">
     <div class="row">
       <div class="col-12">
+        <form class="form-inline" id="searchForm" action="{% url 'product_search' %}" method="get" >
+          <div class="row justify-content-around">
+            <div class="col-10">
+              <input required placeholder="search product tag" id="resultselect" class="form-control" name="product" >
+            </div>
+            <div class="col-2">
+              <button class="btn btn-primary btn-md" >Go</button>
+            </div>
+          </div>
+      </form>
         <div class="card top-selling overflow-auto">
           <div class="card-body pb-0">
             <h5 class="card-title">Product List</h5>
-
             <table class="table table-borderless table-hover">
               <thead>
-                  <th style="width:10%">Image</th>
-                  <th style="width:10%;">Product</th>
-                  <th style="width:10%">Tag</th>
-                  <th style="width:10%">Status</th>
-                  <th style="width:50%;text-align: right;"> <span style="margin-right: 5%;">Action</span></th>
+                <th style="width:10%">Image</th>
+                <th style="width:10%;">Product</th>
+                <th style="width:10%">Tag</th>
+                <th style="width:10%">Status</th>
+                <th style="width:50%;text-align: right;"> <span style="margin-right: 5%;">Action</span></th>
                 </tr>
               </thead>
               <tbody>
                 {% for product in product_list %}
                 <!-- <a href="{% url 'product_detail'  product.pk %}"> -->
                 <tr onclick="window.location='{% url 'product_detail'  product.pk %}'">
-                    <th scope="row"><a href="#"><img src="{{product.image.url}}" height="60px" width="160px" alt=""></a></th>
-                    <td>{{product.name}}</td>
-                    <td>{{product.tag}}</td>
-                    <td>{{product.status}}</td>
+                  <th scope="row"><a href="#"><img src="{{product.image.url}}" height="60px" width="160px" alt=""></a>
+                  </th>
+                  <td>{{product.name}}</td>
+                  <td>{{product.tag}}</td>
+                  <td>{{product.status}}</td>
                   <td style="text-align: right;">
-                    <a href="{% url 'product_detail'  product.pk %}" class="btn btn-md"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                    <a href="{% url 'product_update'  product.pk %}" class="btn btn-md"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a href="{% url 'product_detail'  product.pk %}" class="btn btn-md"><i class="fa fa-eye"
+                        aria-hidden="true"></i></a>
+                    <a href="{% url 'product_update'  product.pk %}" class="btn btn-md"><i class="fa fa-pencil"
+                        aria-hidden="true"></i></a>
                   </td>
                 </tr>
-              <!-- </a> -->
+                <!-- </a> -->
                 {% endfor %}
               </tbody>
             </table>
           </div>
-        </div>  
+        </div>
+        {% include 'includes/paginate_component.html' %}
       </div>
     </div>
   </section>

@@ -187,7 +187,7 @@
                     {% for booking in toSend %}
                     <tr>
                       <td style="vertical-align: top;">{{forloop.counter}}</td>
-                      <th scope="row"><a href="#">{{booking.customerName}}</a></th>
+                      <th scope="row"><a href="#">{{booking.customer.name}}</a></th>
                       <td style="vertical-align: top;">Rs. {{booking.totalAmount}}</td>
                       <td style="vertical-align: top;">
                         <ul class="list-group list-group-flush col col-10">
@@ -233,7 +233,7 @@
                     {% for booking in toRecieve %}
                     <tr>
                       <td style="vertical-align: top;">{{forloop.counter}}</td>
-                      <th scope="row"><a href="#">{{booking.customerName}}</a></th>
+                      <th scope="row"><a href="#">{{booking.customer.name}}</a></th>
                       <td style="vertical-align: top;">Rs. {{booking.totalAmount}}</td>
                       <td style="vertical-align: top;">
                         <ul class="list-group list-group-flush col col-10">
@@ -281,7 +281,7 @@
                     {% for booking in top_bookings %}
                     <tr>
                       <td style="vertical-align: top;">{{forloop.counter}}</td>
-                      <th scope="row"><a href="#">{{booking.customerName}}</a></th>
+                      <th scope="row"><a href="#">{{booking.customer.name}}</a></th>
                       <td style="vertical-align: top;">Rs. {{booking.amountDue}}</td>
                       <td style="vertical-align: top;">
                         <ul class="list-group list-group-flush col col-10">
