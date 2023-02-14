@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Register orange</title>
+  <title>Register Xail</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -32,12 +32,7 @@
   <!-- Template Main CSS File -->
   <link href="{% static '/css/style.css' %}" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: NiceAdmin - v2.5.0
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+
 </head>
 
 <body>
@@ -70,24 +65,24 @@
                     {% csrf_token %}
                     <div class="mb-3">
                       <label class="form-label">Business Name</label>
-                      <input class="form-control" placeholder="Your Business Name" type="text" name='bus_name' />
+                      <input required class="form-control" placeholder="Your Business Name" type="text" name='bus_name' />
                     </div>
                     <div class="mb-3">
                       <label class="form-label">First Name</label>
-                      <input class="form-control" placeholder="Your First Name" type="text" name='f_name' />
+                      <input required class="form-control" placeholder="Your First Name" type="text" name='f_name' />
                     </div>
                     <div class="mb-3">
                       <label class="form-label">Last Name</label>
-                      <input class="form-control" placeholder="Your Last Name" type="text" name='l_name' />
+                      <input required class="form-control" placeholder="Your Last Name" type="text" name='l_name' />
                     </div>
                     <div class="mb-3">
                       <label class="form-label">Email</label>
-                      <input class="form-control" placeholder="Your email" type="text" name='email' />
+                      <input required class="form-control" placeholder="Your email" type="text" name='email' />
                     </div>
                     <!-- form-group// -->
                     <div class="mb-3">
                       <label class="form-label">Create password</label>
-                      <input class="form-control" placeholder="Password" type="password" name='password' />
+                      <input required class="form-control" placeholder="Password" type="password" name='password' />
                     </div>
                     <button type="submit" class="text-center p-2 mx-auto d-block mb-5 btn btn-primary">Register Here</a>
                   </form>

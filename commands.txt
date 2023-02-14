@@ -1,5 +1,13 @@
 cd /home/django/orange/
 git pull
+source venv/bin/activate
+pip install -r requirements.txt
+python3 manage.py migrate accounts
+python3 manage.py migrate 
+set DJANGO_SUPERUSER_PASSWORD=somepassword ; python3 manage.py createsuperuser --no-input --first_name=don --last_name=cj --username=don  --email=support@xail.in
+
 service gunicorn restart
 service nginx restart
 systemctl daemon-reload
+
+

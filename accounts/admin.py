@@ -17,4 +17,3 @@ class UserAdminBase(UserAdmin):
 admin.site.unregister(Group)
 # Register your models here.
 admin.site.register(User, UserAdminBase)
-admin.site.register(Address)

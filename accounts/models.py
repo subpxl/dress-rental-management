@@ -98,10 +98,3 @@ class User(AbstractBaseUser):
 # class Customer User
 
 
-
-class Address(models.Model):
-    address = models.CharField(max_length=100)
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
-
-    def _str_(self):
-        return f'{self.name}'
