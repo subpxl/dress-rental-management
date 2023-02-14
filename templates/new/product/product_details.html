@@ -35,13 +35,13 @@
                 <table class="table table-hover">
                   <thead class="thead-dark  " style="background-color: #212529; color:white;border:2px white">
                     <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Customer Name</th>
-                      <th scope="col">Mobile Number</th>
-                      <th scope="col">Address</th>
-                      <th scope="col">Date Of Booking</th>
-                      <th scope="col">Date Of Return</th>
-                      <th scope="col" id="removeprint">View</th>
+                      <th style="width:10%;">#</th>
+                      <th style="width:10%;">Customer Name</th>
+                      <th style="width:10%;">Mobile Number</th>
+                      <th style="width:10%;">Address</th>
+                      <th style="width:10%;">Date Of Booking</th>
+                      <th style="width:10%;">Date Of Return</th>
+                      <th style="width:40%;text-align: right;"> <span style="margin-right: 2%;">Action</span></th>
           
                     </tr>
                   </thead>
@@ -55,11 +55,9 @@
                       <td>{{ booking.address }}</td>
                       <td>{{ booking.startDate }}</td>
                       <td>{{ booking.endDate }}</td>
-          
-                      <td id="removeprint"> <a class="btn btn-primary btn-md"
+                      <td id="removeprint" style="text-align: right;"> <a class="btn btn-primary btn-md"
                           href="{% url 'booking_details' booking.pk %}">View</a></td>
                     </tr>
-          
                     {% endfor %}
                   </tbody>
                 </table>

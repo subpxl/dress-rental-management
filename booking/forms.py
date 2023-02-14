@@ -1,6 +1,6 @@
 
 from django import forms
-from .models import  Booking
+from .models import  Booking, Customer
 from catalouge.models import  Product
 
 
@@ -19,11 +19,20 @@ class BookedProductForm(forms.ModelForm):
             visible.field.widget.attrs['class'] = 'form-control'
         # self.queryset = Product.objects.filter()
 
+class CustomerForm(forms.ModelForm):
+    class Meta:
+        model = Customer
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super(CustomerForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
 
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
-        exclude = ['status','shop','seller']
+        exclude = ['status','shop','seller','customer']
         widgets = {
             'startDate': DateInput(),
             'endDate': DateInput(),
@@ -38,14 +47,12 @@ class BookingForm(forms.ModelForm):
 class BookingReturnForm(forms.ModelForm):
     class Meta:
         model = Booking
-        fields =['startDate','customerName','products','mobileNumber','endDate','amountPaid','status','note']
+        fields =['startDate','products','endDate','amountPaid','status','note']
         widgets = {
             'startDate': DateInput(),
             'endDate': DateInput(),
             'products': forms.SelectMultiple,
             'status':forms.TextInput(attrs={'readonly': 'readonly'}),
-            'customerName':forms.TextInput(attrs={'readonly': 'readonly'}),
-            'mobileNumber': forms.TextInput(attrs={'readonly': 'readonly'}),
             'startDate': forms.TextInput(attrs={'readonly': 'readonly'}),
             'endDate': forms.TextInput(attrs={'readonly': 'readonly'}),
         }

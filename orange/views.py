@@ -13,6 +13,8 @@ from catalouge.models import Product
 def dashboard(request):
     template_name = "dashboard.html"
     is_approved = False
+    today = datetime.today().strftime("%d %b, %Y - %A")
+    print(today)
     if request.user.is_authenticated and request.user.is_active:
         is_approved = True
     if not is_approved:
@@ -20,8 +22,8 @@ def dashboard(request):
     seller = Seller.objects.get(user = request.user)
     revenue = 0
     try:
-        revenue_list = BookedProduct.objects.filter(product__shop=seller.shop)
-        revenue = revenue_list.aggregate(Sum('price'))['price__sum']
+        revenue_list = Booking.objects.filter(shop=seller.shop)
+        revenue = revenue_list.aggregate(Sum('amountPaid'))['amountPaid__sum']
         if not revenue:
             revenue = 0
     except:
@@ -49,6 +51,7 @@ def dashboard(request):
             toRecieve = None
         context = {
         'revenue':revenue,
+        'today':today,
         'toSend':toSend,
         'toRecieve':toRecieve,
         'is_approved':is_approved
@@ -62,6 +65,7 @@ def dashboard(request):
         toRecieve =None
     context = {
         'revenue':revenue,
+        'today':today,
         'toSend':toSend,
         'toRecieve':toRecieve,
         'is_approved':is_approved

@@ -21,10 +21,7 @@ class Customer(models.Model):
         return reverse("customer_list")
 
 class Booking(models.Model):
-    customerName = models.CharField(max_length=100)
-    mobileNumber = models.CharField(max_length=100)
-    alternateNumber = models.CharField(max_length=100,blank=True,null=True)
-    address = models.CharField(max_length=100,blank=True,null=True)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     orderdate = models.DateField(auto_now_add=True)
     startDate = models.DateField()
     endDate = models.DateField()

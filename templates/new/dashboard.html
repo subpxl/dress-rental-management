@@ -4,7 +4,7 @@
 <main id="main" class="main">
 
   <div class="pagetitle mb-5">
-    <h1>Dashboard</h1>
+    <h1>{{today}}</h1>
     {% if is_approved %}
     <form class="my-3" action="{% url 'dashboard'  %}" method="post">
       {% csrf_token %}

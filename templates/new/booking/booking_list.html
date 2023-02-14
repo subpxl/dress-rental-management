@@ -43,8 +43,8 @@
                 {% for booking in booking_list %}
                 <tr onclick="window.location='{% url 'booking_details'  booking.pk %}'">
                   <td style="vertical-align: top;">{{forloop.counter}}</td>
-                  <td style="vertical-align: top;">{{booking.customerName}}</td>
-                  <td style="vertical-align: top;">{{booking.mobileNumber}}</td>
+                  <td style="vertical-align: top;">{{booking.customer.name}}</td>
+                  <td style="vertical-align: top;">{{booking.customer.mobilenumber}}</td>
                   <td style="vertical-align: top;">
                     <ul class="list-group list-group-flush col col-10">
                       {%  for booked_product in booking.products.all %}

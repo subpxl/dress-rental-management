@@ -7,7 +7,7 @@ from django.shortcuts import redirect, render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.forms import formset_factory
 from .models import Booking,BookedProduct
-from .forms import  BookingForm, BookedProductForm, BookingReturnForm
+from .forms import CustomerForm,  BookingForm, BookedProductForm, BookingReturnForm
 from django.contrib import  messages
 from config.config import  Config
 # from django.contrib.auth.decorators import  permission_required
@@ -47,18 +47,21 @@ def booked_product_search(request):
 def booking_create(request):
     seller = Seller.objects.get(user = request.user)
     bookingForm = BookingForm()
+    customerForm = CustomerForm()
     ProductFormSet = formset_factory(BookedProductForm, extra=2)
     formset = ProductFormSet()
-    context = {'bookingForm': bookingForm, 'formset': formset}
+    context = {'bookingForm': bookingForm, 'formset': formset,'customerForm':customerForm}
     if request.method == "POST":
         products = request.POST.getlist("products")
         description = request.POST.getlist("description")
         price = request.POST.getlist("price")
         size = request.POST.getlist("size")
         bookingForm = BookingForm(request.POST)
-
-        if bookingForm.is_valid():
+        customerForm = CustomerForm(request.POST)
+        if bookingForm.is_valid() and customerForm.is_valid():
+            customer = customerForm.save()
             booking = bookingForm.save(commit=False)
+            booking.customer = customer
             booking.seller = seller
             booking.shop = seller.shop
             booking.save()
