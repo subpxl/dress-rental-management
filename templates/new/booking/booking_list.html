@@ -37,7 +37,8 @@
                   <th style="width:12%;">Products</th>
                   <th style="width:10%;">Booking Date</th>
                   <th style="width:10%;">Return Date</th>
-                  <th style="width:45%;text-align: right;"> <span style="margin-right: 5%;">Action</span></th>
+                  <th style="width:10%;">Branch</th>
+                  <th style="width:35%;text-align: right;"> <span style="margin-right: 5%;">Action</span></th>
                 </tr>
               </thead>
               <tbody>
@@ -56,6 +57,7 @@
                   </td>
                   <td style="vertical-align: top;">{{booking.startDate}}</td>
                   <td style="vertical-align: top;">{{booking.endDate}}</td>
+                  <td style="vertical-align: top;">{{booking.branch}}</td>
                   <td style="text-align: right;">
                     <a href="{% url 'booking_details'  booking.pk %}" class="btn btn-md"><i class="fa fa-eye"
                         aria-hidden="true"></i></a>

@@ -7,6 +7,7 @@ urlpatterns = [
     path('search/', booked_product_search, name="booked_product_search"),
     path("booking/", BookingList.as_view(), name="booking_list"),
     path("booking/<int:pk>/", booking_details, name="booking_details"),
+    path("booking/search/", booking_search, name="booking_search"),
     path("booking/add/", booking_create, name="booking_add"),
     path("booking/update/<int:pk>/", booking_update, name="booking_update"),
     path("booking/delete/<int:pk>/", booking_delete, name="booking_delete"),

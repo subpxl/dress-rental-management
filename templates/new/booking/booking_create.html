@@ -12,7 +12,7 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Customer</h5>
-            <form method="POST"  enctype="multipart/form-data"  id="bookigFrom" >
+            <form method="POST"  enctype="multipart/form-data"  id="bookigFrom" onsubmit="return confirm('Do you really want to submit the form?');">
               {% csrf_token %}
               <div class="row">
                 <div  style="display: none" class=" col-6">{{ bookingForm.startDate|as_crispy_field }}</div>
@@ -32,6 +32,7 @@
                     </div>
                   </div>
                 </div>
+                <input type="hidden" name="branch" maxlength="100" class="form-control textinput textInput" id="id_branch">
                 <div class="col-4">
                   <div id="div_id_shop" class="form-group">
                     <label for="id_shop" class="">
@@ -51,7 +52,7 @@
                 <div class="col-4">{{ bookingForm.amountPaid|as_crispy_field }}</div>
                 <div onclick="doMath()" class="col-4">{{ bookingForm.amountDue|as_crispy_field }}</div>
               </div>
-              <input class="btn btn-primary btn mt-3" type="submit" value="Submit" />
+              <input class="btn btn-primary btn mt-3" type="submit" value="Submit" id="booking_form_ak" />
             </form>
           </div>
         </div>

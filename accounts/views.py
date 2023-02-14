@@ -7,7 +7,7 @@ from django.utils.encoding import force_bytes
 from django.utils.encoding import force_str
 from django.views import View
 from config.config import Config
-from seller.models import Seller, Shop
+from seller.models import Seller, Shop, Branch
 from django.contrib.sites.shortcuts import get_current_site
 from accounts.models import User
 from django.contrib import auth, messages
@@ -51,6 +51,8 @@ def register(request):
         user.save()
         shop = Shop(name=bus_name)
         shop.save()
+        branch = Branch(name=bus_name,main_shop=shop)
+        branch.save()
         seller = Seller(name=bus_name,role=Config.ShopOwner,shop=shop,user=user)
         seller.save()
         print('Seller created successfully')

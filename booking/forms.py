@@ -32,7 +32,7 @@ class CustomerForm(forms.ModelForm):
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
-        exclude = ['status','shop','seller','customer']
+        exclude = ['status','branch','seller','customer']
         widgets = {
             'startDate': DateInput(),
             'endDate': DateInput(),

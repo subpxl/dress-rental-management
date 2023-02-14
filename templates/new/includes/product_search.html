@@ -8,6 +8,14 @@
             <div class="col-6 col-lg-2 form-group">
                 <label>Return Date</label>
                 <input type="date" class=" form-control" name="endDate" id="endDate" required>
+            </div><div class="col-6 col-lg-2 form-group">
+                <label>Branch</label>
+                <select class=" form-control" name="branch" id='branch_pk' required >
+                    <option disabled selected>Select a branch</option>
+                    {% for branch in seller.shop.branch_set.all %}
+                    <option value="{{branch.id}}">{{branch.name}}</option>
+                    {% endfor %}
+                </select>
             </div>
             <div class="col-4 form-group mt-1">
                 <button class="btn btn mt-3 btn btn-primary" id="submitDate" type="submit">Start Booking </button>

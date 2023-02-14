@@ -1,7 +1,7 @@
 import requests
 from decouple import config
 
-Token = config('INTERAKT_TOKEN')
+Token = "SlhPZ1dXREMtQkVzWDlNWk9QWG1ZLTd0bGFYajZ4REFVRUdFMlBaOFVPbzo="
 Url = "https://api.interakt.ai/v1/public/track/events/"
 UserCreateUrl = "https://api.interakt.ai/v1/public/track/users/"
 
@@ -47,3 +47,5 @@ def create_user():
     }
     x = requests.post(UserCreateUrl, json=myobj, headers=headers)
     print(x.text)
+
+create_event()

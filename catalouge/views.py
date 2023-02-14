@@ -2,7 +2,7 @@ from math import prod
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import Category, Product
 from .forms import ProductCreationForm
-from seller.models import Seller, Shop
+from seller.models import Seller, Shop, Branch
 from django.urls import reverse_lazy
 from  django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.files import File
@@ -17,7 +17,7 @@ from booking.models import Booking
 from django.contrib.auth.decorators import login_required
 
 class ProductList(ListView):
-    paginate_by = 1
+    paginate_by = 20
     model = Product
     context_object_name = "product_list"
     template_name = 'product/product_list.html'
@@ -29,7 +29,8 @@ def product_create(request):
         form = ProductCreationForm(request.POST, request.FILES)
         if form.is_valid():
             product_obj = form.save(commit=False)
-            product_obj.shop = seller.shop
+            product_obj.branch = product_obj.category.branch
+            product_obj.seller = seller
             product_obj.save()
             return redirect('product_list')
         else:
@@ -115,6 +116,7 @@ def product_bulk_upload(request):
                 category_id=category.id,
                 color=column[3],
                 size=column[4],
+                branch_id=category.branch.id,
                 seller_id=seller.id,
                 gender=column[6],
                 description=column[7],
@@ -130,7 +132,7 @@ def product_bulk_upload(request):
 
 
 class CategoryList(ListView):
-    paginate_by = 1
+    paginate_by = 20
     model = Category
     context_object_name = "category_list"
     template_name = 'category/category_list.html'
@@ -141,6 +143,11 @@ class CategoryCreate( CreateView):
     fields = "__all__"
     template_name = "category/category_create.html"
 
+    def get_form(self, *args, **kwargs):
+        form = super(CategoryCreate, self).get_form(*args, **kwargs)
+        seller = Seller.objects.get(user = self.request.user)
+        form.fields['branch'].queryset = Branch.objects.filter(main_shop=seller.shop)
+        return form
 
 class CategoryUpdate( UpdateView):
     # permission_required = ('category.update_category')
@@ -148,6 +155,11 @@ class CategoryUpdate( UpdateView):
     fields = "__all__"
     template_name = "category/category_create.html"
 
+    def get_form(self, *args, **kwargs):
+        form = super(CategoryUpdate, self).get_form(*args, **kwargs)
+        seller = Seller.objects.get(user = self.request.user)
+        form.fields['branch'].queryset = Branch.objects.filter(main_shop=seller.shop)
+        return form
 
 class CategoryDelete( DeleteView):
     # permission_required = ('category.delete_category')

@@ -25,9 +25,9 @@
             <td>
                 <div class="row mr-0">
                     <input type="text" class="form-control in-ak" placeholder="Type A Dress ID" size="30"
-                        onkeyup="showResults(this)" onfocus="showResults(this)" name="" />
+                        onkeyup="showResults(this)" onfocus="showResults(this)" name="" required/>
                 </div>
-                <div class="row mr-0"><select onchange="assingV(this)" name="products" class="form-select d-ak"></select>
+                <div class="row mr-0"><select onchange="assingV(this)" name="products" required class="form-select d-ak"></select>
                 </div>
             </td>
             <td><input class="form-control" placeholder="description" name="description"></td>
@@ -49,6 +49,7 @@
     dateForm = document.getElementById('dateForm')
     dateForm.addEventListener("submit", async (e) => {
         e.preventDefault()
+        document.getElementById('id_branch').value = document.getElementById('branch_pk').value
         payload = new FormData(dateForm)
         fetch("{% url 'booked_product_search' %}", {
             method: "POST",

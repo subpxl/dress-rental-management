@@ -2,7 +2,7 @@ from urllib import request
 from .models import Customer
 from django.urls import reverse_lazy
 from datetime import datetime
-from seller.models import Seller
+from seller.models import Seller, Branch
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
@@ -27,13 +27,9 @@ def booked_product_search(request):
     if request.method == "POST":
         startDate = request.POST.get('startDate')
         endDate = request.POST.get('endDate')
-        # found_product = Product.objects.exclude(
-        #     ( Q(booking__startDate__gte=startDate) & Q(booking__startDate__lte=endDate)
-        #     | Q(booking__endDate__lte=endDate) & Q(booking__startDate__gte=startDate))
-        #     | Q(status__contains=Config.NotAvailable)
-        # ).values()
+        branch = request.POST.get('branch')
 
-        found_product = Product.objects.filter(status='Available').values()
+        found_product = Product.objects.filter(status='Available', branch__id = branch).values()
         list_of_dicts = list(found_product)
         data = json.dumps(list_of_dicts)
         return HttpResponse(data, content_type="application/json")
@@ -59,12 +55,14 @@ def booking_create(request):
         size = request.POST.getlist("size")
         bookingForm = BookingForm(request.POST)
         customerForm = CustomerForm(request.POST)
+        branch_id = int(request.POST.get('branch'))
         if bookingForm.is_valid() and customerForm.is_valid():
             customer = customerForm.save()
             booking = bookingForm.save(commit=False)
             booking.customer = customer
+            booking.branch = Branch.objects.get(id=branch_id)
             booking.seller = seller
-            booking.shop = seller.shop
+            booking.orderNo = booking.branch.name[:4] + '_' + booking.orderNo
             booking.save()
             bookingForm.save_m2m()
             for x in range(len(products)):
@@ -91,7 +89,7 @@ def booking_create(request):
         
 class BookingList(LoginRequiredMixin, ListView):
     # permission_required = ('booking:user_view_booking')
-    paginate_by = 1
+    paginate_by = 20
     model = Booking
     context_object_name = "booking_list"
     
@@ -109,7 +107,7 @@ class BookingList(LoginRequiredMixin, ListView):
 
     def get(self,request):
         bookings = Booking.objects.all().exclude(status=Config.Returned)
-        paginator = Paginator(bookings, 1)
+        paginator = Paginator(bookings, 20)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         context = {
@@ -127,6 +125,18 @@ def booking_details(request,pk):
         'booked_product_list':booked_product_list
     }
     return render(request,'booking/booking_details.html',context)
+
+def booking_search(request):
+    if request.method == 'POST':
+        pk = request.POST.get('id_booking_pk')
+        booking = Booking.objects.get(id=pk)
+        booked_product_list = BookedProduct.objects.filter(booking=pk)
+        context ={
+            'booking':booking,
+            'booked_product_list':booked_product_list
+        }
+        return render(request,'booking/booking_details.html',context)
+    return redirect('booking_list')
 
 # @permission_required('booking.user_update_booking')
 def booking_update(request, pk):
@@ -177,7 +187,7 @@ def return_list(request):
         endDate = request.POST.get("endDate","")
         return_list = Booking.objects.filter(startDate__range=[startDate,endDate],status=Config.Returned)
         # return_list = Booking.objects.filter( status=Config.Returned)
-        paginator = Paginator(return_list, 1)
+        paginator = Paginator(return_list, 20)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         context = {
@@ -189,7 +199,7 @@ def return_list(request):
         return render(request, 'booking/return_list.html', context)
     else:
         return_list = Booking.objects.filter(status=Config.Returned)
-        paginator = Paginator(return_list, 1)
+        paginator = Paginator(return_list, 20)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         context = {
@@ -205,7 +215,7 @@ def pending_list(request):
         startDate = request.POST.get("startDate","")
         endDate = request.POST.get("endDate","")
         pending_list = Booking.objects.filter(startDate__range=[startDate,endDate]).exclude(status=Config.Returned)
-        paginator = Paginator(pending_list, 1)
+        paginator = Paginator(pending_list, 20)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         context = {
@@ -217,7 +227,7 @@ def pending_list(request):
         return render(request, 'booking/pending_list.html', context)
     else:
         pending_list = Booking.objects.all().exclude(status=Config.Returned)
-        paginator = Paginator(pending_list, 1)
+        paginator = Paginator(pending_list, 20)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         context = {
@@ -234,7 +244,7 @@ def send_list(request):
         send_list = Booking.objects.filter(startDate__range=[startDate,endDate]).exclude(status=Config.Returned)
     else:
         send_list = Booking.objects.filter(startDate__gte=datetime.today()).exclude(status=Config.Returned)
-    paginator = Paginator(send_list, 1)
+    paginator = Paginator(send_list, 20)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
@@ -251,7 +261,7 @@ def receive_list(request):
         receive_list = Booking.objects.filter(endDate__range=[startDate,endDate]).exclude(status=Config.Returned)
     else:
         receive_list = Booking.objects.filter(endDate__gte=datetime.today()).exclude(status=Config.Returned)
-    paginator = Paginator(receive_list, 1)
+    paginator = Paginator(receive_list, 20)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
@@ -261,7 +271,7 @@ def receive_list(request):
     return  render(request,'booking/receive_list.html',context)
 
 class CustomerList(ListView):
-    paginate_by = 1
+    paginate_by = 20
     model = Customer
     context_object_name = "customer_list"
     template_name = 'customer/customer_list.html'

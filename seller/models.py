@@ -26,6 +26,9 @@ class Branch(models.Model):
     pincode = models.CharField(max_length=100)
     mobileNumber= models.CharField(max_length=100)
 
+    def __str__(self):
+        return "%s " % (self.name)
+        
 class Seller(models.Model):
     name = models.CharField(max_length=50, unique=True)
     user = models.OneToOneField(

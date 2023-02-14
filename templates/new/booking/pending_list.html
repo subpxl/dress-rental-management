@@ -34,6 +34,7 @@
                   <th style="width:10%;">Products</th>
                   <th style="width:10%;">Booking Date</th>
                   <th style="width:10%;">Return Date</th>
+                  <th style="width:45%;text-align: right;"><span style="margin-right: 5%;">Action</span></th>
                   <!-- <th style="width:10%;">Actions</th> -->
                 </tr>
               </thead>
@@ -55,6 +56,7 @@
                   </td>
                   <td style="vertical-align: top;">{{booking_pending.startDate}}</td>
                   <td style="vertical-align: top;">{{booking_pending.endDate}}</td>
+                  <td style="vertical-align: top;text-align: right;"><a href="tel:{{booking_pending.customer.mobilenumber}}" style="margin-right: 5%;" class="btn btn-sm btn-success">Call</a> </td>
                 </tr>
                 {% endif %}
                 {% endfor %}
