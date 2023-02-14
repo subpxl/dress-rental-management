@@ -77,8 +77,8 @@ def login_view(request):
             if user.role == 1:
                 return redirect("dashboard")
         else:
+            messages.info(request, "Username or password is incorrect")
             redirect('login')
-            messages.info(request, "username or password is incorrect")
     return render(request, "accounts/login_page.html", {})
 
 def logout(request):
