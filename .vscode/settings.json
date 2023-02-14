@@ -1,0 +1,15 @@
+{
+  "files.exclude": {
+    "requirements.txt": true,
+    "manage.py": true,
+    ".gitignore": true,
+    ".env.sample": true,
+    ".env": true,
+    "venv": true,
+    ".vscode": true,
+    "api": true,
+    "config": true,
+    "media": true,
+    "static": true
+  }
+}
