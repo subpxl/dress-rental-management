@@ -24,15 +24,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for customer in customer_list %}
-                                <tr onclick="window.location='{% url 'customer_update'  customer.pk %}'">
+                                {% for booking in customer_list %}
+                                <tr onclick="window.location='{% url 'customer_update'  booking.customer.pk %}'">
                                     <td>{{forloop.counter}}</td>
-                                    <td>{{customer.name}}</td>
-                                    <td>{{customer.address}}</td>
-                                    <td>{{customer.mobilenumber}}</td>
-                                    <td>{{customer.alternatenumber}}</td>
+                                    <td>{{booking.customer.name}}</td>
+                                    <td>{{booking.customer.address}}</td>
+                                    <td>{{booking.customer.mobilenumber}}</td>
+                                    <td>{{booking.customer.alternatenumber}}</td>
                                     <td style="text-align: right;">
-                                        <a href="{% url 'customer_update'  customer.pk %}" style="margin-right: 5%;" class="btn btn-md"><i
+                                        <a href="{% url 'customer_update'  booking.customer.pk %}" style="margin-right: 5%;" class="btn btn-md"><i
                                                 class="fa fa-pencil" aria-hidden="true" ></i></a>
                                     </td>
                                 </tr>

@@ -1,0 +1,49 @@
+{% extends 'base.html' %} {% block content %}
+
+<main id="main" class="main">
+  <div class="pagetitle mb-3">
+    <h1>Branches <a href="{% url 'branch_create' %}" style="float: right;" class="btn btn-md btn-primary">Create Branch</a></h1>
+  </div>
+  <section class="section dashboard">
+    <div class="row">
+      <div class="col-12">
+        <div class="card top-selling overflow-auto">
+          <div class="card-body pb-0">
+            <h5 class="card-title">Branch List</h5>
+
+            <table class="table table-borderless table-hover" >
+              <thead>
+                <tr>
+                  <th style="width:10%">#</th>
+                  <th style="width:10%">Name</th>
+                  <th style="width:10%">Shop</th>   
+                  <th style="width:10%">Address</th>    
+                  <th style="width:10%">Contact No.</th>                
+                  <th style="width:50%;text-align: right;"> <span style="margin-right: 5%;">Action</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for branch in branch_list %}
+                <tr onclick="window.location='{% url 'branch_details'  branch.pk %}'">
+                  <td>{{forloop.counter}}</td>
+                  <td>{{branch.name}}</td>
+                  <td>{{branch.main_shop.name}}</td>
+                  <td>{{branch.address}}</td>
+                  <td>{{branch.mobileNumber}}</td>
+                  <td style="text-align: right;">
+                    <a href="{% url 'branch_details'  branch.pk %}" class="btn btn-md"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                    <a href="{% url 'branch_update'  branch.pk %}" class="btn btn-md"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      {% include 'includes/paginate_component.html' %}
+    </div>
+  </section>
+</main>
+
+{% endblock %}

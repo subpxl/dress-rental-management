@@ -19,14 +19,20 @@ from django.contrib.auth.decorators import login_required
 class ProductList(ListView):
     paginate_by = 20
     model = Product
-    context_object_name = "product_list"
-    template_name = 'product/product_list.html'
+
+    def get(self,request):
+        seller = Seller.objects.get(user=request.user)
+        product_list = Product.objects.filter(seller=seller)
+        context ={
+            "product_list":product_list
+        }
+        return render(request,'product/product_list.html',context)
 
 @login_required
 def product_create(request):
     seller = Seller.objects.get(user=request.user)
     if request.method == 'POST':
-        form = ProductCreationForm(request.POST, request.FILES)
+        form = ProductCreationForm(request.POST, request.FILES, initial={'shop':seller.shop})
         if form.is_valid():
             product_obj = form.save(commit=False)
             product_obj.branch = product_obj.category.branch
@@ -39,7 +45,7 @@ def product_create(request):
                 form.errors
             )
             return redirect('product_create')
-    form = ProductCreationForm()
+    form = ProductCreationForm(initial={'shop':seller.shop})
     context = {
         'form':form,
     }
@@ -134,8 +140,14 @@ def product_bulk_upload(request):
 class CategoryList(ListView):
     paginate_by = 20
     model = Category
-    context_object_name = "category_list"
-    template_name = 'category/category_list.html'
+
+    def get(self,request):
+        shop = Seller.objects.get(user=request.user).shop
+        category_list = Category.objects.filter(branch__main_shop=shop)
+        context ={
+            "category_list":category_list
+        }
+        return render(request,'category/category_list.html',context)
 
 class CategoryCreate( CreateView):
     # permission_required = ('category.create_category')

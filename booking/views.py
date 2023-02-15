@@ -62,7 +62,7 @@ def booking_create(request):
             booking.customer = customer
             booking.branch = Branch.objects.get(id=branch_id)
             booking.seller = seller
-            booking.orderNo = booking.branch.name[:4] + '_' + booking.orderNo
+            booking.orderNo = (booking.branch.name[:4] + booking.orderNo).upper()
             booking.save()
             bookingForm.save_m2m()
             for x in range(len(products)):
@@ -87,16 +87,13 @@ def booking_create(request):
         context['bookingForm'].startDate = startDate
         return render(request, "booking/booking_create.html", context)
         
-class BookingList(LoginRequiredMixin, ListView):
-    # permission_required = ('booking:user_view_booking')
-    paginate_by = 20
+class BookingList(ListView):
     model = Booking
-    context_object_name = "booking_list"
-    
+
     def post(self,request):
         startDate = request.POST.get("startDate","")
         endDate = request.POST.get("endDate","")
-        bookings = Booking.objects.filter( startDate__range=[startDate,endDate]).exclude(status=Config.Returned)
+        bookings = Booking.objects.filter(seller__user=request.user,startDate__range=[startDate,endDate]).exclude(status=Config.Returned)
         # return  HttpResponse(endDate)
         context = {
             'startDate':startDate,
@@ -106,7 +103,7 @@ class BookingList(LoginRequiredMixin, ListView):
         return  render(request,'booking/booking_list.html',context)
 
     def get(self,request):
-        bookings = Booking.objects.all().exclude(status=Config.Returned)
+        bookings = bookings = Booking.objects.filter(seller__user=request.user).exclude(status=Config.Returned)
         paginator = Paginator(bookings, 20)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
@@ -129,8 +126,8 @@ def booking_details(request,pk):
 def booking_search(request):
     if request.method == 'POST':
         pk = request.POST.get('id_booking_pk')
-        booking = Booking.objects.get(id=pk)
-        booked_product_list = BookedProduct.objects.filter(booking=pk)
+        booking = Booking.objects.get(orderNo=pk)
+        booked_product_list = BookedProduct.objects.filter(booking=booking)
         context ={
             'booking':booking,
             'booked_product_list':booked_product_list
@@ -273,8 +270,15 @@ def receive_list(request):
 class CustomerList(ListView):
     paginate_by = 20
     model = Customer
-    context_object_name = "customer_list"
     template_name = 'customer/customer_list.html'
+
+    def get(self,request):
+        seller = Seller.objects.get(user=request.user)
+        bookings = Booking.objects.filter(seller=seller)
+        context ={
+            "customer_list":bookings
+        }
+        return render(request,'customer/customer_list.html',context)
 
 
 class CustomerCreate(CreateView):

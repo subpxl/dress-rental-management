@@ -2,10 +2,11 @@ from audioop import reverse
 from datetime import datetime
 from multiprocessing import context
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView,DetailView
-from .models import Seller, Subscription, Shop
+from .models import Seller, Subscription, Shop, Branch
 from django.shortcuts import render, redirect
+from django.contrib import  messages
 from accounts.tokens import account_activation_token
-from .forms import SellerCreationForm
+from .forms import SellerCreationForm, BranchCreationForm
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.conf import settings
@@ -98,19 +99,6 @@ def seller_profile(request):
     seller = Seller.objects.get(user = request.user)
     context = {'seller':seller}
     return render(request,'seller/profile.html',context)
-
-class StaffList(ListView):
-    # permission_required = ('users.view_user')
-    model = Seller
-    template_name = 'seller/staff_list.html'
-
-    def get(self,request):
-        shop = Seller.objects.get(user=request.user).shop
-        staff_list = Seller.objects.filter(shop=shop)
-        context ={
-            "staff_list":staff_list
-        }
-        return render(request,'seller/staff_list.html',context)
         
 def staff_create(request):
     if request.method == 'POST':
@@ -184,7 +172,18 @@ def create_profile(request):
         }
     return render(request,'seller/create_profile.html',context)
 
+class StaffList(ListView):
+    # permission_required = ('users.view_user')
+    model = Seller
+    template_name = 'seller/staff_list.html'
 
+    def get(self,request):
+        shop = Seller.objects.get(user=request.user).shop
+        staff_list = Seller.objects.filter(shop=shop)
+        context ={
+            "staff_list":staff_list
+        }
+        return render(request,'seller/staff_list.html',context)
 
 class StaffDelete(DeleteView):
     # permission_required = ('users.delete_user')
@@ -196,3 +195,62 @@ class StaffDetails(DetailView):
     # permission_required = ('users.view_user')
     model = Seller
     template_name = 'seller/staff_details.html'
+
+class BranchList(ListView):
+    # permission_required = ('users.view_user')
+    model = Branch
+    template_name = 'seller/branch_list.html'
+
+    def get(self,request):
+        shop = Seller.objects.get(user=request.user).shop
+        branch_list = Branch.objects.filter(main_shop=shop)
+        context ={
+            "branch_list":branch_list
+        }
+        return render(request,'seller/branch_list.html',context)
+
+def branch_create(request):
+    if request.method == 'POST':
+        form = BranchCreationForm(request.POST)
+        if form.is_valid():
+            branch_obj = form.save(commit=False)
+            branch_obj.main_shop = Seller.objects.get(user=request.user).shop
+            branch_obj.save()
+        else:
+            messages.info(request, form.errors)
+            return redirect('branch_create')
+        return redirect('branch_list')
+    else:
+        form = BranchCreationForm()
+        context = {
+            'form':form,
+        }
+        return render(request,'seller/branch_create.html',context)
+
+def branch_update(request,pk):
+    branch = Branch.objects.get(id=pk)
+    if request.method == 'POST':
+        form = BranchCreationForm(request.POST,instance=branch)
+        if form.is_valid():
+            form.save()
+        else:
+            messages.info(request, form.errors)
+            return redirect('branch_update', branch.pk)
+        return redirect('branch_list')
+    else:
+        form = BranchCreationForm(instance=branch)
+        context = {
+            'form':form,
+        }
+        return render(request,'seller/branch_create.html',context)
+
+class BranchDelete(DeleteView):
+    # permission_required = ('users.delete_user')
+    model = Branch
+    template_name = "seller/branch_delete.html"
+    success_url = reverse_lazy('branch_list')
+
+class BranchDetails(DetailView):
+    # permission_required = ('users.view_user')
+    model = Branch
+    template_name = 'seller/branch_details.html'
