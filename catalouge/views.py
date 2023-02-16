@@ -16,6 +16,7 @@ from django.contrib import messages
 from booking.models import Booking
 from django.contrib.auth.decorators import login_required
 
+
 class ProductList(ListView):
     paginate_by = 20
     model = Product
@@ -27,6 +28,23 @@ class ProductList(ListView):
             "product_list":product_list
         }
         return render(request,'product/product_list.html',context)
+
+
+class MaintainanceList(ListView):
+    paginate_by = 20
+    model = Product
+    def get(self,request):
+        seller = Seller.objects.get(user=request.user)
+        product_list = Product.objects.filter(seller=seller,status="maintainance")
+        context ={
+            "product_list":product_list
+        }
+        return render(request,'product/maintainance_list.html',context)
+
+
+
+
+
 
 @login_required
 def product_create(request):

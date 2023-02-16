@@ -1,13 +1,32 @@
+# ssh root@139.59.67.45
+
+
+
 cd /home/django/orange/
 git pull
 source venv/bin/activate
 pip install -r requirements.txt
+rm db.sqlite3
 python3 manage.py migrate accounts
 python3 manage.py migrate 
-set DJANGO_SUPERUSER_PASSWORD=somepassword ; python3 manage.py createsuperuser --no-input --first_name=don --last_name=cj --username=don  --email=support@xail.in
 
 service gunicorn restart
 service nginx restart
 systemctl daemon-reload
 
+export DJANGO_SUPERUSER_PASSWORD=admin ; python3 manage.py createsuperuser --no-input --first_name=admin --last_name=admin --username=admin  --email=admin@admin.com
 
+
+
+# windows
+
+git pull
+./venv/Scripts/activate
+pip install -r requirements.txt
+rm db.sqlite3
+python manage.py migrate accounts
+python manage.py migrate 
+
+set DJANGO_SUPERUSER_PASSWORD=admin ; python manage.py createsuperuser --no-input --first_name=admin --last_name=admin --username=admin  --email=admin@admin.com
+
+python manage.py runserver

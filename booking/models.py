@@ -11,7 +11,7 @@ STATUS = Config.STATUS
 class Customer(models.Model):
     name = models.CharField(max_length=100)
     mobilenumber = models.CharField(max_length=100)
-    alternatenumber = models.CharField(max_length=100)
+    whatsappNumber = models.CharField(max_length=100,null=True,blank=True)
     address = models.CharField(max_length=100)
 
     def __str__(self):

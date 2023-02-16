@@ -11,11 +11,13 @@ class Config:
     Booked = 'Booked'
     NotAvailable = 'Not Available'
     Returned="Returned"
+    Maintainance="Maintainance"
     STATUS = (
         ('Available', Available),
         ('Booked', Booked),
         ('Not Available',NotAvailable ),
-        ('Returned',Returned)
+        ('Returned',Returned),
+        ('Maintainance',Maintainance),
     )
     rajgharana_jaora ='rajgharana jaora'
     SHOP = (
