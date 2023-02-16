@@ -25,6 +25,8 @@ class Booking(models.Model):
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
     orderdate = models.DateField(auto_now_add=True)
     startDate = models.DateField()
+    startTime = models.CharField(max_length=15,choices=Config.DayTime)
+    endTime = models.CharField(max_length=15,choices=Config.DayTime)
     endDate = models.DateField()
     totalAmount = models.PositiveIntegerField()
     amountPaid = models.PositiveIntegerField()

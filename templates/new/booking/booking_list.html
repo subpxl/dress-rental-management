@@ -15,6 +15,22 @@
           <label>End Date</label>
           <input type="date" class=" form-control" name="endDate" id="endDate" required>
         </div>
+        <div class="col-6 col-lg-3 form-group">
+          <label>Start Time</label>
+          <select class=" form-control" name="startTime" id='startTime' required >
+            <option value=1>Morning</option>
+            <option value=2>Afternoon</option>
+            <option value=3>Evening</option>
+        </select>
+        </div>
+        <div class="col-6 col-lg-3 form-group">
+          <label>End Time</label>
+          <select class=" form-control" name="endTime" id='endTime' required >
+            <option value=1>Morning</option>
+            <option value=2>Afternoon</option>
+            <option value=3>Evening</option>
+        </select>
+        </div>
         <div class="col-12 form-group">
           <button class="btn btn mt-3 btn btn-primary" id="submitDate" type="submit">Search</button>
         </div>
@@ -35,10 +51,10 @@
                   <th style="width:10%">Customer</th>
                   <th style="width:10%;">Contact</th>
                   <th style="width:12%;">Products</th>
-                  <th style="width:10%;">Booking Date</th>
-                  <th style="width:10%;">Return Date</th>
+                  <th style="width:13%;">Booking Time</th>
+                  <th style="width:13%;">Return Time</th>
                   <th style="width:10%;">Branch</th>
-                  <th style="width:35%;text-align: right;"> <span style="margin-right: 5%;">Action</span></th>
+                  <th style="width:29%;text-align: right;"> <span style="margin-right: 5%;">Action</span></th>
                 </tr>
               </thead>
               <tbody>
@@ -55,8 +71,8 @@
                       {% endfor %}
                     </ul>
                   </td>
-                  <td style="vertical-align: top;">{{booking.startDate}}</td>
-                  <td style="vertical-align: top;">{{booking.endDate}}</td>
+                  <td style="vertical-align: top;">{{booking.startDate}}, {{booking.startTime}}</td>
+                  <td style="vertical-align: top;">{{booking.endDate}}, {{booking.endTime}} </td>
                   <td style="vertical-align: top;">{{booking.branch}}</td>
                   <td style="text-align: right;">
                     <a href="{% url 'booking_details'  booking.pk %}" class="btn btn-md"><i class="fa fa-eye"

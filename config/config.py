@@ -2,10 +2,18 @@ class Config:
     Male ="Male"
     Female="Female"
     Other="Other"
+    Morning=1
+    Evening=3
+    Afternoon=2
     GENDER = (
         ('Male', Male),
         ('Female', Female),
         ('Other', Other),
+    )
+    DayTime = (
+        ('Morning',Morning),
+        ('Evening',Evening),
+        ('Afternoon',Afternoon),
     )
     Available = "Available"
     Booked = 'Booked'

@@ -56,7 +56,7 @@ def product_update(request, pk):
     seller = Seller.objects.get(user=request.user)
     product = Product.objects.get(id=pk)
     if request.method == 'POST':
-        form = ProductCreationForm(request.POST, request.FILES, instance=product)
+        form = ProductCreationForm(request.POST, request.FILES, instance=product, initial={'shop':seller.shop})
         if form.is_valid():
             form.save()
             return redirect('product_list')
@@ -66,7 +66,7 @@ def product_update(request, pk):
                 form.errors
             )
             return redirect('product_update', product.pk)
-    form = ProductCreationForm(instance=product)
+    form = ProductCreationForm(instance=product, initial={'shop':seller.shop})
     context = {
         'form':form,
         'product':product,
