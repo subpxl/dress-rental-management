@@ -2,8 +2,9 @@ from math import prod
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import Category, Product
 from .forms import ProductCreationForm
+from django.db.models import ProtectedError
 from seller.models import Seller, Shop, Branch
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from  django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.files import File
 # from django.contrib.auth.decorators import permission_required
@@ -107,7 +108,19 @@ class ProductDelete(DeleteView):
     # permission_required = ('product.delete_product')
     model = Product
     template_name = 'product/product_delete.html'
-    success_url = reverse_lazy('product_list')
+
+    def get_success_url(self):
+        return reverse('product_list')
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        try:
+            self.delete(request, *args, **kwargs)
+        except ProtectedError:
+            messages.warning(request, 'Can not delete: this parent has a child!')
+            return redirect('product_delete', self.object.pk)
+        return redirect(success_url)
 
 
 # @permission_required('product.view_product')
@@ -191,8 +204,20 @@ class CategoryUpdate( UpdateView):
         form.fields['branch'].queryset = Branch.objects.filter(main_shop=seller.shop)
         return form
 
-class CategoryDelete( DeleteView):
+class CategoryDelete(DeleteView):
     # permission_required = ('category.delete_category')
     model = Category
     template_name = 'category/category_delete.html'
-    success_url = reverse_lazy('category_list')
+
+    def get_success_url(self):
+        return reverse('category_list')
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        try:
+            self.delete(request, *args, **kwargs)
+        except ProtectedError:
+            messages.warning(request, 'Can not delete: this parent has a child!')
+            return redirect('category_delete', self.object.pk)
+        return redirect(success_url)

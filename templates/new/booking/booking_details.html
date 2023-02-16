@@ -136,6 +136,16 @@
                       <td class="thick-line text-center"><strong>Total</strong></td>
                       <td class="thick-line text-end"><strong>Rs. {{ booking.totalAmount }}</strong> </td>
                     </tr>
+
+                    <tr>
+                      <td class="no-line"></td>
+                      <td class="no-line"></td>
+                      <td class="no-line"></td>
+                      <td class="no-line"></td>
+                      <td class="no-line"></td>
+                      <td class="no-line text-center"><strong>Discount </strong></td>
+                      <td class="no-line text-end"><strong>- {{booking.discount}}</strong> </td>
+                    </tr>
                     <tr>
                       <td class="no-line"></td>
                       <td class="no-line"></td>
@@ -153,6 +163,15 @@
                       <td class="no-line"></td>
                       <td class="no-line text-center"><strong>Due</strong></td>
                       <td class="no-line text-end"> <strong>Rs.{{ booking.amountDue }}</strong> </td>
+                    </tr>
+                    <tr>
+                      <td class="no-line"></td>
+                      <td class="no-line"></td>
+                      <td class="no-line"></td>
+                      <td class="no-line"></td>
+                      <td class="no-line"></td>
+                      <td class="no-line text-center"><strong>Final Payment</strong></td>
+                      <td class="no-line text-end"> <strong>Rs. {{booking.final_paid}}</strong> </td>
                     </tr>
                   </tbody>
                 </table>

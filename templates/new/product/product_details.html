@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block content %}
 <main id="main" class="main">
   <div class="pagetitle mb-3">
-    <h1>{{product.name|title}} <a href="{% url 'product_update' product.pk %}" style="float: right;" class="btn btn-md btn-primary">Update</a></h1>
+    <h1>{{product.name|title}} <a href="{% url 'product_update' product.pk %}" style="float: right;" class="btn btn-md btn-primary">Edit</a></h1>
   </div>
   <section class="section dashboard">
     <div class="row">
@@ -12,7 +12,9 @@
 
             <div class="row">
               <div class="col text-center">
-                <img src="{{ product.image.url }}" class="my-3 rounded" width="200" height="200">
+                <img src="{{ product.image.url }}"
+                style="max-width:400px;height:300px";
+                class="my-3">
               </div>
               <div class="col">
                 <h4>Design Number : {{product.tag}}</h4>

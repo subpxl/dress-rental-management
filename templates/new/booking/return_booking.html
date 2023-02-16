@@ -138,8 +138,16 @@
                       <td class="no-line"></td>
                       <td class="no-line"></td>
                       <td class="no-line"></td>
+                      <td class="no-line text-center"><strong>Discount </strong></td>
+                      <td class="no-line text-end"><strong>- {{booking.discount}}</strong> </td>
+                    </tr>
+                    <tr>
+                      <td class="no-line"></td>
+                      <td class="no-line"></td>
+                      <td class="no-line"></td>
+                      <td class="no-line"></td>
                       <td class="no-line text-center"><strong>Paid </strong></td>
-                      <td class="no-line text-end"><strong><input type="number" name='amountPaid' value={{booking.amountPaid}}></strong> </td>
+                      <td class="no-line text-end"><strong>Rs. {{booking.amountPaid}}</strong> </td>
                     </tr>
                     <tr>
                       <td class="no-line"></td>
@@ -147,8 +155,17 @@
                       <td class="no-line"></td>
                       <td class="no-line"></td>
                       <td class="no-line text-center"><strong>Due</strong></td>
-                      <td class="no-line text-end"> <strong>Rs.{{ booking.amountDue }}</strong> </td>
+                      <td class="no-line text-end"> <strong> {{booking.amountDue}}</strong> </td>
                     </tr>
+                    <tr>
+                      <td class="no-line"></td>
+                      <td class="no-line"></td>
+                      <td class="no-line"></td>
+                      <td class="no-line"></td>
+                      <td class="no-line text-center"><strong>Final Payment</strong></td>
+                      <td class="no-line text-end"> <strong><input type="number" name='final_paid' value={{booking.final_paid}}></strong> </td>
+                    </tr>
+                    
                   </tbody>
                 </table>
                 <div class="">

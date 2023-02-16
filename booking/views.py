@@ -163,10 +163,9 @@ def booking_update(request, pk):
             product.status = Config.Available
             product.save()
             booking.products.remove(product)
-            total -= product.price
-        amount_paid = data['amountPaid']
-        booking.amountPaid = amount_paid
-        amount_due = total-int(amount_paid)
+            # total -= product.price
+        booking.final_paid = data['final_paid']
+        # booking.amountPaid = total-int(amount_due)-int(booking.discount)
         if booking.products.count() == 0:
             booking.status = Config.Returned
         booking.save()

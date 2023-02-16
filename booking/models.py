@@ -21,8 +21,8 @@ class Customer(models.Model):
         return reverse("customer_list")
 
 class Booking(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
+    branch = models.ForeignKey(Branch, on_delete=models.PROTECT)
     orderdate = models.DateField(auto_now_add=True)
     startDate = models.DateField()
     startTime = models.CharField(max_length=15,choices=Config.DayTime)
@@ -35,10 +35,11 @@ class Booking(models.Model):
     products = models.ManyToManyField(Product ,blank=False)
     orderNo = ShortUUIDField(length=6, max_length=6,  unique=True, db_index=True, editable=False)
     referenceNo = models.CharField(max_length=100, default="", null=True, blank=True)
-    seller=models.ForeignKey(Seller,on_delete=models.CASCADE)
+    seller=models.ForeignKey(Seller,on_delete=models.PROTECT)
     note = models.CharField(max_length=100,blank=True,null=True)
     status = models.CharField(
         max_length=100, choices=STATUS,default=Config.Booked)
+    final_paid = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return "%s " % (self.branch)
