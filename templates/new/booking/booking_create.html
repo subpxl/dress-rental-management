@@ -21,7 +21,7 @@
                 <div style="display: none" class=" col-6">{{ bookingForm.endTime|as_crispy_field }}</div>
                 <div class="col-6">{{ customerForm.name|as_crispy_field }}</div>
                 <div class="col-6">{{ customerForm.mobilenumber|as_crispy_field }}</div>
-                <div class="col-6">{{ customerForm.alternatenumber|as_crispy_field }}</div>
+                <div class="col-6">{{ customerForm.whatsappNumber|as_crispy_field }}</div>
                 <div class="col-6">{{ customerForm.address|as_crispy_field }}</div>
                 <div class="col-4">{{ bookingForm.referenceNo|as_crispy_field }}</div>
                 <div class="col-4">
@@ -50,9 +50,10 @@
               {% include 'includes/booking_product_component.html' %}
               <h5 class="card-title">Total</h5>
               <div class="row">
-                <div class="col-4">{{ bookingForm.totalAmount|as_crispy_field }}</div>
-                <div class="col-4">{{ bookingForm.amountPaid|as_crispy_field }}</div>
-                <div onclick="doMath()" class="col-4">{{ bookingForm.amountDue|as_crispy_field }}</div>
+                <div class="col-12 col-lg-3">{{ bookingForm.totalAmount|as_crispy_field }}</div>
+                <div class="col-12 col-lg-3">{{ bookingForm.discount|as_crispy_field }}</div>
+                <div class="col-12 col-lg-3">{{ bookingForm.amountPaid|as_crispy_field }}</div>
+                <div class="col-12 col-lg-3">{{ bookingForm.amountDue|as_crispy_field }}</div>
               </div>
               <input class="btn btn-primary btn mt-3" type="submit" value="Submit" id="booking_form_ak" />
             </form>
@@ -73,11 +74,16 @@
           bookingSection.classList.remove('d-none');
       }
     })
+
+    let amountPaid_ = document.getElementById('id_amountPaid');
+    amountPaid_.addEventListener('change',doMath);
     function doMath()
     {
+        console.log('doing math')
         var total = document.getElementById('id_totalAmount').value;
         var amountPaid = document.getElementById('id_amountPaid').value;
-        var sum = Number(total) -  Number(amountPaid);
+        var discount = document.getElementById('id_discount').value
+        var sum = Number(total) -  Number(amountPaid) - Number(discount);
         document.getElementById("id_amountDue").value = sum;
     }
 </script>

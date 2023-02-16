@@ -27,7 +27,7 @@
                     <input type="text" class="form-control in-ak" placeholder="Type A Dress ID" size="30"
                         onkeyup="showResults(this)" onfocus="showResults(this)" name="" required/>
                 </div>
-                <div class="row mr-0"><select onchange="assingV(this)" name="products" required class="form-select d-ak"></select>
+                <div class="row mr-0"><select name="products" required class="form-select d-ak"></select>
                 </div>
             </td>
             <td><input class="form-control" placeholder="description" name="description"></td>
@@ -55,24 +55,49 @@
         e.preventDefault()
         document.getElementById('id_branch').value = document.getElementById('branch_pk').value
         payload = new FormData(dateForm)
+        console.log("sent req");
         fetch("{% url 'booked_product_search' %}", {
             method: "POST",
             body: payload
         }).then(res => res.json()).then(data => {
             myProductArray = data
+            console.log("rec data ", myProductArray);
         }).then(() => {
             startDateId.value = startDate.value
             endDateId.value = endDate.value
             startTimeId.value = startTime.value
             endTimeId.value = endTime.value
+            console.log(startTime.value, endTime.value, startTimeId.value,endTimeId.value)
         }
         )
     })
     var nameArr = '';
-    function assingV(ele){
+    function assingV(ele,desc,size,price){
         let inputV = ele.parentElement.previousElementSibling.getElementsByTagName('input')[0];
         inputV.value = ele.options[ele.selectedIndex].text;
+        inputV.setAttribute('disabled', 'disabled');
+        ele.classList.add('d-none')
+        td = ele.parentElement.parentElement;
+        console.log('first td ', td)
+        let td1 = td.nextElementSibling;
+        td1.getElementsByTagName('input')[0].value = desc;
+        td1.getElementsByTagName('input')[0].setAttribute('readonly', 'readonly');
+        let td2 = td1.nextElementSibling;
+        td2.getElementsByTagName('input')[0].value = size;
+        td2.getElementsByTagName('input')[0].setAttribute('readonly', 'readonly');
+        let td3 = td2.nextElementSibling;
+        td3.getElementsByTagName('input')[0].value = price;
+        td3.getElementsByTagName('input')[0].setAttribute('readonly', 'readonly');
+        totalA = document.getElementById('id_totalAmount')
+        if (totalA.value == ""){
+            totalA.value = Number(price)
+        }
+        else {
+            totalA.value = Number(totalA.value)+Number(price)
+        }
+        addProductForm();
     }
+
     function showResults(ele) {
         let searchresult = ele.parentElement.nextElementSibling.childNodes[0];
         searchresult.innerHTML = "<option style='color:red;' disabled> select a product </option>"
@@ -83,7 +108,7 @@
             let newarr = myProductArray.filter(a => (a.tag.match(typedInput)))
             console.log('newarr => ', newarr)
             newarr.forEach((item, index) => {
-                searchresult.innerHTML += `<option style='color:green;' onclick="assingV(this.parentNode)" class="options" value=${item.id}` + '>' + `${item.color}  ${item.tag} ` + "</option>"
+                searchresult.innerHTML += `<option style='color:green;' onclick="assingV(this.parentNode,'${item.description}',${item.size},${item.price})" class="options" value=${item.id}` + '>' + `${item.color}  ${item.tag} ` + "</option>"
                 return item
             })
         } else {
@@ -101,7 +126,7 @@
             + '<input type="text" class="form-control in-ak" placeholder="Type A Dress ID"'
             + 'size="30" onkeyup="showResults(this)" onfocus="showResults(this)" name=""/>'
             + '</div>'
-            + '<div class="row mr-0"><select name="products" onchange="assingV(this)" class="form-select d-ak"></select>'
+            + '<div class="row mr-0"><select name="products" class="form-select d-ak"></select>'
             + '</div>'
             + '</td>'
             + '<td><input class="form-control" placeholder="description" name ="description" ></td>'
