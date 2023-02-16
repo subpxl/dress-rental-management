@@ -9,6 +9,9 @@
         z-index: 99;
         height: 38px;
     }
+    .z--1{
+        z-index:-1 !important;
+    }
 </style>
 <table class="table">
     <thead class="thead-dark">
@@ -27,7 +30,7 @@
                     <input type="text" class="form-control in-ak" placeholder="Type A Dress ID" size="30"
                         onkeyup="showResults(this)" onfocus="showResults(this)" name="" required/>
                 </div>
-                <div class="row mr-0"><select name="products" required class="form-select d-ak"></select>
+                <div class="row mr-0"><select name="products" required class="form-select d-ak" onchange="assingV(this)"></select>
                 </div>
             </td>
             <td><input class="form-control" placeholder="description" name="description"></td>
@@ -72,12 +75,13 @@
         )
     })
     var nameArr = '';
-    function assingV(ele,desc,size,price){
+    function assingV(ele){
         let inputV = ele.parentElement.previousElementSibling.getElementsByTagName('input')[0];
         inputV.value = ele.options[ele.selectedIndex].text;
-        inputV.setAttribute('disabled', 'disabled');
-        ele.classList.add('d-none')
-        td = ele.parentElement.parentElement;
+        {% comment %} inputV.setAttribute('disabled', 'disabled');
+        ele.classList.add('d-none') {% endcomment %}
+        inputV.classList.add('z--1')
+        {% comment %} td = ele.parentElement.parentElement;
         console.log('first td ', td)
         let td1 = td.nextElementSibling;
         td1.getElementsByTagName('input')[0].value = desc;
@@ -95,12 +99,12 @@
         else {
             totalA.value = Number(totalA.value)+Number(price)
         }
-        addProductForm();
+        addProductForm(); {% endcomment %}
     }
 
     function showResults(ele) {
         let searchresult = ele.parentElement.nextElementSibling.childNodes[0];
-        searchresult.innerHTML = "<option style='color:red;' disabled> select a product </option>"
+        searchresult.innerHTML = "<option style='color:red;'> select a product </option>"
         var typedInput = ele.value
         console.log("typed input : ", typedInput, searchresult)
         if (myProductArray.length >= 1) {
@@ -108,7 +112,8 @@
             let newarr = myProductArray.filter(a => (a.tag.match(typedInput)))
             console.log('newarr => ', newarr)
             newarr.forEach((item, index) => {
-                searchresult.innerHTML += `<option style='color:green;' onclick="assingV(this.parentNode,'${item.description}',${item.size},${item.price})" class="options" value=${item.id}` + '>' + `${item.color}  ${item.tag} ` + "</option>"
+                {% comment %} searchresult.innerHTML += `<option style='color:green;' onclick="assingV(this.parentNode,'${item.description}',${item.size},${item.price})" class="options" value=${item.id}` + '>' + `${item.color}  ${item.tag} ` + "</option>" {% endcomment %}
+                searchresult.innerHTML += `<option style='color:green;' class="options" value=${item.id}` + '>' + `${item.color}  ${item.tag} ` + "</option>"
                 return item
             })
         } else {
@@ -126,7 +131,7 @@
             + '<input type="text" class="form-control in-ak" placeholder="Type A Dress ID"'
             + 'size="30" onkeyup="showResults(this)" onfocus="showResults(this)" name=""/>'
             + '</div>'
-            + '<div class="row mr-0"><select name="products" class="form-select d-ak"></select>'
+            + '<div class="row mr-0"><select name="products" class="form-select d-ak" onchange="assingV(this)"></select>'
             + '</div>'
             + '</td>'
             + '<td><input class="form-control" placeholder="description" name ="description" ></td>'
