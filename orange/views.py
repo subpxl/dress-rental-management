@@ -21,6 +21,26 @@ def dashboard(request):
         return render(request,template_name)
     seller = Seller.objects.get(user = request.user)
     revenue = 0
+    data = [
+        {
+            'name':'Bookings',
+            'value':0
+        },
+        {
+            'name':'Pendings',
+            'value':0
+        },
+        {
+            'name':'Returns',
+            'value':0
+        }
+    ]
+    try:
+        data[0]['value']=Booking.objects.filter(seller=seller).exclude(status=Config.Returned).count()
+        data[2]['value']=Booking.objects.filter(seller=seller,status=Config.Returned).count()
+        data[1]['value']=Booking.objects.filter(seller=seller).count() - data['Bookings'] - data['Returns']
+    except:
+        pass
     try:
         revenue_list = Booking.objects.filter(seller=seller)
         revenue = revenue_list.aggregate(Sum('amountPaid'))['amountPaid__sum']
@@ -51,6 +71,7 @@ def dashboard(request):
             toRecieve = None
         context = {
         'revenue':revenue,
+        'data':data,
         'today':today,
         'toSend':toSend,
         'toRecieve':toRecieve,
@@ -65,6 +86,7 @@ def dashboard(request):
         toRecieve =None
     context = {
         'revenue':revenue,
+        'data':data,
         'today':today,
         'toSend':toSend,
         'toRecieve':toRecieve,

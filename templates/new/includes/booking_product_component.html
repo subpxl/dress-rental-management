@@ -45,6 +45,10 @@
     endDate = document.getElementById('endDate')
     startDateId = document.getElementById('id_startDate')
     endDateId = document.getElementById('id_endDate')
+    startTime = document.getElementById('startTime')
+    endTime = document.getElementById('endTime')
+    startTimeId = document.getElementById('id_startTime')
+    endTimeId = document.getElementById('id_endTime')
     var myProductArray = []
     dateForm = document.getElementById('dateForm')
     dateForm.addEventListener("submit", async (e) => {
@@ -56,10 +60,11 @@
             body: payload
         }).then(res => res.json()).then(data => {
             myProductArray = data
-            console.log("array is ; ", myProductArray)
         }).then(() => {
             startDateId.value = startDate.value
             endDateId.value = endDate.value
+            startTimeId.value = startTime.value
+            endTimeId.value = endTime.value
         }
         )
     })

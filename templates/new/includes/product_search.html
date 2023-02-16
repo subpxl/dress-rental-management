@@ -8,7 +8,24 @@
             <div class="col-6 col-lg-2 form-group">
                 <label>Return Date</label>
                 <input type="date" class=" form-control" name="endDate" id="endDate" required>
-            </div><div class="col-6 col-lg-2 form-group">
+            </div>
+            <div class="col-6 col-lg-2 form-group">
+                <label>Booking Time</label>
+                <select class=" form-control" name="startTime" id='startTime' required >
+                    <option value=1>Morning</option>
+                    <option value=2>Afternoon</option>
+                    <option value=3>Evening</option>
+                </select>
+            </div>
+            <div class="col-6 col-lg-2 form-group">
+                <label>Return Time</label>
+                <select class=" form-control" name="endTime" id='endTime' required >
+                    <option value=1>Morning</option>
+                    <option value=2>Afternoon</option>
+                    <option value=3>Evening</option>
+                </select>
+            </div>
+            <div class="col-6 col-lg-2 form-group">
                 <label>Branch</label>
                 <select class=" form-control" name="branch" id='branch_pk' required >
                     <option disabled selected>Select a branch</option>
