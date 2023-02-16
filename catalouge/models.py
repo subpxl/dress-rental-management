@@ -50,10 +50,10 @@ class Product(models.Model):
 
 
     #calling image compression function before saving the data
-    def save(self, *args, **kwargs):
-                new_image = compress(self.image)
-                self.image = new_image
-                super().save(*args, **kwargs)
+#     def save(self, *args, **kwargs):
+#                 new_image = compress(self.image)
+#                 self.image = new_image
+#                 super().save(*args, **kwargs)
 
 
 
