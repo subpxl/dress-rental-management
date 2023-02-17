@@ -64,8 +64,8 @@
                     {% endfor %}
                     </ul>
                   </td>
-                  <td style="vertical-align: top;">{{booking_pending.startDate}}, {{booking_pending.startTime}} </td>
-                  <td style="vertical-align: top;">{{booking_pending.endDate}}, {{booking_pending.endTime}} </td>
+                  <td style="vertical-align: top;">{{booking_pending.startDate}}, {{booking_pending.get_startTime_display}} </td>
+                  <td style="vertical-align: top;">{{booking_pending.endDate}}, {{booking_pending.get_endTime_display}} </td>
                   <td style="vertical-align: top;text-align: right;"><a href="tel:{{booking_pending.customer.mobilenumber}}" style="margin-right: 5%;" class="btn btn-sm btn-success">Call</a> </td>
                 </tr>
                 {% endif %}

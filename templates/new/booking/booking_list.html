@@ -71,8 +71,8 @@
                       {% endfor %}
                     </ul>
                   </td>
-                  <td style="vertical-align: top;">{{booking.startDate}}, {{booking.startTime}}</td>
-                  <td style="vertical-align: top;">{{booking.endDate}}, {{booking.endTime}} </td>
+                  <td style="vertical-align: top;">{{booking.startDate}}, {{booking.get_startTime_display}}</td>
+                  <td style="vertical-align: top;">{{booking.endDate}}, {{booking.get_endTime_display}} </td>
                   <td style="vertical-align: top;">{{booking.branch}}</td>
                   <td style="text-align: right;">
                     <a href="{% url 'booking_details'  booking.pk %}" class="btn btn-md"><i class="fa fa-eye"

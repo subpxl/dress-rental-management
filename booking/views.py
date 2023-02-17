@@ -34,15 +34,17 @@ def booked_product_search(request):
         endDate = request.POST.get('endDate')
         startTime = request.POST.get('startTime')
         endTime = request.POST.get('endTime')
-        print(startTime,endTime,startDate,endDate,type(startDate))
         branch = request.POST.get('branch')
+        print("testing ------")
+        test = Booking.objects.get(id=4)
+        print(test.startDate, test.startTime, test.endDate, test.endTime)
+        print(startDate, startTime, endDate, endTime)
+        # same_times = Booking.objects.filter(startTime__gte=startTime)
+        # print(same_times)
         black_list = BookedProduct.objects.filter(
-                        Q(
-                            Q(booking__startDate__lt=endDate)|Q(booking__startDate=endDate,booking__startTime__lte=endTime)
-                            ) & Q(
-                                Q(booking__endDate__gt=startDate)|Q(booking__endDate=startDate,booking__endTime__gte=startTime)
-                                )
-                        ).values_list('product',flat=True).distinct()
+                        Q(booking__startDate__lt=endDate)|Q(booking__startDate=endDate,booking__startTime__lte=endTime),
+                        Q(booking__endDate__gt=startDate)|Q(booking__endDate=startDate,booking__endTime__gte=startTime)
+                    ).values_list('product',flat=True).distinct()
         
         print(black_list)
         found_product = Product.objects.filter(branch__id = branch).exclude(id__in=black_list).values()

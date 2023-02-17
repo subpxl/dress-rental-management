@@ -53,6 +53,12 @@ def product_create(request):
     if request.method == 'POST':
         form = ProductCreationForm(request.POST, request.FILES, initial={'shop':seller.shop})
         if form.is_valid():
+            tag = form.cleaned_data.get('tag')
+            if Product.objects.filter(seller=seller,tag=tag).count() >= 1:
+                messages.warning(request,
+                    "Product with same tag is already created"
+                )
+                return redirect('product_create') 
             product_obj = form.save(commit=False)
             product_obj.branch = product_obj.category.branch
             product_obj.seller = seller
@@ -60,7 +66,7 @@ def product_create(request):
             return redirect('product_list')
         else:
             print(form.errors)
-            messages.error(request,
+            messages.warning(request,
                 form.errors
             )
             return redirect('product_create')
@@ -77,11 +83,17 @@ def product_update(request, pk):
     if request.method == 'POST':
         form = ProductCreationForm(request.POST, request.FILES, instance=product, initial={'shop':seller.shop})
         if form.is_valid():
+            tag = form.cleaned_data.get('tag')
+            if Product.objects.filter(seller=seller,tag=tag).count() >= 1:
+                messages.warning(request,
+                    "Product with same tag is already created"
+                )
+                return redirect('product_update', product.pk)
             form.save()
             return redirect('product_list')
         else:
             print(form.errors)
-            messages.error(request,
+            messages.warning(request,
                 form.errors
             )
             return redirect('product_update', product.pk)
@@ -99,7 +111,7 @@ def product_search(request):
         product =Product.objects.get(tag=product)
         return redirect('product_detail', product.pk)
     except:
-        messages.error(request, f"{product} tag not found")
+        messages.warning(request, f"{product} tag not found")
         return redirect('product_list')
 
 
@@ -138,7 +150,7 @@ def product_bulk_upload(request):
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
         if not myfile.name.endswith('.csv'):
-            messages.error(request, 'THIS IS NOT A CSV FILE')
+            messages.warning(request, 'THIS IS NOT A CSV FILE')
         data_set = myfile.read().decode('UTF-8')
         io_string = io.StringIO(data_set)
         next(io_string)

@@ -35,7 +35,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=100)
-    tag = models.CharField(max_length=100,unique=True)
+    tag = models.CharField(max_length=100)
     color = models.CharField(max_length=100,null=True,blank=True)
     size = models.CharField(max_length=100,null=True,blank=True)
     branch = models.ForeignKey(Branch,on_delete=models.CASCADE)

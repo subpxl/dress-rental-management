@@ -4,7 +4,7 @@ from .models import Product, Category
 class ProductCreationForm(forms.ModelForm):
     class Meta:
         model = Product
-        exclude = ('branch',)
+        exclude = ('branch','seller')
 
     def __init__(self, *args, **kwargs):
         super(ProductCreationForm, self).__init__(*args, **kwargs)
