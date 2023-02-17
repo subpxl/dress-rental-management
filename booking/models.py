@@ -64,6 +64,8 @@ class BookedProduct(models.Model):
     booking = models.ForeignKey(Booking, on_delete=models.CASCADE)
     description = models.CharField(max_length=100)
     size = models.CharField(max_length=100)
+    status = models.CharField(max_length=15)
     price = models.CharField(max_length=100)
+    
     def __str__(self):
         return "%s , %s" % (self.product,self.booking)

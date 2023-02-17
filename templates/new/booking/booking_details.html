@@ -118,7 +118,7 @@
                       <td>{{ forloop.counter }}</td>
                       <td> <strong>{{booked_product.product.name}}</strong></td>
                       <td><strong>{{ booked_product.product.tag }} </strong></td>
-                      <td><strong>{% if booked_product.product.status == 'Available' %}Returned{% else %} {{booked_product.product.status}}{% endif %} </strong></td>
+                      <td><strong>{{booked_product.status}}</strong></td>
                       <td class="text-center"><strong>{{ booked_product.size }}</strong></td>
                       <td class="text-center"><strong>{{booked_product.description}} </strong></td>
                       <td class="text-end"><strong>{{booked_product.price}} </strong></td>

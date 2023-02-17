@@ -104,7 +104,10 @@
         else {
             totalA.value = Number(totalA.value)+Number(price)
         }
-        addProductForm(); 
+        let ind = document.getElementsByClassName('d-ak').length
+        if(document.getElementsByClassName('d-ak')[ind-1].value!="" && document.getElementsByClassName('d-ak')[ind-1].value!="select a product"){
+            addProductForm(); 
+        }
     }
 
     function showResults(ele) {

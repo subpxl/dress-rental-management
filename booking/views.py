@@ -78,10 +78,10 @@ def booking_create(request):
             booking.save()
             bookingForm.save_m2m()
             for x in range(len(products)):
-                product = Product.objects.get(id=products[x])
-                product.status = Config.Booked
-                product.save()
-                bookedProduct = BookedProduct(booking=booking,product_id=products[x],description=description[x],price=price[x],size=size[x])
+                # product = Product.objects.get(id=products[x])
+                # product.status = Config.Booked
+                # product.save()
+                bookedProduct = BookedProduct(booking=booking,product_id=products[x],description=description[x],price=price[x],size=size[x],status=Config.Booked)
                 bookedProduct.save()
 
             # bookingDetails = '/booking/{}'.format(booking.id)
@@ -147,20 +147,21 @@ def booking_search(request):
 # @permission_required('booking.user_update_booking')
 def booking_update(request, pk):
     booking = Booking.objects.get(id=pk)
-    booked_product_list = BookedProduct.objects.filter(booking=pk,product__in=booking.products.all())
+    booked_product_list = BookedProduct.objects.filter(booking=pk,status=Config.Booked)
     if request.method == 'POST':
         data = request.POST
         total = booking.totalAmount 
         data.getlist('booked_product')
         for prod in data.getlist('booked_product'):
-            product = Product.objects.get(id=prod)
-            product.status = Config.Available
+            product = BookedProduct.objects.get(product__id=prod,booking__id=pk)
+            # if Booking.objects.filter(prodcuts=product).count()==0:
+            product.status = Config.Returned
             product.save()
-            booking.products.remove(product)
+            # booking.products.remove(product)
             # total -= product.price
         booking.final_paid = data['final_paid']
         # booking.amountPaid = total-int(amount_due)-int(booking.discount)
-        if booking.products.count() == 0:
+        if BookedProduct.objects.filter(booking__id=pk,status=Config.Booked).count() == 0:
             booking.status = Config.Returned
         booking.save()
         return redirect('booking_list')
@@ -175,8 +176,8 @@ def booking_update(request, pk):
 def booking_delete(request, pk):
     booking = Booking.objects.get(id=pk)
     if request.method == 'POST':
-        for prod in booking.products.all():
-            prod.status = Config.Available
+        for prod in booking.bookedproduct_set.all():
+            prod.status = Config.Returned
             prod.save()
         booking.delete()
         return redirect('booking_list')
@@ -233,7 +234,7 @@ def pending_list(request):
         }
         return render(request, 'booking/pending_list.html', context)
     else:
-        pending_list = Booking.objects.filter(seller=seller).exclude(status=Config.Returned)
+        pending_list = Booking.objects.filter(seller=seller,bookedproduct__status=Config.Returned).exclude(status=Config.Returned)
         paginator = Paginator(pending_list, 20)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)

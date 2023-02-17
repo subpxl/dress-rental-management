@@ -65,9 +65,9 @@
                   <td style="vertical-align: top;">{{booking.customer.mobilenumber}}</td>
                   <td style="vertical-align: top;">
                     <ul class="list-group list-group-flush col col-10">
-                      {% for booked_product in booking.products.all %}
+                      {% for booked_product in booking.bookedproduct_set.all %}
                       <li class="list-group-item p-0" style="padding-bottom: 2px !important;">
-                        {{booked_product.name|title}} {{booked_product.tag}}</li>
+                        {{booked_product.product.name|title}} {{booked_product.product.tag}}</li>
                       {% endfor %}
                     </ul>
                   </td>
