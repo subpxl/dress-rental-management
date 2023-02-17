@@ -45,7 +45,7 @@
                   <td style="vertical-align: top;">{{booking_return.customer.name}}</td>
                   <td style="vertical-align: top;">{{booking_return.customer.mobilenumber}}</td>
                   <td style="vertical-align: top;">
-                    <ul class="list-group list-group-flush col col-6">
+                    <ul class="list-group list-group-flush col col-10">
                       {% for booked_product in booking_return.bookedproduct_set.all %}
                           <li class="list-group-item p-0" style="padding-bottom: 2px !important;">{{booked_product.product.name}} {{booked_product.product.tag}}</li>
                       {% endfor %}

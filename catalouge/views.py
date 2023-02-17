@@ -138,7 +138,7 @@ class ProductDelete(DeleteView):
 # @permission_required('product.view_product')
 def product_details(request,pk):
     product = Product.objects.get(id=pk)
-    bookings = Booking.objects.filter(products  =pk)
+    bookings = Booking.objects.filter(bookedproduct__product=pk)
     context = {
         'product':product,
         'bookings':bookings

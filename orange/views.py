@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib import  messages
 from booking.models import  BookedProduct, Booking
-from datetime import  date as dt, datetime
+from datetime import date as dt, datetime
 from config.config import Config
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
@@ -64,8 +64,8 @@ def dashboard(request):
         startDate = request.POST.get('startDate')
         endDate = request.POST.get('endDate')
         try:
-            toSend = Booking.objects.filter(startDate__range=[startDate,endDate],seller=seller).exclude(status=Config.Returned)
-            toRecieve = Booking.objects.filter(endDate__range=[startDate,endDate],seller=seller).exclude(status=Config.Returned)
+            toSend = Booking.objects.filter(seller=seller,startDate__gte=dt.today(),endDate__lte=endDate).exclude(status=Config.Returned)
+            toRecieve = Booking.objects.filter(seller=seller,startDate__gte=startDate,endDate__lte=dt.today()).exclude(status=Config.Returned)
         except Booking.DoesNotExist:
             toSend = None
             toRecieve = None
@@ -80,7 +80,7 @@ def dashboard(request):
         return  render(request,template_name,context)
     try:
         toSend = Booking.objects.filter(startDate__gte=dt.today(),seller=seller).exclude(status=Config.Returned)
-        toRecieve = Booking.objects.filter(endDate__gte=dt.today(),startDate__lte=dt.today(),seller=seller).exclude(status=Config.Returned)
+        toRecieve = Booking.objects.filter(endDate__lte=dt.today(),seller=seller).exclude(status=Config.Returned)
     except Booking.DoesNotExist:
         toSend = None
         toRecieve =None

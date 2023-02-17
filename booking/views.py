@@ -20,13 +20,6 @@ from django.http import  HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 
-
-def get_bookings(startDate,startTime,endDate,endTime):
-    bookings = Booking.objects.filter(
-        seller__user = request.user).filter(
-            Q(startDate__gt=startDate)|Q(startDate=startDate,startTime__gt=startTime)).filter(
-                Q(endDate__lt=endDate)|Q(endDate=endDate,endTime__lt=endTime))
-
 @csrf_exempt
 def booked_product_search(request):
     if request.method == "POST":
@@ -35,10 +28,10 @@ def booked_product_search(request):
         startTime = request.POST.get('startTime')
         endTime = request.POST.get('endTime')
         branch = request.POST.get('branch')
-        print("testing ------")
-        test = Booking.objects.get(id=4)
-        print(test.startDate, test.startTime, test.endDate, test.endTime)
-        print(startDate, startTime, endDate, endTime)
+        # print("testing ------")
+        # test = Booking.objects.get(id=4)
+        # print(test.startDate, test.startTime, test.endDate, test.endTime)
+        # print(startDate, startTime, endDate, endTime)
         # same_times = Booking.objects.filter(startTime__gte=startTime)
         # print(same_times)
         black_list = BookedProduct.objects.filter(
@@ -106,11 +99,10 @@ def booking_create(request):
         
 class BookingList(ListView):
     model = Booking
-
     def post(self,request):
         startDate = request.POST.get("startDate","")
         endDate = request.POST.get("endDate","")
-        bookings = Booking.objects.filter(seller__user=request.user,startDate__range=[startDate,endDate]).exclude(status=Config.Returned)
+        bookings = Booking.objects.filter(seller__user=request.user,startDate__gte=startDate,endDate__lte=endDate).exclude(status=Config.Returned)
         # return  HttpResponse(endDate)
         context = {
             'startDate':startDate,
@@ -199,7 +191,7 @@ def return_list(request):
     if request.method=="POST":
         startDate = request.POST.get("startDate","")
         endDate = request.POST.get("endDate","")
-        return_list = Booking.objects.filter(seller=seller,startDate__range=[startDate,endDate],status=Config.Returned)
+        return_list = Booking.objects.filter(seller=seller,startDate__gte=startDate,endDate__lte=endDate,status=Config.Returned)
         # return_list = Booking.objects.filter( status=Config.Returned)
         paginator = Paginator(return_list, 20)
         page_number = request.GET.get('page')
@@ -229,7 +221,7 @@ def pending_list(request):
     if request.method=="POST":
         startDate = request.POST.get("startDate","")
         endDate = request.POST.get("endDate","")
-        pending_list = Booking.objects.filter(seller=seller,startDate__range=[startDate,endDate]).exclude(status=Config.Returned)
+        pending_list = Booking.objects.filter(seller=seller,startDate__gte=startDate,endDate__lte=endDate).exclude(status=Config.Returned)
         paginator = Paginator(pending_list, 20)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
@@ -257,7 +249,7 @@ def send_list(request):
     if request.method=="POST":
         startDate = request.POST.get("startDate","")
         endDate = request.POST.get("endDate","")
-        send_list = Booking.objects.filter(seller=seller,startDate__range=[startDate,endDate]).exclude(status=Config.Returned)
+        send_list = Booking.objects.filter(seller=seller,startDate__gte=datetime.today(),endDate__lte=endDate).exclude(status=Config.Returned)
     else:
         send_list = Booking.objects.filter(seller=seller,startDate__gte=datetime.today()).exclude(status=Config.Returned)
     paginator = Paginator(send_list, 20)
@@ -275,9 +267,9 @@ def receive_list(request):
     if request.method=="POST":
         startDate = request.POST.get("startDate","")
         endDate = request.POST.get("endDate","")
-        receive_list = Booking.objects.filter(seller=seller,endDate__range=[startDate,endDate]).exclude(status=Config.Returned)
+        receive_list = Booking.objects.filter(seller=seller,startDate__gte=startDate,endDate__lte=datetime.today()).exclude(status=Config.Returned)
     else:
-        receive_list = Booking.objects.filter(seller=seller,endDate__gte=datetime.today()).exclude(status=Config.Returned)
+        receive_list = Booking.objects.filter(seller=seller,endDate__lte=datetime.today()).exclude(status=Config.Returned)
     paginator = Paginator(receive_list, 20)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)

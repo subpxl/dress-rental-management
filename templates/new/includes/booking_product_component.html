@@ -79,19 +79,21 @@
         let inputV = ele.parentElement.previousElementSibling.getElementsByTagName('input')[0];
         let selected_option = ele.options[ele.selectedIndex]
         inputV.value = selected_option.text;
-        price = selected_option.dataset.price
+        let price = selected_option.dataset.price
+        let desc = selected_option.dataset.desc
+        let size = selected_option.dataset.size 
         // inputV.setAttribute('disabled', 'disabled');
-        // ele.classList.add('d-none')
+        ele.setAttribute('readonly', 'readonly');
         inputV.classList.add('z--1')
         inputV.setAttribute('disabled', 'disabled');
         td = ele.parentElement.parentElement;
         console.log('first td ', td)
         let td1 = td.nextElementSibling;
-        // td1.getElementsByTagName('input')[0].value = desc;
-        // td1.getElementsByTagName('input')[0].setAttribute('readonly', 'readonly');
+        td1.getElementsByTagName('input')[0].value = desc;
+        td1.getElementsByTagName('input')[0].setAttribute('readonly', 'readonly');
         let td2 = td1.nextElementSibling;
-        // td2.getElementsByTagName('input')[0].value = size;
-        // td2.getElementsByTagName('input')[0].setAttribute('readonly', 'readonly');
+        td2.getElementsByTagName('input')[0].value = size;
+        td2.getElementsByTagName('input')[0].setAttribute('readonly', 'readonly');
         let td3 = td2.nextElementSibling;
         td3.getElementsByTagName('input')[0].value = price;
         td3.getElementsByTagName('input')[0].setAttribute('readonly', 'readonly');
@@ -116,7 +118,7 @@
             console.log('newarr => ', newarr)
             newarr.forEach((item, index) => {
                 {% comment %} searchresult.innerHTML += `<option style='color:green;' onclick="assingV(this.parentNode,'${item.description}',${item.size},${item.price})" class="options" value=${item.id}` + '>' + `${item.name}  ${item.tag} ` + "</option>" {% endcomment %}
-                searchresult.innerHTML += `<option style='color:green;' class="options" data-price='${item.price}' value=${item.id}` + '>' + `${item.name}  ${item.tag} ` + "</option>"
+                searchresult.innerHTML += `<option style='color:green;' class="options" data-price='${item.price}' data-desc='${item.description}' data-size='${item.size}' value=${item.id}` + '>' + `${item.name}  ${item.tag} ` + "</option>"
                 return item
             })
         } else {

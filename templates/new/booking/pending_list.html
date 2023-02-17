@@ -32,10 +32,10 @@
                   <th style="width:10%">Customer</th>
                   <th style="width:10%;">Contact</th>
                   <th style="width:12%;">Returned Products</th>
-                  <th style="width:12%;">Pending Products</th>
+                  <!-- <th style="width:12%;">Pending Products</th> -->
                   <th style="width:13%;">Booking Time</th>
                   <th style="width:13%;">Return Time</th>
-                  <th style="width:17%;text-align: right;"><span style="margin-right: 5%;">Action</span></th>
+                  <th style="width:29%;text-align: right;"><span style="margin-right: 5%;">Action</span></th>
                   <!-- <th style="width:10%;">Actions</th> -->
                 </tr>
               </thead>
@@ -55,7 +55,7 @@
                     {% endfor %}
                     </ul>
                   </td>
-                  <td style="vertical-align: top;">
+                  <!-- <td style="vertical-align: top;">
                     <ul class="list-group list-group-flush col col-6">
                     {% for booked_product in booking_pending.bookedproduct_set.all %}
                     {% if booked_product.product.status == 'Booked' %}
@@ -63,7 +63,7 @@
                     {% endif %}
                     {% endfor %}
                     </ul>
-                  </td>
+                  </td> -->
                   <td style="vertical-align: top;">{{booking_pending.startDate}}, {{booking_pending.get_startTime_display}} </td>
                   <td style="vertical-align: top;">{{booking_pending.endDate}}, {{booking_pending.get_endTime_display}} </td>
                   <td style="vertical-align: top;text-align: right;"><a href="tel:{{booking_pending.customer.mobilenumber}}" style="margin-right: 5%;" class="btn btn-sm btn-success">Call</a> </td>

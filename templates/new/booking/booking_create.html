@@ -76,7 +76,9 @@
     })
 
     let amountPaid_ = document.getElementById('id_amountPaid');
-    amountPaid_.addEventListener('change',doMath);
+    amountPaid_.addEventListener('keyup',doMath);
+    // let discount_ = document.getElementById('id_discount');
+    // discount_.addEventListener('keyup',doMath);
     function doMath()
     {
         console.log('doing math')
