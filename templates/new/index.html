@@ -27,7 +27,15 @@
 
   <!-- Template Main CSS File -->
   <link href="{% static 'css/mainindex.css' %}" rel="stylesheet">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9S19B3ZD9T"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'G-9S19B3ZD9T');
+</script>
 
 </head>
 
@@ -555,11 +563,37 @@
 
   </footer><!-- End Footer -->
   <!-- End Footer -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
-  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <a href="https://api.whatsapp.com/send?phone=916262632679&text=Hi%20I'm%20Interested%20in%20Dress%20Rental%20Software." class="float" target="_blank">
+    <i class="bi bi-whatsapp"></i>
+    </a>
+
+    <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <div id="preloader"></div>
 
+  <style>
+    .float{
+      position:fixed;
+      width:60px;
+      height:60px;
+      bottom:40px;
+      left:40px;
+      background-color:#25d366;
+      color:#FFF;
+      border-radius:40px;
+      text-align:center;
+      font-size:40px;
+      box-shadow: 2px 2px 3px #999;
+      z-index:100;
+    }
+    
+    .my-float{
+      margin-top:16px;
+    }
+  </style>
   <!-- Vendor JS Files -->
   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
   <script src="{% static 'vendor/aos/aos.js' %}"></script>
