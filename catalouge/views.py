@@ -18,6 +18,8 @@ from booking.models import Booking
 from django.contrib.auth.decorators import login_required
 
 
+from config.config import Config
+
 class ProductList(ListView):
     paginate_by = 20
     model = Product
@@ -36,7 +38,7 @@ class MaintainanceList(ListView):
     model = Product
     def get(self,request):
         seller = Seller.objects.get(user=request.user)
-        product_list = Product.objects.filter(seller=seller,status="maintainance")
+        product_list = Product.objects.filter(seller=seller,status=Config.Maintainance)
         context ={
             "product_list":product_list
         }
@@ -84,11 +86,11 @@ def product_update(request, pk):
         form = ProductCreationForm(request.POST, request.FILES, instance=product, initial={'shop':seller.shop})
         if form.is_valid():
             tag = form.cleaned_data.get('tag')
-            if Product.objects.filter(seller=seller,tag=tag).count() >= 1:
-                messages.warning(request,
-                    "Product with same tag is already created"
-                )
-                return redirect('product_update', product.pk)
+            # if Product.objects.filter(seller=seller,tag=tag).count() >= 1:
+            #     messages.warning(request,
+            #         "Product with same tag is already created"
+            #     )
+                # return redirect('product_update', product.pk)
             form.save()
             return redirect('product_list')
         else:
@@ -102,7 +104,7 @@ def product_update(request, pk):
         'form':form,
         'product':product,
     }
-    return render(request,'product/product_create.html',context)
+    return render(request,'product/product_update.html',context)
 
 @login_required
 def product_search(request):

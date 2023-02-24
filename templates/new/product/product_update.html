@@ -1,0 +1,60 @@
+{% extends 'base.html' %} {% block content %}
+{% load crispy_forms_tags %}
+<main id="main" class="main">
+{% include 'includes/alert.html' %}
+  <div class="pagetitle">
+    <h1>2 Update Product</h1>
+  </div><!-- End Page Title -->
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Product</h5>
+            <form class="row g-3" method="post"  action ="{% url 'product_update' product.pk  %}" enctype="multipart/form-data">
+              {% csrf_token %}
+              <!-- {{form}} -->
+              <div class="col-md-12">
+                {{ form.name|as_crispy_field }}
+              </div>
+              <div class="col-md-4">
+                {{ form.tag|as_crispy_field }}
+              </div>
+              <div class="col-md-4">
+                {{ form.color|as_crispy_field }}
+              </div>
+              <div class="col-md-4">
+                {{ form.size|as_crispy_field }}
+              </div>
+              <div class="col-12">
+                {{ form.description|as_crispy_field }}
+              </div>
+              <div class="col-md-4">
+                {{ form.price|as_crispy_field }}
+              </div>
+              <div class="col-md-4">
+                {{ form.gender|as_crispy_field }}
+              </div>
+              <div class="col-md-4">
+                {{ form.category|as_crispy_field }}
+              </div>
+              <div class="col-md-4">
+                {{ form.status|as_crispy_field }}
+              </div>
+              <div class="col-md-4">
+                {{ form.image|as_crispy_field }}
+              </div>
+              <div class="">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                {% if form.instance.pk %}
+                <a href="{% url 'product_delete'  product.pk %}" class="btn btn-md btn-danger" style="float:right">Delete</a>
+                {% endif %}
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}
