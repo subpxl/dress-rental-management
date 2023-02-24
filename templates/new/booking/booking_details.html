@@ -69,13 +69,13 @@
                 </div>
             
                 <div class=" px-2 col col-6 ">
-                  <address class="float-end text-end">
-                    <strong>Shop {{ booking.shop.name }}</strong><br />
-                    <strong>Address : {{ booking.shop.address }}</strong><br />
-                    <strong>{{ booking.shop.address2 }}</strong> <br />
-                    <strong>City : {{ booking.shop.city }}</strong><br />
-                    <strong>Pincode : {{ booking.shop.pincode }}</strong><br />
-                    <strong>Contact : {{ booking.shop.customer.mobilenumber }}</strong><br />
+                  <address class="float-end ">
+                    <strong>Shop {{ booking.branch }}</strong><br />
+                    <strong>Address : {{ booking.branch.address }}</strong><br />
+                    {% comment %} <strong>{{ booking.branch.address2 }}</strong> <br /> {% endcomment %}
+                    <strong>City : {{ booking.branch.city }}</strong><br />
+                    <strong>Pincode : {{ booking.branch.pincode }}</strong><br />
+                    <strong>Contact : {{ booking.branch.mobileNumber }}</strong><br />
                   </address>
                 </div>
               </div>
