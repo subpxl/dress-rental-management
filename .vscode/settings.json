@@ -1,6 +1,5 @@
 {
   "files.exclude": {
-    "requirements.txt": true,
     "manage.py": true,
     ".gitignore": true,
     ".vscode": true,

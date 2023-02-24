@@ -19,6 +19,7 @@ export DJANGO_SUPERUSER_PASSWORD=admin ; python3 manage.py createsuperuser --no-
 
 
 
+
 python manage.py migrate accounts --database=production
 python manage.py migrate  --database=production
 
