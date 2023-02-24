@@ -18,3 +18,4 @@ sqlparse==0.4.3
 urllib3==1.26.14
 psycopg2-binary
 django-admin-honeypot
+django-import-export
