@@ -9,10 +9,10 @@ from shortuuid.django_fields import ShortUUIDField
 STATUS = Config.STATUS
 
 class Customer(models.Model):
-    name = models.CharField(max_length=100)
-    mobilenumber = models.CharField(max_length=100)
-    whatsappNumber = models.CharField(max_length=100,null=True,blank=True)
-    address = models.CharField(max_length=100)
+    name = models.CharField(max_length=500)
+    mobilenumber = models.CharField(max_length=500)
+    whatsappNumber = models.CharField(max_length=500,null=True,blank=True)
+    address = models.CharField(max_length=500)
 
     def __str__(self):
         return "%s " % (self.name)
@@ -33,12 +33,12 @@ class Booking(models.Model):
     amountDue = models.IntegerField()
     discount = models.PositiveIntegerField(default=0)
     products = models.ManyToManyField(Product ,blank=False)
-    orderNo = ShortUUIDField(length=6, max_length=6,  unique=True, db_index=True, editable=False)
-    referenceNo = models.CharField(max_length=100, default="", null=True, blank=True)
+    orderNo = ShortUUIDField(length=6, max_length=21,  unique=True, db_index=True, editable=False)
+    referenceNo = models.CharField(max_length=500, default="", null=True, blank=True)
     seller=models.ForeignKey(Seller,on_delete=models.PROTECT)
-    note = models.CharField(max_length=100,blank=True,null=True)
+    note = models.CharField(max_length=500,blank=True,null=True)
     status = models.CharField(
-        max_length=100, choices=STATUS,default=Config.Booked)
+        max_length=500, choices=STATUS,default=Config.Booked)
     final_paid = models.PositiveIntegerField(default=0)
 
     def __str__(self):
@@ -62,10 +62,10 @@ class Booking(models.Model):
 class BookedProduct(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     booking = models.ForeignKey(Booking, on_delete=models.CASCADE)
-    description = models.CharField(max_length=100)
-    size = models.CharField(max_length=100)
-    status = models.CharField(max_length=15)
-    price = models.CharField(max_length=100)
+    description = models.CharField(max_length=500)
+    size = models.CharField(max_length=500)
+    status = models.CharField(max_length=25)
+    price = models.CharField(max_length=500)
     
     def __str__(self):
         return "%s , %s" % (self.product,self.booking)
