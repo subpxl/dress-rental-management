@@ -101,12 +101,6 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '5432',
 
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('LOCAL_DB_NAME'),
-        'USER': config('LOCAL_DB_USER'),
-        'PASSWORD': config('LOCAL_DB_PASSWORD'),
-        'HOST': config('LOCAL_DB_HOST'),
-        'PORT': config('LOCAL_DB_PORT'),
     },
 
     'production': {
