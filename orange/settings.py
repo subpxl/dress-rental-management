@@ -17,6 +17,9 @@ from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+
+default_database = config('DEFAULT_DATABASE')
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -24,7 +27,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-a!c@7z4tx#&fc5g$@_7)4)wc)ij@t%$k1gvao%niz(8uwf%e6n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
+if default_database =="production":
+
+    DEBUG = False
+else:
+    DEBUG=True
 
 ALLOWED_HOSTS = ['xail.in','www.xail.in','localhost','127.0.0.1','139.59.67.45','digitalbazaar.io']
 
@@ -113,7 +121,6 @@ DATABASES = {
     }
 }
 
-default_database = config('DEFAULT_DATABASE')
 print(default_database)
 DATABASES['default']= DATABASES[default_database]
 

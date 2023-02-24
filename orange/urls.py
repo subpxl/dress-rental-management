@@ -27,6 +27,7 @@ urlpatterns = [
     path('',include('booking.urls')),
     path('',include('seller.urls')),
     path('api/',include('api.urls')),
+
     path('dashboard/',dashboard,name='dashboard'),
     path('mechanic/', admin.site.urls),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
