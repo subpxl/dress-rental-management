@@ -31,6 +31,9 @@ python manage.py createsuperuser  --database=production
 python manage.py runserver  --database=production
 
 
+python -m locust -f locustfile.py --host http://localhost:8000 --users 5000 --spawn-rate 20
+
+
 
 # windows
 

@@ -65,7 +65,7 @@
           <span>Staff</span>
         </a>
       </li> {% endcomment %}
-      {% comment %} <li class="nav-item">
+       <li class="nav-item">
         <a class="nav-link " href="{% url 'branch_list' %}">
           <i class="bi bi-grid"></i>
           <span>Branch</span>
@@ -76,7 +76,7 @@
           <i class="bi bi-grid"></i>
           <span>Bulk Upload</span>
         </a>
-      </li> {% endcomment %}
+      </li> 
       {% if request.user.is_authenticated %}
       <li class="nav-heading">Account</li>
       <li class="nav-item">
