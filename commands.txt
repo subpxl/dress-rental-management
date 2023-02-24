@@ -16,6 +16,9 @@ python3 manage.py migrate
 export DJANGO_SUPERUSER_PASSWORD=admin ; python3 manage.py createsuperuser --no-input --first_name=admin --last_name=admin --username=admin  --email=admin@admin.com  --database=production--database=production
 
 
+
+
+
 python manage.py migrate accounts --database=production
 python manage.py migrate  --database=production
 
