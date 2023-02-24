@@ -30,7 +30,8 @@ SECRET_KEY = 'django-insecure-a!c@7z4tx#&fc5g$@_7)4)wc)ij@t%$k1gvao%niz(8uwf%e6n
 
 if default_database =="production":
 
-    DEBUG = False
+    # DEBUG = False
+    DEBUG=True
 else:
     DEBUG=True
 
