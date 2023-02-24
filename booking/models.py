@@ -31,7 +31,7 @@ class Booking(models.Model):
     totalAmount = models.PositiveIntegerField()
     amountPaid = models.PositiveIntegerField()
     amountDue = models.IntegerField()
-    discount = models.PositiveIntegerField(default=0)
+    discount = models.PositiveIntegerField(default=0,null=True)
     products = models.ManyToManyField(Product ,blank=False)
     orderNo = ShortUUIDField(length=6, max_length=21,  unique=True, db_index=True, editable=False)
     referenceNo = models.CharField(max_length=500, default="", null=True, blank=True)
