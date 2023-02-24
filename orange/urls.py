@@ -28,6 +28,6 @@ urlpatterns = [
     path('',include('seller.urls')),
     path('api/',include('api.urls')),
     path('dashboard/',dashboard,name='dashboard'),
-    path('admin/', admin.site.urls),
+    path('mechanic/', admin.site.urls),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
