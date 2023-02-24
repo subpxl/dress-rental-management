@@ -9,9 +9,9 @@ rm db.sqlite3
 python3 manage.py migrate accounts
 python3 manage.py migrate 
 
-    service gunicorn restart
-    service nginx restart
-    systemctl daemon-reload
+service gunicorn restart
+service nginx restart
+systemctl daemon-reload
 
 
 export DJANGO_SUPERUSER_PASSWORD=admin ; python3 manage.py createsuperuser --no-input --first_name=admin --last_name=admin --username=admin  --email=admin@admin.com  
