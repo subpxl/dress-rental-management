@@ -38,15 +38,15 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
     SELLER = 1
     CUSTOMER = 2
-    AFFILIATE = 3
-    STAFF = 4
-    MANAGER = 5
+    
+    STAFF = 3
+    MANAGER = 4
 
     ROLE_CHOICE = (
         (SELLER, 'Seller'),
         (CUSTOMER, 'Customer'),
-        (AFFILIATE, 'Affliate'),
-        (STAFF, 'Affliate'),
+        
+        (STAFF, 'STAFF'),
         (MANAGER, 'Manager'),
     )
     first_name = models.CharField(max_length=50)

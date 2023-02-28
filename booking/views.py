@@ -19,7 +19,7 @@ from catalouge.models import Product
 from django.http import  HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-
+from datetime import date
 @csrf_exempt
 def booked_product_search(request):
     if request.method == "POST":
@@ -59,6 +59,9 @@ def booking_create(request):
     customerForm = CustomerForm()
     ProductFormSet = formset_factory(BookedProductForm, extra=2)
     formset = ProductFormSet()
+    # if request.is_ajax():
+    #     val=request.GET.get('term')
+    #     print(val)
     context = {'bookingForm': bookingForm, 'formset': formset,'customerForm':customerForm}
     if request.method == "POST":
         products = request.POST.getlist("products")
@@ -149,6 +152,7 @@ def booking_update(request, pk):
     booking = Booking.objects.get(id=pk)
     booked_product_list = BookedProduct.objects.filter(booking=pk,status=Config.Booked)
     if request.method == 'POST':
+        
         data = request.POST
         total = booking.totalAmount 
         data.getlist('booked_product')
@@ -162,7 +166,9 @@ def booking_update(request, pk):
         booking.final_paid = data['final_paid']
         # booking.amountPaid = total-int(amount_due)-int(booking.discount)
         if BookedProduct.objects.filter(booking__id=pk,status=Config.Booked).count() == 0:
+            print(booking)
             booking.status = Config.Returned
+        booking.endDate=date.today()
         booking.save()
         return redirect('booking_list')
     context ={

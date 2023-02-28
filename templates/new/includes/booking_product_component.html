@@ -13,6 +13,7 @@
         z-index:-1 !important;
     }
 </style>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <table class="table">
     <thead class="thead-dark">
         <tr>
@@ -28,14 +29,19 @@
             <td>
                 <div class="row mr-0">
                     <input type="text" class="form-control in-ak" placeholder="Type A Dress ID" size="30"
-                        onkeyup="showResults(this)" onfocus="showResults(this)" name="" required/>
+                        onkeyup="showResults(this)" onchange="showResults(this)" name="" required/> 
                 </div>
                 <div class="row mr-0"><select name="products" required class="form-select d-ak" onchange="assingV(this)"></select>
                 </div>
+                {% comment %} <select class="js-example-basic-single" name="state" onkeyup="showResults(this)" onchange="showResults(this)">
+                    <option value="AL">Alabama</option>
+                      ...
+                    <option value="WY">Wyoming</option>
+                  </select> {% endcomment %}
             </td>
             <td><input class="form-control" placeholder="description" name="description"></td>
             <td><input class="form-control" placeholder="size" name="size"></td>
-            <td><input class="form-control" placeholder="price" name="price"></td>
+            <td><input class="form-control" placeholder="price" type="number" name="price"></td>
             <td style="width: 10%;text-align: center;cursor: pointer;">
                 <span onclick="removeProductForm(this)"><i class="fa fa-trash" aria-hidden="true"></i>
             </span></td>
@@ -73,6 +79,7 @@
             console.log(startTime.value, endTime.value, startTimeId.value,endTimeId.value)
         }
         )
+        
     })
     var nameArr = '';
     function assingV(ele){
@@ -90,13 +97,12 @@
         console.log('first td ', td)
         let td1 = td.nextElementSibling;
         td1.getElementsByTagName('input')[0].value = desc;
-        td1.getElementsByTagName('input')[0].setAttribute('readonly', 'readonly');
         let td2 = td1.nextElementSibling;
         td2.getElementsByTagName('input')[0].value = size;
-        td2.getElementsByTagName('input')[0].setAttribute('readonly', 'readonly');
         let td3 = td2.nextElementSibling;
         td3.getElementsByTagName('input')[0].value = price;
-        td3.getElementsByTagName('input')[0].setAttribute('readonly', 'readonly');
+        td3.getElementsByTagName('input').type=number;
+        
         totalA = document.getElementById('id_totalAmount')
         if (totalA.value == ""){
             totalA.value = Number(price)
@@ -112,7 +118,7 @@
 
     function showResults(ele) {
         let searchresult = ele.parentElement.nextElementSibling.childNodes[0];
-        searchresult.innerHTML = "<option style='color:red;'> select a product </option>"
+        searchresult.innerHTML = "<option style='color:red;' selected='true' disabled='disabled'> select a product </option>"
         var typedInput = ele.value
         console.log("typed input : ", typedInput, searchresult)
         if (myProductArray.length >= 1) {
@@ -129,8 +135,27 @@
             console.log("nothing here")
             return
         }
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2({
+                ajax: {
+                    url: '{% url 'booked_product_search' %}',
+                    dataType: 'json',
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return console.log("hello");
+                            })
+                        };
+                    }
+                },
+                minimumInputLength: 1
+            });
+        });
     }
 </script>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     function addProductForm() {
         let tr = document.createElement('tr');
@@ -144,7 +169,7 @@
             + '</td>'
             + '<td><input class="form-control" placeholder="description" name ="description" ></td>'
             + '<td><input class="form-control" placeholder="size"  name="size"></td>'
-            + '<td><input class="form-control" placeholder="price"  name="price"></td>'
+            + '<td><input class="form-control" type="number" placeholder="price"  name="price"></td>'
             + '<td style="width: 10%;text-align: center;cursor: pointer;">'
             + '<span onclick="removeProductForm(this)"><i class="fa fa-trash" aria-hidden="true"></i>'
             + '</span></td>'
@@ -157,3 +182,23 @@
         return;
     }
 </script>
+{% comment %} <script>
+$(document).ready(function () {
+            $('.js-example-basic-single').select2({
+                ajax: {
+                    url: '{% url 'booked_product_search' %}',
+                    dataType: 'json',
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                let newarr = myProductArray.filter(a => (a.tag.match(item.term)))
+                                console.log(newarr)
+                                return "showResults(item.term)";
+                            })
+                        };
+                    }
+                },
+                minimumInputLength: 1
+            });
+        });
+</script>{% endcomment %}

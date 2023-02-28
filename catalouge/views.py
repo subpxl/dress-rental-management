@@ -158,6 +158,14 @@ def product_bulk_upload(request):
         next(io_string)
         for column in csv.reader(io_string, delimiter=',', quotechar="|"):
             print(column[0],column[1],column[2],column[3],column[4],column[5],column[6],column[7],column[8],column[9])
+            
+            category=Category.objects.filter(name=column[2])
+            if not category:
+                shop = Seller.objects.get(user=request.user).shop
+                category_list = Category.objects.filter(branch__main_shop=shop)
+                print(category_list)
+                # category=Category.objects.create(name=column[2],branch=)
+                # category.save()
             category = Category.objects.get(name=column[2])
             seller = Seller.objects.get(name=column[5])
             image = urllib.request.urlretrieve(column[8])
