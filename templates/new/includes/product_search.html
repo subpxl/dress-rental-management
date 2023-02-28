@@ -2,7 +2,7 @@
     <form action="{% url 'booked_product_search' %}" id="dateForm" method="post">
         <div class="row">
             <div class="col-6 col-lg-2 form-group">
-                <label>Booking Date</label>
+                <label>Pickup Date</label>
                 <input autofocus type="date" class=" form-control" name="startDate" id="startDate" required>
             </div>
             <div class="col-6 col-lg-2 form-group">
@@ -10,7 +10,7 @@
                 <input type="date" class=" form-control" name="endDate" id="endDate" required>
             </div>
             <div class="col-6 col-lg-2 form-group">
-                <label>Booking Time</label>
+                <label>Pickup Time</label>
                 <select class="form-control" name="startTime" id='startTime' required >
                     <option value="1">Morning</option>
                     <option value="2">Afternoon</option>

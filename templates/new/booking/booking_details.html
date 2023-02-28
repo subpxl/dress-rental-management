@@ -83,9 +83,9 @@
             
               <div class="row px-2">
                 <div class="col-4"><strong>Pickup Date:<br />
-                    {{ booking.startDate }}</div></strong>
+                    {{ booking.startDate }},{{booking.get_startTime_display}}</div></strong>
                 <div class="col-4"><strong>Return Date:<br />
-                    {{ booking.endDate }}</div></strong>
+                    {{ booking.endDate }},{{booking.get_startTime_display}}</div></strong>
                 <div class="col-4 text-end">
                   <address>
                     <strong>Order Date:<br />

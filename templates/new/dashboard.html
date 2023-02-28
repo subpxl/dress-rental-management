@@ -178,14 +178,14 @@
                         <th style="width:15%">Customer</th>
                         <th style="width:15%;">Total Price</th>
                         <th style="width:15%;">Products</th>
-                        <th style="width:15%;">Booking Date</th>
+                        <th style="width:15%;">Pickup Date</th>
                         <th style="width:15%;">Return Date</th>
                       </tr>
                     </tr>
                   </thead>
                   <tbody>
                     {% for booking in toSend %}
-                    <tr>
+                    <tr onclick="window.location='{% url 'booking_details'  booking.pk %}'">
                       <td style="vertical-align: top;">{{forloop.counter}}</td>
                       <th scope="row"><a href="#">{{booking.customer.name}}</a></th>
                       <td style="vertical-align: top;">Rs. {{booking.totalAmount}}</td>
@@ -224,14 +224,14 @@
                         <th style="width:15%">Customer</th>
                         <th style="width:15%;">Total Price</th>
                         <th style="width:15%;">Products</th>
-                        <th style="width:15%;">Booking Date</th>
+                        <th style="width:15%;">Pickup Date</th>
                         <th style="width:15%;">Return Date</th>
                       </tr>
                     </tr>
                   </thead>
                   <tbody>
                     {% for booking in toRecieve %}
-                    <tr>
+                    <tr onclick="window.location='{% url 'booking_details'  booking.pk %}'">
                       <td style="vertical-align: top;">{{forloop.counter}}</td>
                       <th scope="row"><a href="#">{{booking.customer.name}}</a></th>
                       <td style="vertical-align: top;">Rs. {{booking.totalAmount}}</td>
@@ -272,14 +272,14 @@
                         <th style="width:15%">Customer</th>
                         <th style="width:15%;">Amount Due</th>
                         <th style="width:15%;">Products</th>
-                        <th style="width:15%;">Booking Date</th>
+                        <th style="width:15%;">Pickup Date</th>
                         <th style="width:15%;">Return Date</th>
                       </tr>
                     </tr>
                   </thead>
                   <tbody>
                     {% for booking in top_bookings %}
-                    <tr>
+                    <tr onclick="window.location='{% url 'booking_details'  booking.pk %}'">
                       <td style="vertical-align: top;">{{forloop.counter}}</td>
                       <th scope="row"><a href="#">{{booking.customer.name}}</a></th>
                       <td style="vertical-align: top;">Rs. {{booking.amountDue}}</td>

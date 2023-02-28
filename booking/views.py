@@ -40,14 +40,15 @@ def booked_product_search(request):
                     ).values_list('product',flat=True).distinct()
         
         print(black_list)
-        found_product = Product.objects.filter(branch__id = branch).exclude(id__in=black_list).values()
+        found_product = Product.objects.filter(branch__id = branch,status='Available').exclude(id__in=black_list).values()
         list_of_dicts = list(found_product)
-        print(list_of_dicts)
+        print(list_of_dicts,"1")
         data = json.dumps(list_of_dicts)
         return HttpResponse(data, content_type="application/json")
     else:
         found_product = Product.objects.filter(status='Available').values()
         list_of_dicts = list(found_product)
+        print(list_of_dicts,"1")
         data = json.dumps(list_of_dicts)
         return HttpResponse(data, content_type="application/json")
 
