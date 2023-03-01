@@ -50,6 +50,9 @@ class Product(models.Model):
     status = models.CharField(
         max_length=100, choices=Config.STATUS, default=Config.Available)
 
+    tax=models.PositiveIntegerField(null=True,blank=True)
+    quantity=models.PositiveIntegerField(null=True,blank=True)
+
 
     #calling image compression function before saving the data
 #     def save(self, *args, **kwargs):

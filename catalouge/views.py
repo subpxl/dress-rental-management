@@ -84,9 +84,10 @@ def product_create(request):
 @login_required
 def product_update(request, pk):
     seller = Seller.objects.get(user=request.user)
+    shop=Shop.objects.get(seller__user=request.user)
     product = Product.objects.get(id=pk)
     if request.method == 'POST':
-        form = ProductCreationForm(request.POST, request.FILES, instance=product, initial={'shop':seller.shop})
+        form = ProductCreationForm(request.POST, request.FILES, instance=product, initial={'shop':shop})
         if form.is_valid():
             tag = form.cleaned_data.get('tag')
             # if Product.objects.filter(seller=seller,tag=tag).count() >= 1:
@@ -102,7 +103,7 @@ def product_update(request, pk):
                 form.errors
             )
             return redirect('product_update', product.pk)
-    form = ProductCreationForm(instance=product, initial={'shop':seller.shop})
+    form = ProductCreationForm(instance=product, initial={'shop':shop})
     context = {
         'form':form,
         'product':product,
@@ -162,15 +163,19 @@ def product_bulk_upload(request):
         for column in csv.reader(io_string, delimiter=',', quotechar="|"):
             print(column[0],column[1],column[2],column[3],column[4],column[5],column[6],column[7],column[8],column[9])
             
-            category=Category.objects.filter(name=column[2])
-            if not category:
-                shop = Seller.objects.get(user=request.user).shop
-                category_list = Category.objects.filter(branch__main_shop=shop)
-                print(category_list)
-                # category=Category.objects.create(name=column[2],branch=)
-                # category.save()
-            category = Category.objects.get(name=column[2])
-            seller = Seller.objects.get(name=column[5])
+            # category=Category.objects.filter(name=column[2])
+            shop=Shop.objects.get(seller__user=request.user)
+            shop_category=Category.objects.filter(shop=shop,name=column[2])
+            seller=Seller.objects.get(user=request.user)
+            category=None
+            if shop_category:
+                category=shop_category[0]
+            else:
+                category=Category.objects.create(name=column[2],shop=shop)
+                shop.save()
+
+            # category = Category.objects.get(name=column[2])
+            # seller = Seller.objects.get(name=column[5])
             image = urllib.request.urlretrieve(column[8])
             product = Product.objects.update_or_create(
                 tag=column[0],
@@ -178,12 +183,14 @@ def product_bulk_upload(request):
                 category_id=category.id,
                 color=column[3],
                 size=column[4],
-                branch_id=category.branch.id,
-                seller_id=seller.id,
+                shop=shop,
+                # branch_id=category.branch.id,
+                seller=seller,
                 gender=column[6],
                 description=column[7],
                 price=column[9],
             )
+            print(product)
             product[0].image.save(
                 os.path.basename(column[1]),
                 File(open(image[0], 'rb'))

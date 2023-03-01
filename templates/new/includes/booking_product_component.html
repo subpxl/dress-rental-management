@@ -44,11 +44,11 @@
                 </div>
                 <div class="row mr-0"><select name="products" required class="form-select d-ak" onchange="assingV(this)"></select>
                 </div>
-                {% comment %} <select class="js-example-basic-single" name="state" onkeyup="showResults(this)" onchange="showResults(this)">
+                <!-- {% comment %} <select class="js-example-basic-single" name="state" onkeyup="showResults(this)" onchange="showResults(this)">
                     <option value="AL">Alabama</option>
                       ...
                     <option value="WY">Wyoming</option>
-                  </select> {% endcomment %}
+                  </select> {% endcomment %} -->
             </td>
             <td><input class="form-control" placeholder="description" name="description"></td>
             <td><input class="form-control" placeholder="size" name="size"></td>
@@ -104,6 +104,7 @@
     })
     var nameArr = '';
     function assingV(ele){
+        
         let inputV = ele.parentElement.previousElementSibling.getElementsByTagName('input')[0];
         let selected_option = ele.options[ele.selectedIndex]
         inputV.value = selected_option.text;
@@ -135,6 +136,7 @@
         if(document.getElementsByClassName('d-ak')[ind-1].value!="" && document.getElementsByClassName('d-ak')[ind-1].value!="select a product"){
             addProductForm(); 
         }
+        
     }
 
     function showResults(ele) {
@@ -190,6 +192,14 @@
             + '</td>'
             + '<td><input class="form-control" placeholder="description" name ="description" ></td>'
             + '<td><input class="form-control" placeholder="size"  name="size"></td>'
+            +'{%if check_tax_quantity %}'
+            +   '{%if check_tax_quantity.consider_quantity %}'
+            +    '<td><input class="form-control" placeholder="Quantity" type="number" name="Quantity"></td>'
+            +    '{% endif %}'
+            +    '{%if check_tax_quantity.consider_tax %}'
+            +    '<td><input class="form-control" placeholder="Tax" type="number" name="Tax"></td>'
+            +    '{% endif %}'
+            + '{% endif %}'
             + '<td><input class="form-control" type="number" placeholder="price"  name="price"></td>'
             + '<td style="width: 10%;text-align: center;cursor: pointer;">'
             + '<span onclick="removeProductForm(this)"><i class="fa fa-trash" aria-hidden="true"></i>'
