@@ -58,13 +58,15 @@
               <div class="row px-2">
                 <div class="col col-6">
                   <address>
-                    <strong>Billed To :</strong><br />
+                    <!-- <strong>Billed To :</strong><br /> -->
             
                     <strong>Name : {{ booking.customer.name }}</strong><br />
                     <strong>Address : {{ booking.customer.address }}</strong><br />
             
                     <strong>Contact No. : {{ booking.customer.mobilenumber }} </strong><br />
-                    <strong>Alternate No.: {{ booking.whatsappNumber }}</strong>
+                    <strong>WhatsApp No.: {{ booking.whatsappNumber }}</strong><br>
+                    <strong>Email ID : {{ booking.customer.email }}</strong><br />
+                    
                   </address>
                 </div>
             
@@ -105,7 +107,7 @@
                     <tr>
                       <th><strong>#</strong></th>
                       <th><strong>Product</strong></th>
-                      <th><strong>Tag</strong></th>
+                      <!-- <th><strong>Tag</strong></th> -->
                       <th><strong>Status</strong></th>
                       <th class="text-center"><strong>Size</strong></th>
                       <th class="text-center"><strong>Description</strong></th>
@@ -116,8 +118,8 @@
                     {% for booked_product in booked_product_list %}
                     <tr>
                       <td>{{ forloop.counter }}</td>
-                      <td> <strong>{{booked_product.product.name}}</strong></td>
-                      <td><strong>{{ booked_product.product.tag }} </strong></td>
+                      <td> <strong>{{booked_product.product.name}} - {{ booked_product.product.tag }}</strong></td>
+                      <!-- <td><strong>{{ booked_product.product.tag }} </strong></td> -->
                       <td><strong>{{booked_product.status}}</strong></td>
                       <td class="text-center"><strong>{{ booked_product.size }}</strong></td>
                       <td class="text-center"><strong>{{booked_product.description}} </strong></td>

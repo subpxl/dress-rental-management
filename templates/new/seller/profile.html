@@ -81,6 +81,13 @@
                     <div class="col-lg-3 col-md-4 label">Email</div>
                     <div class="col-lg-9 col-md-8">{{seller.user.email}}</div>
                   </div>
+                  <div class="row">
+                    <form method="POST" action="">
+                      {% csrf_token %}
+                        {{form.as_p}}
+                        <input type="submit" value="submit">
+                    </form>
+                  </div>
                 </div>
               </div><!-- End Bordered Tabs -->
             </div>

@@ -2,11 +2,11 @@ from audioop import reverse
 from datetime import datetime
 from multiprocessing import context
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView,DetailView
-from .models import Seller, Subscription, Shop, Branch
+from .models import Seller, Subscription, Shop ,Tax_and_Quantity
 from django.shortcuts import render, redirect
 from django.contrib import  messages
 from accounts.tokens import account_activation_token
-from .forms import SellerCreationForm, BranchCreationForm
+from .forms import SellerCreationForm
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.conf import settings
@@ -19,6 +19,7 @@ from django.utils.encoding import force_bytes
 from django.utils.encoding import force_str
 from accounts.models import User
 from django.contrib.auth.decorators import login_required
+from .forms import Tax_and_Quantity_Form
 
 razorpay_client = razorpay.Client(
     auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
@@ -97,7 +98,26 @@ class ShopDetails(DetailView):
 @login_required
 def seller_profile(request):
     seller = Seller.objects.get(user = request.user)
-    context = {'seller':seller}
+    seller_exists=Tax_and_Quantity.objects.filter(seller=seller)
+    form=Tax_and_Quantity_Form()
+    if request.method=="POST":
+        
+        if seller_exists:
+            form=Tax_and_Quantity_Form(request.POST,instance=seller_exists[0])
+            if form.is_valid():
+                form.save()
+        else:
+            form=Tax_and_Quantity_Form(request.POST)
+            if form.is_valid():
+                save_form=form.save(commit=False)
+                save_form.seller=seller
+                save_form.save()
+
+        return redirect('seller_profile')
+
+    if seller_exists:
+        form=Tax_and_Quantity_Form(instance=seller_exists[0])
+    context = {'seller':seller,'form':form}
     return render(request,'seller/profile.html',context)
         
 def staff_create(request):
@@ -196,61 +216,61 @@ class StaffDetails(DetailView):
     model = Seller
     template_name = 'seller/staff_details.html'
 
-class BranchList(ListView):
-    # permission_required = ('users.view_user')
-    model = Branch
-    template_name = 'seller/branch_list.html'
+# class BranchList(ListView):
+#     # permission_required = ('users.view_user')
+#     model = Branch
+#     template_name = 'seller/branch_list.html'
 
-    def get(self,request):
-        shop = Seller.objects.get(user=request.user).shop
-        branch_list = Branch.objects.filter(main_shop=shop)
-        context ={
-            "branch_list":branch_list
-        }
-        return render(request,'seller/branch_list.html',context)
+#     def get(self,request):
+#         shop = Seller.objects.get(user=request.user).shop
+#         branch_list = Branch.objects.filter(main_shop=shop)
+#         context ={
+#             "branch_list":branch_list
+#         }
+#         return render(request,'seller/branch_list.html',context)
 
-def branch_create(request):
-    if request.method == 'POST':
-        form = BranchCreationForm(request.POST)
-        if form.is_valid():
-            branch_obj = form.save(commit=False)
-            branch_obj.main_shop = Seller.objects.get(user=request.user).shop
-            branch_obj.save()
-        else:
-            messages.info(request, form.errors)
-            return redirect('branch_create')
-        return redirect('branch_list')
-    else:
-        form = BranchCreationForm()
-        context = {
-            'form':form,
-        }
-        return render(request,'seller/branch_create.html',context)
+# def branch_create(request):
+#     if request.method == 'POST':
+#         form = BranchCreationForm(request.POST)
+#         if form.is_valid():
+#             branch_obj = form.save(commit=False)
+#             branch_obj.main_shop = Seller.objects.get(user=request.user).shop
+#             branch_obj.save()
+#         else:
+#             messages.info(request, form.errors)
+#             return redirect('branch_create')
+#         return redirect('branch_list')
+#     else:
+#         form = BranchCreationForm()
+#         context = {
+#             'form':form,
+#         }
+#         return render(request,'seller/branch_create.html',context)
 
-def branch_update(request,pk):
-    branch = Branch.objects.get(id=pk)
-    if request.method == 'POST':
-        form = BranchCreationForm(request.POST,instance=branch)
-        if form.is_valid():
-            form.save()
-        else:
-            messages.info(request, form.errors)
-            return redirect('branch_update', branch.pk)
-        return redirect('branch_list')
-    else:
-        form = BranchCreationForm(instance=branch)
-        context = {
-            'form':form,
-        }
-        return render(request,'seller/branch_create.html',context)
+# def branch_update(request,pk):
+#     branch = Branch.objects.get(id=pk)
+#     if request.method == 'POST':
+#         form = BranchCreationForm(request.POST,instance=branch)
+#         if form.is_valid():
+#             form.save()
+#         else:
+#             messages.info(request, form.errors)
+#             return redirect('branch_update', branch.pk)
+#         return redirect('branch_list')
+#     else:
+#         form = BranchCreationForm(instance=branch)
+#         context = {
+#             'form':form,
+#         }
+#         return render(request,'seller/branch_create.html',context)
 
-class BranchDelete(DeleteView):
-    # permission_required = ('users.delete_user')
-    model = Branch
-    template_name = "seller/branch_delete.html"
-    success_url = reverse_lazy('branch_list')
+# class BranchDelete(DeleteView):
+#     # permission_required = ('users.delete_user')
+#     model = Branch
+#     template_name = "seller/branch_delete.html"
+#     success_url = reverse_lazy('branch_list')
 
-class BranchDetails(DetailView):
-    # permission_required = ('users.view_user')
-    model = Branch
-    template_name = 'seller/branch_details.html'
+# class BranchDetails(DetailView):
+#     # permission_required = ('users.view_user')
+#     model = Branch
+#     template_name = 'seller/branch_details.html'

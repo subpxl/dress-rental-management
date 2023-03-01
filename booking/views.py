@@ -2,7 +2,7 @@ from urllib import request
 from .models import Customer
 from django.urls import reverse_lazy
 from datetime import datetime
-from seller.models import Seller, Branch
+from seller.models import Seller,Shop,Tax_and_Quantity
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
@@ -27,7 +27,7 @@ def booked_product_search(request):
         endDate = request.POST.get('endDate')
         startTime = request.POST.get('startTime')
         endTime = request.POST.get('endTime')
-        branch = request.POST.get('branch')
+        # branch = request.POST.get('branch')
         # print("testing ------")
         # test = Booking.objects.get(id=4)
         # print(test.startDate, test.startTime, test.endDate, test.endTime)
@@ -40,7 +40,7 @@ def booked_product_search(request):
                     ).values_list('product',flat=True).distinct()
         
         print(black_list)
-        found_product = Product.objects.filter(branch__id = branch,status='Available').exclude(id__in=black_list).values()
+        found_product = Product.objects.filter(shop__seller__user = request.user,status='Available').exclude(id__in=black_list).values()
         list_of_dicts = list(found_product)
         print(list_of_dicts,"1")
         data = json.dumps(list_of_dicts)
@@ -56,6 +56,11 @@ def booked_product_search(request):
 # @permission_required('booking.user_create_booking')
 def booking_create(request):
     seller = Seller.objects.get(user = request.user)
+    check=Tax_and_Quantity.objects.filter(seller=seller)
+    check_tax_quantity=None
+    if check:
+        check_tax_quantity=check[0]
+    # print(check_tax_quantity.consider_quantity)
     bookingForm = BookingForm()
     customerForm = CustomerForm()
     ProductFormSet = formset_factory(BookedProductForm, extra=2)
@@ -63,7 +68,7 @@ def booking_create(request):
     # if request.is_ajax():
     #     val=request.GET.get('term')
     #     print(val)
-    context = {'bookingForm': bookingForm, 'formset': formset,'customerForm':customerForm}
+    context = {'bookingForm': bookingForm, 'formset': formset,'customerForm':customerForm,'check_tax_quantity':check_tax_quantity}
     if request.method == "POST":
         products = request.POST.getlist("products")
         description = request.POST.getlist("description")
@@ -71,14 +76,14 @@ def booking_create(request):
         size = request.POST.getlist("size")
         bookingForm = BookingForm(request.POST)
         customerForm = CustomerForm(request.POST)
-        branch_id = int(request.POST.get('branch'))
+        # branch_id = int(request.POST.get('branch'))
         if bookingForm.is_valid() and customerForm.is_valid():
             customer = customerForm.save()
             booking = bookingForm.save(commit=False)
             booking.customer = customer
-            booking.branch = Branch.objects.get(id=branch_id)
+            booking.shop = Shop.objects.get(seller__user=request.user)
             booking.seller = seller
-            booking.orderNo = (booking.branch.name[:4] + booking.orderNo).upper()
+            booking.orderNo = (booking.shop.name[:4] + booking.orderNo).upper()
             booking.save()
             bookingForm.save_m2m()
             for x in range(len(products)):

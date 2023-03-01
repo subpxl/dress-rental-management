@@ -3,37 +3,28 @@ from django.urls import reverse
 from accounts.models import User
 from config.config import Config
 
-class Shop(models.Model):
-    name = models.CharField(max_length=100)
-    address = models.CharField(max_length=100)
-    address2 = models.CharField(max_length=100,null=True,blank=True)
-    city = models.CharField(max_length=100)
-    pincode = models.CharField(max_length=100)
-    mobileNumber= models.CharField(max_length=100)
 
-    def __str__(self):
-        return "%s " % (self.name)
 
     # def get_absolute_url(self):
     #     return reverse("shop_list")
 
-class Branch(models.Model):
-    main_shop = models.ForeignKey(Shop,on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
-    address = models.CharField(max_length=100)
-    address2 = models.CharField(max_length=100,null=True,blank=True)
-    city = models.CharField(max_length=100)
-    pincode = models.CharField(max_length=100)
-    mobileNumber = models.CharField(max_length=100)
+# class Branch(models.Model):
+#     main_shop = models.ForeignKey(Shop,on_delete=models.CASCADE)
+#     name = models.CharField(max_length=100)
+#     address = models.CharField(max_length=100)
+#     address2 = models.CharField(max_length=100,null=True,blank=True)
+#     city = models.CharField(max_length=100)
+#     pincode = models.CharField(max_length=100)
+#     mobileNumber = models.CharField(max_length=100)
 
-    def __str__(self):
-        return "%s " % (self.name)
+#     def __str__(self):
+#         return "%s " % (self.name)
         
 class Seller(models.Model):
     name = models.CharField(max_length=50, unique=True)
     user = models.OneToOneField(
         User, related_name='user', on_delete=models.CASCADE) 
-    shop = models.ForeignKey(Shop,on_delete=models.CASCADE,null=True)
+    # shop = models.ForeignKey(Shop,on_delete=models.CASCADE,null=True)
     role = models.CharField(
         max_length=255, choices=Config.ROLE_CHOICES, default=Config.Staff, blank=True, null=True)
     # cover_photo = models.ImageField(
@@ -66,6 +57,17 @@ class Seller(models.Model):
     def __str__(self) :
         return f'{self.name}'
 
+class Shop(models.Model):
+    name = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+    address2 = models.CharField(max_length=100,null=True,blank=True)
+    city = models.CharField(max_length=100)
+    pincode = models.CharField(max_length=100)
+    mobileNumber= models.CharField(max_length=100)
+    seller=models.ForeignKey(Seller,on_delete=models.PROTECT)
+
+    def __str__(self):
+        return "%s " % (self.name)
 
 class Subscription(models.Model):
     plans = (
@@ -86,3 +88,12 @@ class Subscription(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     payment_id = models.CharField(max_length=36, null=False, blank=False)
     signature_id = models.CharField(max_length=128, null=False, blank=False)
+
+class Tax_and_Quantity(models.Model):
+    consider_tax=models.BooleanField(default=False)
+    consider_quantity=models.BooleanField(default=False)
+    seller=models.ForeignKey(Seller,on_delete=models.PROTECT)
+
+
+    def __str__(self):
+        return self.seller.name

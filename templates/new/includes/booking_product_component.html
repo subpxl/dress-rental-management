@@ -20,6 +20,17 @@
             <th>Name</th>
             <th>Description</th>
             <th>Size</th>
+            <!-- {{check_tax_quantity.consider_tax}} -->
+            {%if check_tax_quantity %}
+                {%if check_tax_quantity.consider_quantity %}
+                    <th>Quantity</th>
+                {% endif %}
+
+                {%if check_tax_quantity.consider_tax %}
+                    <th>Tax</th>
+                {% endif %}
+
+            {% endif %}
             <th>Price</th>
             <th style="width: 10%;text-align: center;font-size: 25px;padding: 0;font-weight: bolder;cursor: pointer;"><span onclick="addProductForm()">+</span></th>
         </tr>
@@ -28,7 +39,7 @@
         <tr>
             <td>
                 <div class="row mr-0">
-                    <input type="text" class="form-control in-ak" placeholder="Type A Dress ID" size="30"
+                    <input type="text" class="form-control in-ak" placeholder="Type A Dress ID" size="25"
                         onkeyup="showResults(this)" onchange="showResults(this)" name="" required/> 
                 </div>
                 <div class="row mr-0"><select name="products" required class="form-select d-ak" onchange="assingV(this)"></select>
@@ -41,6 +52,16 @@
             </td>
             <td><input class="form-control" placeholder="description" name="description"></td>
             <td><input class="form-control" placeholder="size" name="size"></td>
+            {%if check_tax_quantity %}
+                {%if check_tax_quantity.consider_quantity %}
+                <td><input class="form-control" placeholder="Quantity" type="number" name="Quantity"></td>
+                {% endif %}
+
+                {%if check_tax_quantity.consider_tax %}
+                <td><input class="form-control" placeholder="Tax" type="number" name="Tax"></td>
+                {% endif %}
+
+            {% endif %}
             <td><input class="form-control" placeholder="price" type="number" name="price"></td>
             <td style="width: 10%;text-align: center;cursor: pointer;">
                 <span onclick="removeProductForm(this)"><i class="fa fa-trash" aria-hidden="true"></i>

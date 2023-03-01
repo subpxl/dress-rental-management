@@ -3,7 +3,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import Category, Product
 from .forms import ProductCreationForm
 from django.db.models import ProtectedError
-from seller.models import Seller, Shop, Branch
+from seller.models import Seller, Shop
 from django.urls import reverse_lazy, reverse
 from  django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.files import File
@@ -52,8 +52,9 @@ class MaintainanceList(ListView):
 @login_required
 def product_create(request):
     seller = Seller.objects.get(user=request.user)
+    shop=Shop.objects.get(seller__user=request.user)
     if request.method == 'POST':
-        form = ProductCreationForm(request.POST, request.FILES, initial={'shop':seller.shop})
+        form = ProductCreationForm(request.POST, request.FILES, initial={'shop':shop})
         if form.is_valid():
             tag = form.cleaned_data.get('tag')
             if Product.objects.filter(seller=seller,tag=tag).count() >= 1:
@@ -62,8 +63,9 @@ def product_create(request):
                 )
                 return redirect('product_create') 
             product_obj = form.save(commit=False)
-            product_obj.branch = product_obj.category.branch
+            # product_obj.branch = product_obj.category.branch
             product_obj.seller = seller
+            product_obj.shop=shop
             product_obj.save()
             return redirect('product_list')
         else:
@@ -72,7 +74,8 @@ def product_create(request):
                 form.errors
             )
             return redirect('product_create')
-    form = ProductCreationForm(initial={'shop':seller.shop})
+    form = ProductCreationForm(initial={'shop':shop})
+    print(form)
     context = {
         'form':form,
     }
@@ -195,8 +198,8 @@ class CategoryList(ListView):
     model = Category
 
     def get(self,request):
-        shop = Seller.objects.get(user=request.user).shop
-        category_list = Category.objects.filter(branch__main_shop=shop)
+        shop = Shop.objects.get(seller__user=request.user)
+        category_list = Category.objects.filter(shop=shop)
         context ={
             "category_list":category_list
         }
@@ -205,26 +208,42 @@ class CategoryList(ListView):
 class CategoryCreate( CreateView):
     # permission_required = ('category.create_category')
     model = Category
-    fields = "__all__"
+    fields = ["name"]
     template_name = "category/category_create.html"
 
-    def get_form(self, *args, **kwargs):
-        form = super(CategoryCreate, self).get_form(*args, **kwargs)
+    # def get_form(self, *args, **kwargs):
+    #     form = super(CategoryCreate, self).get_form(*args, **kwargs)
+    #     seller = Seller.objects.get(user = self.request.user)
+    #     form.fields['shop'].queryset = Shop.objects.filter(seller__user=self.request.user)
+    #     return form
+
+    def form_valid(self, form):
+        # user = self.request.user
         seller = Seller.objects.get(user = self.request.user)
-        form.fields['branch'].queryset = Branch.objects.filter(main_shop=seller.shop)
-        return form
+        
+        form.instance.shop = Shop.objects.get(seller__user=self.request.user)
+        # form.instance.created_by = user if user else None
+        return super(CategoryCreate, self).form_valid(form)
 
 class CategoryUpdate( UpdateView):
     # permission_required = ('category.update_category')
     model = Category
-    fields = "__all__"
+    fields = ["name"]
     template_name = "category/category_create.html"
 
-    def get_form(self, *args, **kwargs):
-        form = super(CategoryUpdate, self).get_form(*args, **kwargs)
+    # def get_form(self, *args, **kwargs):
+    #     form = super(CategoryUpdate, self).get_form(*args, **kwargs)
+    #     seller = Seller.objects.get(user = self.request.user)
+    #     form.fields['branch'].queryset = Branch.objects.filter(main_shop=seller.shop)
+    #     return form
+
+    def form_valid(self, form):
+        # user = self.request.user
         seller = Seller.objects.get(user = self.request.user)
-        form.fields['branch'].queryset = Branch.objects.filter(main_shop=seller.shop)
-        return form
+        
+        form.instance.shop = Shop.objects.get(seller__user=self.request.user)
+        # form.instance.created_by = user if user else None
+        return super(CategoryUpdate, self).form_valid(form)
 
 class CategoryDelete(DeleteView):
     # permission_required = ('category.delete_category')

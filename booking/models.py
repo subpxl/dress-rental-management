@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.db import models
 from catalouge.models import Product
 from config.config import Config
-from seller.models import Shop, Seller, Branch
+from seller.models import Shop, Seller
 from shortuuid.django_fields import ShortUUIDField
 
 STATUS = Config.STATUS
@@ -13,6 +13,7 @@ class Customer(models.Model):
     mobilenumber = models.CharField(max_length=500)
     whatsappNumber = models.CharField(max_length=500,null=True,blank=True)
     address = models.CharField(max_length=500)
+    email=models.EmailField(null=True,blank=True)
 
     def __str__(self):
         return "%s " % (self.name)
@@ -22,7 +23,8 @@ class Customer(models.Model):
 
 class Booking(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
-    branch = models.ForeignKey(Branch, on_delete=models.PROTECT)
+    # branch = models.ForeignKey(Branch, on_delete=models.PROTECT)
+    shop=models.ForeignKey(Shop,on_delete=models.PROTECT)
     orderdate = models.DateField(auto_now_add=True)
     startDate = models.DateField()
     startTime = models.CharField(max_length=15,choices=Config.DayTime)
@@ -42,7 +44,7 @@ class Booking(models.Model):
     final_paid = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return "%s " % (self.branch)
+        return "%s " % (self.shop)
 
     def get_absolute_url(self):
         return reverse("booking_list")

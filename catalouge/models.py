@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from config.config import Config
-from seller.models import Shop, Seller, Branch
+from seller.models import Shop, Seller
 
 # image compression
 from io import BytesIO
@@ -21,7 +21,8 @@ def compress(image):
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
-    branch = models.ForeignKey(Branch,on_delete=models.CASCADE)
+    # branch = models.ForeignKey(Branch,on_delete=models.CASCADE)
+    shop=models.ForeignKey(Shop,on_delete=models.PROTECT)
 
     def __str__(self):
         return "%s " % (self.name)
@@ -38,7 +39,8 @@ class Product(models.Model):
     tag = models.CharField(max_length=100)
     color = models.CharField(max_length=100,null=True,blank=True)
     size = models.CharField(max_length=100,null=True,blank=True)
-    branch = models.ForeignKey(Branch,on_delete=models.CASCADE)
+    # branch = models.ForeignKey(Branch,on_delete=models.CASCADE)
+    shop=models.ForeignKey(Shop,on_delete=models.PROTECT)
     gender = models.CharField(choices=Config.GENDER,max_length=100,default=Config.Male)
     description = models.CharField(max_length=100,null=True,blank=True)
     price = models.PositiveIntegerField()
