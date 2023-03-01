@@ -21,10 +21,12 @@
             <h5 class="card-title">Product List</h5>
             <table class="table table-borderless table-hover">
               <thead>
-                <th style="width:10%">Image</th>
-                <th style="width:10%;">Product</th>
-                <th style="width:10%">Tag</th>
-                <th style="width:10%">Status</th>
+                <th style="width:15%">Image</th>
+                <th style="width:15%;">Product</th>
+                <th style="width:15%">Tag</th>
+                <th style="width:15%">Status</th>
+                <th style="width:15%">Tax</th>
+                <th style="width:15%">Quantity</th>
                 <th style="width:50%;text-align: right;"> <span style="margin-right: 5%;">Action</span></th>
                 </tr>
               </thead>
@@ -37,6 +39,8 @@
                   <td>{{product.name}}</td>
                   <td>{{product.tag}}</td>
                   <td>{{product.status}}</td>
+                  <td>{{product.tax}}</td>
+                  <td>{{product.quantity}}</td>
                   <td style="text-align: right;">
                     <a href="{% url 'product_detail'  product.pk %}" class="btn btn-md"><i class="fa fa-eye"
                         aria-hidden="true"></i></a>

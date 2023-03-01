@@ -80,24 +80,25 @@
     startTimeId = document.getElementById('id_startTime')
     endTimeId = document.getElementById('id_endTime')
     var myProductArray = []
+    var product_already_selected=[]
     dateForm = document.getElementById('dateForm')
     dateForm.addEventListener("submit", async (e) => {
         e.preventDefault()
         document.getElementById('id_branch').value = document.getElementById('branch_pk').value
         payload = new FormData(dateForm)
-        console.log("sent req");
+        // console.log("sent req");
         fetch("{% url 'booked_product_search' %}", {
             method: "POST",
             body: payload
         }).then(res => res.json()).then(data => {
             myProductArray = data
-            console.log("rec data ", myProductArray);
+            // console.log("rec data ", myProductArray);
         }).then(() => {
             startDateId.value = startDate.value
             endDateId.value = endDate.value
             startTimeId.value = startTime.value
             endTimeId.value = endTime.value
-            console.log(startTime.value, endTime.value, startTimeId.value,endTimeId.value)
+            // console.log(startTime.value, endTime.value, startTimeId.value,endTimeId.value)
         }
         )
         
@@ -107,6 +108,9 @@
         
         let inputV = ele.parentElement.previousElementSibling.getElementsByTagName('input')[0];
         let selected_option = ele.options[ele.selectedIndex]
+        product_already_selected.push(selected_option.text)
+        // console.log("temp")
+        // console.log(selected_option.text)
         inputV.value = selected_option.text;
         let price = selected_option.dataset.price
         let desc = selected_option.dataset.desc
@@ -143,15 +147,18 @@
         let searchresult = ele.parentElement.nextElementSibling.childNodes[0];
         searchresult.innerHTML = "<option style='color:red;' selected='true' disabled='disabled'> select a product </option>"
         var typedInput = ele.value
-        console.log("typed input : ", typedInput, searchresult)
+        // console.log("typed input : ", typedInput, searchresult)
         if (myProductArray.length >= 1) {
             console.log(myProductArray)
             let newarr = myProductArray.filter(a => (a.tag.match(typedInput)))
             console.log('newarr => ', newarr)
             newarr.forEach((item, index) => {
-                {% comment %} searchresult.innerHTML += `<option style='color:green;' onclick="assingV(this.parentNode,'${item.description}',${item.size},${item.price})" class="options" value=${item.id}` + '>' + `${item.name}  ${item.tag} ` + "</option>" {% endcomment %}
+                {% comment %} searchresult.innerHTML += `<option style='color:green;' onclick="assingV(this.parentNode,'${item.description}',${item.size},${item.price})" class="options" value=${item.id}` + '>' + `${item.name} ${item.tag}` + "</option>" {% endcomment %}
+                let test1=`${item.name} ${item.tag}`
+                // console.log(test1,'test',product_already_selected.includes(test1))
+                if (!product_already_selected.includes(test1)){
                 searchresult.innerHTML += `<option style='color:green;' class="options" data-price='${item.price}' data-desc='${item.description}' data-size='${item.size}' value=${item.id}` + '>' + `${item.name}  ${item.tag} ` + "</option>"
-                return item
+                return item}
             })
         } else {
             searchresult.innerHTML += "<option style='color:red;' value=  > no products found </option>"

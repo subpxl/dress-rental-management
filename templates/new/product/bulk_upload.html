@@ -2,12 +2,14 @@
 {% block content %}
 {% load static %}
 <style>
-  .table td.fit, 
+.table td.fit, 
 .table th.fit {
     white-space: nowrap;
     width: 1%;
 }
 </style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="{% static 'js/csv_upload.js' %}"></script>
 <main id="main" class="main">
   
   <div class="pagetitle col-lg-12">
@@ -124,4 +126,35 @@
     window.open(val, "_blank");
     }
 </script>
+<!-- <script>
+  function readFile() {
+    console.log("hello");
+    event.preventDefault()
+    const input=document.getElementById("csv-file")
+    const file = input.files[0];
+    const reader = new FileReader();
+    reader.onload = function() {
+      const rows = reader.result.split('\r');
+      rows.forEach(function(row) {
+        const columns = row.split(',');
+        
+        // var form_data = new FormData();
+		    // form_data.append('csv_file_row', columns);
+        // console.log(form_data)
+        $.ajax({
+            type: 'POST',
+            data: columns,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+              alert(response.message);
+            },
+            error: function(xhr, status, error) {
+              console.error(xhr.responseText);
+            }});
+      });
+    };
+    reader.readAsText(file);
+  }
+  </script> -->
 {% endblock %}

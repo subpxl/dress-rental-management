@@ -16,6 +16,8 @@ import os
 from django.contrib import messages
 from booking.models import Booking
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 from config.config import Config

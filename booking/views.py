@@ -36,11 +36,11 @@ def booked_product_search(request):
         # print(same_times)
         black_list = BookedProduct.objects.filter(
                         Q(booking__startDate__lt=endDate)|Q(booking__startDate=endDate,booking__startTime__lte=endTime),
-                        Q(booking__endDate__gt=startDate)|Q(booking__endDate=startDate,booking__endTime__gte=startTime)
+                        Q(booking__endDate__gt=startDate)|Q(booking__endDate=startDate,booking__endTime__gte=startTime)|Q(status='Booked')|Q(status='Maintainence')
                     ).values_list('product',flat=True).distinct()
         
         print(black_list)
-        found_product = Product.objects.filter(shop__seller__user = request.user,status='Available').exclude(id__in=black_list).values()
+        found_product = Product.objects.filter(Q(status='Available')|Q(status="Returned"),shop__seller__user = request.user).exclude(id__in=black_list).values()
         list_of_dicts = list(found_product)
         print(list_of_dicts,"1")
         data = json.dumps(list_of_dicts)
@@ -87,7 +87,7 @@ def booking_create(request):
             booking.save()
             bookingForm.save_m2m()
             for x in range(len(products)):
-                # product = Product.objects.get(id=products[x])
+                # product = Product.objects.filter(Q(id=products[x]))
                 # product.status = Config.Booked
                 # product.save()
                 bookedProduct = BookedProduct(booking=booking,product_id=products[x],description=description[x],price=price[x],size=size[x],status=Config.Booked)
