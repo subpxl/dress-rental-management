@@ -1,0 +1,54 @@
+{% extends 'base.html' %} {% block content %}
+{% load static %}
+{%load crispy_forms_tags %}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Tax Configurations</h1>
+    </div><!-- End Page Title -->
+
+    <section class="section profile">
+      <!-- <div class="row">
+        <div class="col-xl-4">
+
+          <div class="card">
+            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+              <h2>{{seller.name}}</h2>
+              <h3>{{seller.role}}</h3>
+              <div class="social-links mt-2">
+                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+    </div> -->
+
+    
+    <div class="row">
+
+        <div class="col-xl-12">
+            
+          <div class="card">
+            <h5 class="card-title d-inline-block" style="width: 90%;margin-left: 20px;">Add Tax</h5>
+            <div class="card-body pt-3">
+                <form method="POST" action="">
+                    {% csrf_token %}
+                      <!-- {{form.as_p}} -->
+                      <div class="col-6">{{ form.consider_tax|as_crispy_field }}</div>
+                      <div class="col-6">{{ form.tax_name|as_crispy_field }}</div>
+                      <div class="col-6">{{ form.tax_percentage|as_crispy_field }}</div>
+                      <div class="col-6">{{ form.consider_quantity|as_crispy_field }}</div>
+                      <input class="btn btn-primary btn mt-3" type="submit" value="submit">
+                  </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main><!-- End #main -->
+{% endblock %}

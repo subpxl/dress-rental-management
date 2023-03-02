@@ -20,6 +20,8 @@ from django.http import  HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from datetime import date
+from seller.forms import Tax_and_Quantity_Form
+from django.http import JsonResponse
 @csrf_exempt
 def booked_product_search(request):
     if request.method == "POST":
@@ -416,3 +418,47 @@ def pickup_list(request):
                 'pick_up_list':pick_up_list
         }
         return  render(request,'booking/pickup_list.html',context)
+
+
+def tax_configurations(request):
+    form=Tax_and_Quantity_Form()
+    seller = Seller.objects.get(user = request.user)
+    tax_data=Tax_and_Quantity.objects.filter(seller=seller)
+    if request.method=="POST":
+        form=Tax_and_Quantity_Form(request.POST)
+        if form.is_valid():
+            save_form=form.save(commit=False)
+            save_form.seller=seller
+            save_form.save()
+            return redirect('tax_configurations')
+
+    context={'form':form,'tax_data':tax_data}
+    return render(request,'includes/tax_configurations.html',context)
+
+def delete_tax(request,pk):
+    tax_data=Tax_and_Quantity.objects.get(id=pk)
+    tax_data.delete()
+    return redirect('tax_configurations')
+
+
+def get_tax_dropdown_data(request):
+    taxes=Tax_and_Quantity.objects.filter(seller__user=request.user).values()
+    values = list(taxes)
+    # data=json.dumps(taxes)
+    return JsonResponse(values,safe=False)
+
+def edit_tax(request,pk):
+    taxes=Tax_and_Quantity.objects.get(id=pk)
+    form=Tax_and_Quantity_Form(instance=taxes)
+    if request.method=="POST":    
+        form=Tax_and_Quantity_Form(request.POST,instance=taxes)
+        if form.is_valid():
+            form.save()
+            return redirect('tax_configurations')
+    context={
+        'form':form
+    }
+
+    return render(request,'includes/edit_tax.html',context)
+    
+    

@@ -78,6 +78,12 @@
           <span>Bulk Upload</span>
         </a>
       </li> 
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'tax_configurations' %}">
+          <i class="bi bi-grid"></i>
+          <span>Tax Configurations</span>
+        </a>
+      </li> 
       {% if request.user.is_authenticated %}
       <li class="nav-heading">Account</li>
       <li class="nav-item">

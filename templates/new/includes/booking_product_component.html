@@ -21,19 +21,24 @@
             <th>Description</th>
             <th>Size</th>
             <!-- {{check_tax_quantity.consider_tax}} -->
+            {%if check_tax_quantity %}
+
+            {%if check_tax_quantity.consider_quantity %}
+                <th>Quantity</th>
+            {% endif %}
+        {% endif %}
             
             <th>Price</th>
             {%if check_tax_quantity %}
-                {%if check_tax_quantity.consider_quantity %}
-                    <th>Quantity</th>
-                {% endif %}
-
                 {%if check_tax_quantity.consider_tax %}
                     <th>Tax</th>
                 {% endif %}
-
             {% endif %}
-            <th style="width: 10%;text-align: center;font-size: 25px;padding: 0;font-weight: bolder;cursor: pointer;"><span onclick="addProductForm()">+</span></th>
+
+
+
+            
+            <th style="width: 10%;text-align: center;font-size: 25px;padding: 0;font-weight: bolder;cursor: pointer;"><span onclick="addProductForm()" class="values_add">+</span></th>
         </tr>
     </thead>
     <tbody id='productForms'>
@@ -43,7 +48,7 @@
                     <input type="text" class="form-control in-ak" placeholder="Type A Dress ID" size="25"
                         onkeyup="showResults(this)" onchange="showResults(this)" name="" required/> 
                 </div>
-                <div class="row mr-0"><select name="products" required class="form-select d-ak" onchange="assingV(this)"></select>
+                <div class="row mr-0" style="width:280px;"><select name="products" required class="form-select d-ak" onchange="assingV(this)"></select>
                 </div>
                 <!-- {% comment %} <select class="js-example-basic-single" name="state" onkeyup="showResults(this)" onchange="showResults(this)">
                     <option value="AL">Alabama</option>
@@ -51,17 +56,23 @@
                     <option value="WY">Wyoming</option>
                   </select> {% endcomment %} -->
             </td>
-            <td><input class="form-control" placeholder="description" name="description"></td>
-            <td><input class="form-control" placeholder="size" name="size"></td>
-            
-            <td><input class="form-control" placeholder="price" type="number" name="price"></td>
+            <td><input class="form-control" style="width:400px;" placeholder="description" name="description"></td>
+            <td><input class="form-control" style="width:80px;" placeholder="size" name="size"></td>
             {%if check_tax_quantity %}
-                {%if check_tax_quantity.consider_quantity %}
-                <td><input class="form-control" placeholder="Quantity" type="number" name="Quantity"></td>
-                {% endif %}
+                    {%if check_tax_quantity.consider_quantity %}
+                    <td><input class="form-control" style="width:80px;" placeholder="Quantity" type="number" name="Quantity"></td>
+                    {% endif %}
+            {% endif %}
+            
+            <td><input class="form-control" style="width:80px;" placeholder="price" type="number" name="price"></td>
+            {%if check_tax_quantity %}
 
                 {%if check_tax_quantity.consider_tax %}
-                <td><input class="form-control" placeholder="Tax" type="number" name="Tax"></td>
+                <td>
+                    <select class="form-select tax_values" placeholder="Tax" name="Tax">
+                        <option selected disabled>Select Tax</option>
+                    </select>
+                </td>
                 {% endif %}
 
             {% endif %}
@@ -200,16 +211,22 @@
             + '</div>'
             + '</td>'
             + '<td><input class="form-control" placeholder="description" name ="description" ></td>'
-            + '<td><input class="form-control" placeholder="size"  name="size"></td>'
+            + '<td><input class="form-control" style="width:80px;"  placeholder="size"  name="size"></td>'
             +'{%if check_tax_quantity %}'
             +   '{%if check_tax_quantity.consider_quantity %}'
-            +    '<td><input class="form-control" placeholder="Quantity" type="number" name="Quantity"></td>'
-            +    '{% endif %}'
-            +    '{%if check_tax_quantity.consider_tax %}'
-            +    '<td><input class="form-control" placeholder="Tax" type="number" name="Tax"></td>'
+            +    '<td><input class="form-control" style="width:80px;"  placeholder="Quantity" type="number" name="Quantity"></td>'
             +    '{% endif %}'
             + '{% endif %}'
-            + '<td><input class="form-control" type="number" placeholder="price"  name="price"></td>'
+            + '<td><input class="form-control" type="number" placeholder="price"  name="Price"></td>'
+            +   '{%if check_tax_quantity %}'
+            +        '{%if check_tax_quantity.consider_tax %}'
+            +            '<td>'
+            +                '<select class="form-select tax_values" placeholder="Tax" name="Tax">'
+            +                    '<option selected disabled>Select Tax</option>'
+            +                '</select>'
+            +            '</td>'
+            +        '{% endif %}'
+            +       '{% endif %}'
             + '<td style="width: 10%;text-align: center;cursor: pointer;">'
             + '<span onclick="removeProductForm(this)"><i class="fa fa-trash" aria-hidden="true"></i>'
             + '</span></td>'
@@ -242,3 +259,31 @@ $(document).ready(function () {
             });
         });
 </script>{% endcomment %}
+<script>
+    $(document).ready(function() {
+        // console.log("called")
+        $.ajax({
+            url: "{% url 'get_tax_dropdown_data' %}",
+            dataType: 'json',
+            success: function(data) {
+                $.each(data, function(index, element) {
+                    console.log(element)
+                   $('.tax_values').append(`<option>${element.tax_name} : ${element.tax_percentage}%</option>`)
+                });
+            }
+        });
+    });
+    $('.values_add').click(function() {
+        // alert("Hello");
+        // console.log("called")
+        $.ajax({
+            url: "{% url 'get_tax_dropdown_data' %}",
+            dataType: 'json',
+            success: function(data) {
+                $.each(data, function(index, element) {
+                   $('.tax_values').append(`<option value=''>${element.tax_name} : ${element.tax_percentage}%</option>`)
+                });
+            }
+        });
+    });
+</script>

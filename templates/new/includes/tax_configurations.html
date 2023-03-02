@@ -1,0 +1,101 @@
+{% extends 'base.html' %} {% block content %}
+{% load static %}
+{%load crispy_forms_tags %}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Tax Configurations</h1>
+    </div><!-- End Page Title -->
+
+    <section class="section profile">
+      <!-- <div class="row">
+        <div class="col-xl-4">
+
+          <div class="card">
+            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+              <h2>{{seller.name}}</h2>
+              <h3>{{seller.role}}</h3>
+              <div class="social-links mt-2">
+                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+    </div> -->
+    <div class="row">
+        <div class="col-12">
+          <div class="card top-selling overflow-auto">
+            <div class="card-body pb-0">
+              <h5 class="card-title d-inline-block" style="width: 90%;">List of Taxes</h5>
+              <table class="table table-hover" >
+                <thead>
+                  <tr>
+                    <th style="width:2%">#</th>
+                    <th style="width:10%">Tax Name</th>
+                    <th style="width:10%;">Tax Percentage</th>
+                    <!-- <th style="width:13%;">Seller</th> -->
+                    <th style="width:13%;"></th>
+                    <!-- <th style="width:10%;">Pickup Date</th>
+                    <th style="width:10%;">Return Date</th>
+                    <th style="width:45%;text-align: right;"> <span style="margin-right: 5%;">Action</span></th> -->
+                    <!-- <th style="width:10%;">Actions</th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for tax in tax_data %}
+                    <td style="vertical-align: top;">{{forloop.counter}}</td>
+                    <td style="vertical-align: top;">{{tax.tax_name}}</td>
+                    <td style="vertical-align: top;">{{tax.tax_percentage}} %</td>
+                    <!-- <td style="vertical-align: top;">{{tax.seller.name}}</td> -->
+                    <!-- <td style="vertical-align: top;">
+                      <ul class="list-group list-group-flush col col-10">
+                        {% for booked_product in booking_return.bookedproduct_set.all %}
+                            <li class="list-group-item p-0" style="padding-bottom: 2px !important;">{{booked_product.product.name}} {{booked_product.product.tag}}</li>
+                        {% endfor %}
+                      </ul>
+                    </td> -->
+                    <!-- <td style="vertical-align: top;">{{booking_return.startDate}}</td>
+                    <td style="vertical-align: top;">{{booking_return.endDate}}</td>
+                    <td style="text-align: right;">
+                    </td> -->
+                    <!-- <td style="vertical-align: top;"><button class="btn btn-delete btn mt-3" type="submit" value="submit">Delete</button></td> -->
+                    <td style="vertical-align: top;text-align: right;"><a href="{% url 'edit_tax' tax.id%}" style="margin-right: 5%;" class="btn btn-sm btn-primary">Edit</a> <a href="{% url 'delete_tax' tax.id%}" style="margin-right: 5%;" class="btn btn-sm btn-danger">Delete</a> </td>
+
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          {% include 'includes/paginate_component.html' %}
+        </div>
+      </div>
+    
+    <div class="row">
+
+        <div class="col-xl-12">
+            
+          <div class="card">
+            <h5 class="card-title d-inline-block" style="width: 90%;margin-left: 20px;">Add Tax</h5>
+            <div class="card-body pt-3">
+                <form method="POST" action="">
+                    {% csrf_token %}
+                      <!-- {{form.as_p}} -->
+                      <div class="col-6">{{ form.consider_tax|as_crispy_field }}</div>
+                      <div class="col-6">{{ form.tax_name|as_crispy_field }}</div>
+                      <div class="col-6">{{ form.tax_percentage|as_crispy_field }}</div>
+                      <div class="col-6">{{ form.consider_quantity|as_crispy_field }}</div>
+                      <input class="btn btn-primary btn mt-3" type="submit" value="submit">
+                  </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main><!-- End #main -->
+{% endblock %}

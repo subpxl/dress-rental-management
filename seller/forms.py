@@ -13,7 +13,7 @@ class SellerCreationForm(forms.ModelForm):
 class Tax_and_Quantity_Form(forms.ModelForm):
     class Meta:
         model=Tax_and_Quantity
-        fields=["consider_tax","consider_quantity"]
+        fields=["consider_tax","tax_percentage","tax_name","consider_quantity"]
         exclude=["seller"]
         
 

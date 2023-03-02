@@ -92,8 +92,10 @@ class Subscription(models.Model):
 class Tax_and_Quantity(models.Model):
     consider_tax=models.BooleanField(default=False)
     consider_quantity=models.BooleanField(default=False)
+    tax_name=models.CharField(max_length=255,null=True,blank=True)
+    tax_percentage=models.PositiveIntegerField(null=True,blank=True)
     seller=models.ForeignKey(Seller,on_delete=models.PROTECT)
 
 
     def __str__(self):
-        return self.seller.name
+        return "{}:{}".format(self.tax_name,self.seller.name )

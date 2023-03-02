@@ -20,5 +20,10 @@ urlpatterns = [
     path("customer/update/<int:pk>/", CustomerUpdate.as_view(), name="customer_update"),
     path("customer/delete/<int:pk>/", CustomerDelete.as_view(), name="customer_delete"),
     path('pickup/<int:pk>/',pickup,name="pickup"),
-    path('booking/pickup_list/',pickup_list,name='pickup_list')
+    path('booking/pickup_list/',pickup_list,name='pickup_list'),
+    path('booking/tax_configurations/',tax_configurations,name="tax_configurations"),
+    path('booking/delete_tax/<int:pk>',delete_tax,name="delete_tax"),
+    path('get_tax_dropdown_data',get_tax_dropdown_data,name="get_tax_dropdown_data"),
+    path('booking/edit_tax/<int:pk>',edit_tax,name="edit_tax")
+
 ]
