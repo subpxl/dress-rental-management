@@ -19,5 +19,6 @@ urlpatterns = [
     path("customer/add/", CustomerCreate.as_view(), name="customer_add"),
     path("customer/update/<int:pk>/", CustomerUpdate.as_view(), name="customer_update"),
     path("customer/delete/<int:pk>/", CustomerDelete.as_view(), name="customer_delete"),
-    path('pickup/<int:pk>/',pickup,name="pickup")
+    path('pickup/<int:pk>/',pickup,name="pickup"),
+    path('booking/pickup_list/',pickup_list,name='pickup_list')
 ]

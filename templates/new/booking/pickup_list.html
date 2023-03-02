@@ -1,0 +1,70 @@
+{% extends 'base.html' %} {% block content %}
+<main id="main" class="main">
+  <div class="pagetitle mb-3 col-lg-12">
+    <h1>All PickUps</h1>
+    <form class="mt-3" action="{% url 'return_list'  %}" method="post">
+      {% csrf_token %}
+        <div class="row">
+          <div class="col-6 col-lg-3 form-group">
+              <label>Start Date</label>
+              <input type="date" class=" form-control" name="startDate" id="startDate" required>
+          </div>
+          <div class="col-6 col-lg-3 form-group">
+              <label>End Date</label>
+              <input type="date" class=" form-control" name="endDate" id="endDate" required>
+          </div>
+          <div class="col-12 form-group">
+              <button class="btn btn mt-3 btn btn-primary" id="submitDate" type="submit">Search</button>
+          </div>
+      </div>
+    </form>
+  </div>
+  <section class="section dashboard">
+    <div class="row">
+      <div class="col-12">
+        <div class="card top-selling overflow-auto">
+          <div class="card-body pb-0">
+            <h5 class="card-title d-inline-block" style="width: 90%;">Pickup List</h5>
+            <table class="table table-hover" >
+              <thead>
+                <tr>
+                  <th style="width:2%">#</th>
+                  <th style="width:10%">Customer</th>
+                  <th style="width:10%;">Contact</th>
+                  <th style="width:13%;">Products</th>
+                  <th style="width:10%;">Pickup Date</th>
+                  <th style="width:10%;">Return Date</th>
+                  <th style="width:45%;text-align: right;"> <span style="margin-right: 5%;">Action</span></th>
+                  <!-- <th style="width:10%;">Actions</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                {% for booking_return in pick_up_list %}
+                <tr onclick="window.location='{% url 'booking_details'  booking_return.pk %}'">
+                  <td style="vertical-align: top;">{{forloop.counter}}</td>
+                  <td style="vertical-align: top;">{{booking_return.customer.name}}</td>
+                  <td style="vertical-align: top;">{{booking_return.customer.mobilenumber}}</td>
+                  <td style="vertical-align: top;">
+                    <ul class="list-group list-group-flush col col-10">
+                      {% for booked_product in booking_return.bookedproduct_set.all %}
+                          <li class="list-group-item p-0" style="padding-bottom: 2px !important;">{{booked_product.product.name}} {{booked_product.product.tag}}</li>
+                      {% endfor %}
+                    </ul>
+                  </td>
+                  <td style="vertical-align: top;">{{booking_return.startDate}}</td>
+                  <td style="vertical-align: top;">{{booking_return.endDate}}</td>
+                  <td style="text-align: right;">
+                    <a href="{% url 'booking_details'  booking_return.pk %}" style='margin-right: 5%;'class="btn btn-md"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        {% include 'includes/paginate_component.html' %}
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}

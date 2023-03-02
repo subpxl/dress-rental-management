@@ -128,7 +128,7 @@ class BookingList(ListView):
         return  render(request,'booking/booking_list.html',context)
 
     def get(self,request):
-        bookings = Booking.objects.filter(seller__user=request.user).exclude(status=Config.Returned)
+        bookings = Booking.objects.filter(seller__user=request.user).exclude(Q(status=Config.Returned)|Q(status=Config.PickedUp))
         paginator = Paginator(bookings, 20)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
@@ -163,7 +163,7 @@ def booking_search(request):
 # @permission_required('booking.user_update_booking')
 def booking_update(request, pk):
     booking = Booking.objects.get(id=pk)
-    booked_product_list = BookedProduct.objects.filter(booking=pk,status=Config.Booked)
+    booked_product_list = BookedProduct.objects.filter(Q(status=Config.Booked)|Q(status=Config.PickedUp),booking=pk)
     if request.method == 'POST':
         
         data = request.POST
@@ -333,31 +333,30 @@ class CustomerDelete(DeleteView):
 def pickup(request,pk):
     booking = Booking.objects.get(id=pk)
     booked_product_list = BookedProduct.objects.filter(booking=pk,status=Config.Booked)
-    # if request.method == 'POST':
+    if request.method == 'POST':
         
-    #     data = request.POST
-    #     total = booking.totalAmount 
-    #     data.getlist('booked_product')
-    #     for prod in data.getlist('booked_product'):
-    #         product = BookedProduct.objects.get(product__id=prod,booking__id=pk)
-    #         # if Booking.objects.filter(prodcuts=product).count()==0:
-    #         product.status = Config.Returned
-    #         product.save()
-    #         # booking.products.remove(product)
-    #         # total -= product.price
-    #     booking.final_paid = data['final_paid']
-    #     # booking.amountPaid = total-int(amount_due)-int(booking.discount)
-    #     if BookedProduct.objects.filter(booking__id=pk,status=Config.Booked).count() == 0:
-    #         print(booking)
-    #         booking.status = Config.Returned
-    #     booking.endDate=date.today()
-    #     booking.save()
-    #     return redirect('booking_list')
+        data = request.POST
+        total = booking.totalAmount 
+        data.getlist('booked_product')
+        for prod in data.getlist('booked_product'):
+            product = BookedProduct.objects.get(product__id=prod,booking__id=pk)
+            # if Booking.objects.filter(prodcuts=product).count()==0:
+            product.status = Config.PickedUp
+            product.save()
+            # booking.products.remove(product)
+            # total -= product.price
+        booking.final_paid = data['final_paid']
+        # booking.amountPaid = total-int(amount_due)-int(booking.discount)
+        if BookedProduct.objects.filter(booking__id=pk,status=Config.Booked).count() == 0:
+            print(booking)
+            booking.status = Config.PickedUp
+        booking.save()
+        return redirect('booking_list')
     context ={
         'booking':booking,
         'booked_product_list':booked_product_list
     }
-    return render(request,'booking/pickup.html')
+    return render(request,'booking/pickup.html',context=context)
 
 # def pickup(request, pk):
 #     booking = Booking.objects.get(id=pk)
@@ -387,3 +386,33 @@ def pickup(request,pk):
 #         'booked_product_list':booked_product_list
 #     }
 #     return render(request,'booking/return_booking.html',context)
+
+
+def pickup_list(request):
+    seller = Seller.objects.get(user = request.user)
+    if request.method=="POST":
+        startDate = request.POST.get("startDate","")
+        endDate = request.POST.get("endDate","")
+        pick_up_list = Booking.objects.filter(seller=seller,startDate__gte=startDate,endDate__lte=endDate,status=Config.PickedUp)
+        # return_list = Booking.objects.filter( status=Config.Returned)
+        paginator = Paginator(pick_up_list, 20)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        context = {
+            'page_obj':page_obj,
+            'startDate':startDate,
+            'endDate':endDate,
+            'pick_up_list':pick_up_list
+        }
+        return render(request, 'booking/return_list.html', context)
+    else:
+        pick_up_list  = Booking.objects.filter(seller=seller,status=Config.PickedUp)
+        print(pick_up_list,'pi')
+        paginator = Paginator(pick_up_list, 20)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        context = {
+                'page_obj':page_obj,
+                'pick_up_list':pick_up_list
+        }
+        return  render(request,'booking/pickup_list.html',context)
