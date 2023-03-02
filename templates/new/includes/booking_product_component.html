@@ -21,6 +21,8 @@
             <th>Description</th>
             <th>Size</th>
             <!-- {{check_tax_quantity.consider_tax}} -->
+            
+            <th>Price</th>
             {%if check_tax_quantity %}
                 {%if check_tax_quantity.consider_quantity %}
                     <th>Quantity</th>
@@ -31,7 +33,6 @@
                 {% endif %}
 
             {% endif %}
-            <th>Price</th>
             <th style="width: 10%;text-align: center;font-size: 25px;padding: 0;font-weight: bolder;cursor: pointer;"><span onclick="addProductForm()">+</span></th>
         </tr>
     </thead>
@@ -52,6 +53,8 @@
             </td>
             <td><input class="form-control" placeholder="description" name="description"></td>
             <td><input class="form-control" placeholder="size" name="size"></td>
+            
+            <td><input class="form-control" placeholder="price" type="number" name="price"></td>
             {%if check_tax_quantity %}
                 {%if check_tax_quantity.consider_quantity %}
                 <td><input class="form-control" placeholder="Quantity" type="number" name="Quantity"></td>
@@ -62,7 +65,6 @@
                 {% endif %}
 
             {% endif %}
-            <td><input class="form-control" placeholder="price" type="number" name="price"></td>
             <td style="width: 10%;text-align: center;cursor: pointer;">
                 <span onclick="removeProductForm(this)"><i class="fa fa-trash" aria-hidden="true"></i>
             </span></td>

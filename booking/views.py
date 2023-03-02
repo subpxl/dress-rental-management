@@ -34,15 +34,22 @@ def booked_product_search(request):
         # print(startDate, startTime, endDate, endTime)
         # same_times = Booking.objects.filter(startTime__gte=startTime)
         # print(same_times)
+        # black_list = BookedProduct.objects.filter(
+        #                 Q(booking__startDate__lt=endDate)|Q(booking__startDate=endDate,booking__startTime__lte=endTime),
+        #                 Q(booking__endDate__gt=startDate)|Q(booking__endDate=startDate,booking__endTime__gte=startTime)|Q(status='Booked')|Q(status='Maintainence')
+        #             ).values_list('product',flat=True).distinct()
+        # black_list = BookedProduct.objects.filter(
+        #             Q(status='Booked')|Q(status='Maintainence')
+        #             ).values_list('product',flat=True).distinct()
         black_list = BookedProduct.objects.filter(
-                        Q(booking__startDate__lt=endDate)|Q(booking__startDate=endDate,booking__startTime__lte=endTime),
-                        Q(booking__endDate__gt=startDate)|Q(booking__endDate=startDate,booking__endTime__gte=startTime)|Q(status='Booked')|Q(status='Maintainence')
+                        Q(status='Booked')|Q(status='Maintainence'),
+                        Q(booking__startDate__lte=endDate),
+                        Q(booking__endDate__gte=startDate)
                     ).values_list('product',flat=True).distinct()
-        
-        print(black_list)
+        print("blacklist:{}".format(black_list))
         found_product = Product.objects.filter(Q(status='Available')|Q(status="Returned"),shop__seller__user = request.user).exclude(id__in=black_list).values()
         list_of_dicts = list(found_product)
-        print(list_of_dicts,"1")
+        # print(list_of_dicts,"1")
         data = json.dumps(list_of_dicts)
         return HttpResponse(data, content_type="application/json")
     else:
@@ -174,7 +181,7 @@ def booking_update(request, pk):
         if BookedProduct.objects.filter(booking__id=pk,status=Config.Booked).count() == 0:
             print(booking)
             booking.status = Config.Returned
-        booking.endDate=date.today()
+        # booking.endDate=date.today()
         booking.save()
         return redirect('booking_list')
     context ={
@@ -322,3 +329,61 @@ class CustomerDelete(DeleteView):
     model = Customer
     template_name = 'customer/customer_delete.html'
     success_url = reverse_lazy('customer_list')
+
+def pickup(request,pk):
+    booking = Booking.objects.get(id=pk)
+    booked_product_list = BookedProduct.objects.filter(booking=pk,status=Config.Booked)
+    # if request.method == 'POST':
+        
+    #     data = request.POST
+    #     total = booking.totalAmount 
+    #     data.getlist('booked_product')
+    #     for prod in data.getlist('booked_product'):
+    #         product = BookedProduct.objects.get(product__id=prod,booking__id=pk)
+    #         # if Booking.objects.filter(prodcuts=product).count()==0:
+    #         product.status = Config.Returned
+    #         product.save()
+    #         # booking.products.remove(product)
+    #         # total -= product.price
+    #     booking.final_paid = data['final_paid']
+    #     # booking.amountPaid = total-int(amount_due)-int(booking.discount)
+    #     if BookedProduct.objects.filter(booking__id=pk,status=Config.Booked).count() == 0:
+    #         print(booking)
+    #         booking.status = Config.Returned
+    #     booking.endDate=date.today()
+    #     booking.save()
+    #     return redirect('booking_list')
+    context ={
+        'booking':booking,
+        'booked_product_list':booked_product_list
+    }
+    return render(request,'booking/pickup.html')
+
+# def pickup(request, pk):
+#     booking = Booking.objects.get(id=pk)
+#     booked_product_list = BookedProduct.objects.filter(booking=pk,status=Config.Booked)
+#     if request.method == 'POST':
+        
+#         data = request.POST
+#         total = booking.totalAmount 
+#         data.getlist('booked_product')
+#         for prod in data.getlist('booked_product'):
+#             product = BookedProduct.objects.get(product__id=prod,booking__id=pk)
+#             # if Booking.objects.filter(prodcuts=product).count()==0:
+#             product.status = Config.Returned
+#             product.save()
+#             # booking.products.remove(product)
+#             # total -= product.price
+#         booking.final_paid = data['final_paid']
+#         # booking.amountPaid = total-int(amount_due)-int(booking.discount)
+#         if BookedProduct.objects.filter(booking__id=pk,status=Config.Booked).count() == 0:
+#             print(booking)
+#             booking.status = Config.Returned
+#         booking.endDate=date.today()
+#         booking.save()
+#         return redirect('booking_list')
+#     context ={
+#         'booking':booking,
+#         'booked_product_list':booked_product_list
+#     }
+#     return render(request,'booking/return_booking.html',context)

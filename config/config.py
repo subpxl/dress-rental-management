@@ -20,12 +20,14 @@ class Config:
     NotAvailable = 'Not Available'
     Returned="Returned"
     Maintainance="Maintainance"
+    PickedUp="Picked Up"
     STATUS = (
         ('Available', Available),
         ('Booked', Booked),
         ('Not Available',NotAvailable ),
         ('Returned',Returned),
         ('Maintainance',Maintainance),
+        ('Picked Up',PickedUp)
     )
     rajgharana_jaora ='rajgharana jaora'
     SHOP = (
