@@ -98,4 +98,4 @@ class Tax_and_Quantity(models.Model):
 
 
     def __str__(self):
-        return "{}:{}".format(self.tax_name,self.seller.name )
+        return "{}:{}".format(self.tax_name,self.tax_percentage )

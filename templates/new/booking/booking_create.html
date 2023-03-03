@@ -52,6 +52,9 @@
               
               <div style="float: right;">
                 <h5 class="card-title">Total</h5>
+                
+                <div class=" col-lg-3" style="width: 300px;">{{ bookingForm.subtotal_price|as_crispy_field }}</div>
+                <div class=" col-lg-3" style="width: 300px;">{{ bookingForm.subtotal_tax|as_crispy_field }}</div>
                 <div class=" col-lg-3" style="width: 300px;">{{ bookingForm.totalAmount|as_crispy_field }}</div>
                 <div class=" col-lg-3" style="width: 300px;">{{ bookingForm.discount|as_crispy_field }}</div>
                 <div class=" col-lg-3" style="width: 300px;">{{ bookingForm.amountPaid|as_crispy_field }}</div>
@@ -89,6 +92,7 @@
         var amountPaid = document.getElementById('id_amountPaid').value;
         var discount = document.getElementById('id_discount').value
         var sum = Number(total) -  Number(amountPaid) - Number(discount);
+        console.log(sum)
         document.getElementById("id_amountDue").value = sum;
     }
 </script>

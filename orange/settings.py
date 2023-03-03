@@ -35,7 +35,7 @@ if default_database =="production":
 else:
     DEBUG=True
 
-ALLOWED_HOSTS = ['xail.in','www.xail.in','localhost','127.0.0.1','139.59.67.45','143.110.240.120']
+ALLOWED_HOSTS = ['xail.in','www.xail.in','localhost','127.0.0.1','139.59.67.45','143.110.240.120','code.jurasystems.in']
 
 
 # Application definition

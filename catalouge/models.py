@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from config.config import Config
-from seller.models import Shop, Seller
+from seller.models import Shop, Seller,Tax_and_Quantity
 
 # image compression
 from io import BytesIO
@@ -49,9 +49,8 @@ class Product(models.Model):
     image = models.ImageField(upload_to='uploads/')
     status = models.CharField(
         max_length=100, choices=Config.STATUS, default=Config.Available)
-
-    tax=models.PositiveIntegerField(null=True,blank=True)
     quantity=models.PositiveIntegerField(null=True,blank=True)
+    tax=models.ForeignKey(Tax_and_Quantity,on_delete=models.CASCADE)
 
 
     #calling image compression function before saving the data

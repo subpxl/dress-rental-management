@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.db import models
 from catalouge.models import Product
 from config.config import Config
-from seller.models import Shop, Seller
+from seller.models import Shop, Seller,Tax_and_Quantity
 from shortuuid.django_fields import ShortUUIDField
 
 STATUS = Config.STATUS
@@ -33,6 +33,8 @@ class Booking(models.Model):
     totalAmount = models.PositiveIntegerField()
     amountPaid = models.PositiveIntegerField()
     amountDue = models.IntegerField()
+    subtotal_price=models.PositiveIntegerField(null=True)
+    subtotal_tax=models.PositiveIntegerField(null=True)
     discount = models.PositiveIntegerField(default=0,null=True)
     products = models.ManyToManyField(Product ,blank=False)
     orderNo = ShortUUIDField(length=6, max_length=21,  unique=True, db_index=True, editable=False)
@@ -67,7 +69,8 @@ class BookedProduct(models.Model):
     description = models.CharField(max_length=500)
     size = models.CharField(max_length=500)
     status = models.CharField(max_length=25)
-    price = models.CharField(max_length=500)
+    price = models.PositiveIntegerField()
+    tax=models.ForeignKey(Tax_and_Quantity,on_delete=models.CASCADE)
     
     def __str__(self):
         return "%s , %s" % (self.product,self.booking)
