@@ -51,6 +51,9 @@ class Product(models.Model):
         max_length=100, choices=Config.STATUS, default=Config.Available)
     quantity=models.PositiveIntegerField(null=True,blank=True)
     tax=models.ForeignKey(Tax_and_Quantity,on_delete=models.CASCADE)
+    
+    def get_tax(self):
+        return ((self.price)*(self.tax.tax_percentage))/100
 
 
     #calling image compression function before saving the data
