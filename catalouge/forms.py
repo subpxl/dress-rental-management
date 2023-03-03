@@ -2,6 +2,8 @@ from django import forms
 from .models import Product, Category
 
 class ProductCreationForm(forms.ModelForm):
+    name = forms.CharField(widget=forms.TextInput(attrs={'autofocus': 'autofocus'}))
+
     class Meta:
         model = Product
         exclude = ('seller','shop')

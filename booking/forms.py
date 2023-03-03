@@ -20,6 +20,8 @@ class BookedProductForm(forms.ModelForm):
         # self.queryset = Product.objects.filter()
 
 class CustomerForm(forms.ModelForm):
+    name = forms.CharField(widget=forms.TextInput(attrs={'autofocus': 'autofocus'}))
+
     class Meta:
         model = Customer
         fields = "__all__"
@@ -30,6 +32,7 @@ class CustomerForm(forms.ModelForm):
             visible.field.widget.attrs['class'] = 'form-control'
 
 class BookingForm(forms.ModelForm):
+
     class Meta:
         model = Booking
         exclude = ['status','branch','seller','customer','final_paid','shop']
