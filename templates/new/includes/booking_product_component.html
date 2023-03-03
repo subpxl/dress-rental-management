@@ -46,9 +46,9 @@
             <td>
                 <div class="row mr-0">
                     <input type="text" class="form-control in-ak" placeholder="Type A Dress ID" size="25"
-                        onkeyup="showResults(this)" onchange="showResults(this)" name="" required/> 
+                        onkeyup="showResults(this)" onfocus="showResults(this)" name="" required/> 
                 </div>
-                <div class="row mr-0" style="width:280px;"><select name="products" required class="form-select d-ak" onchange="assingV(this)"></select>
+                <div class="row mr-0" ><select name="products" required class="form-select d-ak" onchange="assingV(this)"></select>
                 </div>
                 <!-- {% comment %} <select class="js-example-basic-single" name="state" onkeyup="showResults(this)" onchange="showResults(this)">
                     <option value="AL">Alabama</option>
@@ -57,14 +57,14 @@
                   </select> {% endcomment %} -->
             </td>
             <td><input class="form-control" style="width:400px;" placeholder="description" name="description"></td>
-            <td><input class="form-control" style="width:80px;" placeholder="size" name="size"></td>
+            <td><input class="form-control size" style="width:80px;" placeholder="size" name="size"></td>
             {%if check_tax_quantity %}
                     {%if check_tax_quantity.consider_quantity %}
-                    <td><input class="form-control" style="width:80px;" placeholder="Quantity" type="number" name="Quantity"></td>
+                    <td class="quantity"><input class="form-control" style="width:80px;" placeholder="Quantity" type="number" name="Quantity"></td>
                     {% endif %}
             {% endif %}
             
-            <td><input class="form-control" style="width:80px;" placeholder="price" type="number" name="price"></td>
+            <td class="price"><input class="form-control" style="width:80px;" placeholder="price" type="number" name="price"></td>
             {%if check_tax_quantity %}
 
                 {%if check_tax_quantity.consider_tax %}
@@ -133,14 +133,24 @@
         inputV.classList.add('z--1')
         inputV.setAttribute('disabled', 'disabled');
         td = ele.parentElement.parentElement;
-        console.log('first td ', td)
+        // console.log('first td ', td)
         let td1 = td.nextElementSibling;
         td1.getElementsByTagName('input')[0].value = desc;
         let td2 = td1.nextElementSibling;
         td2.getElementsByTagName('input')[0].value = size;
         let td3 = td2.nextElementSibling;
-        td3.getElementsByTagName('input')[0].value = price;
-        td3.getElementsByTagName('input').type=number;
+        // console.log("td3",td3.classList.contains('quantity'))
+        if (td3.classList.contains('quantity')) {
+                  td3.nextElementSibling.getElementsByTagName('input')[0].value = price;
+                  td3.getElementsByTagName('input').type=number;
+        } else {
+            console.log(td3.nextElementSibling)
+                    td3.getElementsByTagName('input')[0].value = price;
+                    td3.getElementsByTagName('input').type=number;
+
+        }
+        // td3.getElementsByTagName('input')[0].value = price;
+        // td3.getElementsByTagName('input').type=number;
         
         totalA = document.getElementById('id_totalAmount')
         if (totalA.value == ""){
@@ -214,10 +224,10 @@
             + '<td><input class="form-control" style="width:80px;"  placeholder="size"  name="size"></td>'
             +'{%if check_tax_quantity %}'
             +   '{%if check_tax_quantity.consider_quantity %}'
-            +    '<td><input class="form-control" style="width:80px;"  placeholder="Quantity" type="number" name="Quantity"></td>'
+            +    '<td class="quantity"><input class="form-control" style="width:80px;"  placeholder="Quantity" type="number" name="Quantity"></td>'
             +    '{% endif %}'
             + '{% endif %}'
-            + '<td><input class="form-control" type="number" placeholder="price"  name="Price"></td>'
+            + '<td class="price"><input class="form-control" type="number" placeholder="price"  name="Price"></td>'
             +   '{%if check_tax_quantity %}'
             +        '{%if check_tax_quantity.consider_tax %}'
             +            '<td>'
@@ -239,7 +249,7 @@
         return;
     }
 </script>
-{% comment %} <script>
+<!-- {% comment %} <script>
 $(document).ready(function () {
             $('.js-example-basic-single').select2({
                 ajax: {
@@ -258,7 +268,7 @@ $(document).ready(function () {
                 minimumInputLength: 1
             });
         });
-</script>{% endcomment %}
+</script>{% endcomment %} -->
 <script>
     $(document).ready(function() {
         // console.log("called")
