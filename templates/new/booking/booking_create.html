@@ -49,14 +49,16 @@
               </div>
               <h5 class="card-title">Products</h5>
               {% include 'includes/booking_product_component.html' %}
-              <h5 class="card-title">Total</h5>
-              <div class="row">
-                <div class="col-12 col-lg-3">{{ bookingForm.totalAmount|as_crispy_field }}</div>
-                <div class="col-12 col-lg-3">{{ bookingForm.discount|as_crispy_field }}</div>
-                <div class="col-12 col-lg-3">{{ bookingForm.amountPaid|as_crispy_field }}</div>
-                <div class="col-12 col-lg-3">{{ bookingForm.amountDue|as_crispy_field }}</div>
+              
+              <div style="float: right;">
+                <h5 class="card-title">Total</h5>
+                <div class=" col-lg-3" style="width: 300px;">{{ bookingForm.totalAmount|as_crispy_field }}</div>
+                <div class=" col-lg-3" style="width: 300px;">{{ bookingForm.discount|as_crispy_field }}</div>
+                <div class=" col-lg-3" style="width: 300px;">{{ bookingForm.amountPaid|as_crispy_field }}</div>
+                <div class=" col-lg-3" style="width: 300px;">{{ bookingForm.amountDue|as_crispy_field }}</div>
+                <input class="btn btn-primary btn mt-3" type="submit" value="Submit" id="booking_form_ak" />
               </div>
-              <input class="btn btn-primary btn mt-3" type="submit" value="Submit" id="booking_form_ak" />
+              
             </form>
           </div>
         </div>

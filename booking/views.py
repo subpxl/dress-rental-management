@@ -85,6 +85,7 @@ def booking_create(request):
         size = request.POST.getlist("size")
         bookingForm = BookingForm(request.POST)
         customerForm = CustomerForm(request.POST)
+        print(price)
         # branch_id = int(request.POST.get('branch'))
         if bookingForm.is_valid() and customerForm.is_valid():
             customer = customerForm.save()
